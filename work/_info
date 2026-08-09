@@ -1,0 +1,111 @@
+m255
+K4
+z2
+!s11f vlog 2020.1 2020.02, Feb 28 2020
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+dC:/Users/rohan/OneDrive/Desktop/modelsim_ase/win32aloem
+vrasterizer
+Z0 DXx6 sv_std 3 std 0 22 VYECXdT12H8WgbUP_5Y6:3
+Z1 !s110 1784409309
+!i10b 1
+!s100 8R36C=UUeFBUYd4RM`kdD1
+Z2 !s11b Dg1SIo80bB@j0V0VzS_@n1
+IH:h9Vg4Pe@cT2]OIXo;Qh1
+Z3 VDg1SIo80bB@j0V0VzS_@n1
+S1
+Z4 dC:/Users/rohan/OneDrive/Desktop/Claude_FGPA
+w1784409169
+8C:/Users/rohan/OneDrive/Desktop/Claude_FGPA/rtl/rasterizer.sv
+FC:/Users/rohan/OneDrive/Desktop/Claude_FGPA/rtl/rasterizer.sv
+!i122 49
+L0 1 155
+Z5 OV;L;2020.1;71
+r1
+!s85 0
+31
+Z6 !s108 1784409309.000000
+!s107 C:/Users/rohan/OneDrive/Desktop/Claude_FGPA/rtl/rasterizer.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/rohan/OneDrive/Desktop/Claude_FGPA/rtl/rasterizer.sv|
+!i113 1
+Z7 o-work work -sv
+Z8 tCvgOpt 0
+vscreen_mem
+R0
+R1
+!i10b 1
+!s100 FBB:4DdL2ma6KUcm=gQR71
+R2
+Ikdg^REm9;4[fVl5a[C<m73
+R3
+S1
+R4
+w1784252598
+8C:/Users/rohan/OneDrive/Desktop/Claude_FGPA/rtl/screen_mem.sv
+FC:/Users/rohan/OneDrive/Desktop/Claude_FGPA/rtl/screen_mem.sv
+!i122 50
+L0 1 20
+R5
+r1
+!s85 0
+31
+R6
+!s107 C:/Users/rohan/OneDrive/Desktop/Claude_FGPA/rtl/screen_mem.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/rohan/OneDrive/Desktop/Claude_FGPA/rtl/screen_mem.sv|
+!i113 1
+R7
+R8
+vtb_rasterizer
+R0
+!s110 1784409310
+!i10b 1
+!s100 ;TF8PKQTbdzHS_:NJLg^D3
+R2
+I<QX<[z9Z:;?KGMGlkK22o2
+R3
+S1
+R4
+w1784409304
+Z9 8C:/Users/rohan/OneDrive/Desktop/Claude_FGPA/tb/tb_rasterizer.sv
+Z10 FC:/Users/rohan/OneDrive/Desktop/Claude_FGPA/tb/tb_rasterizer.sv
+!i122 51
+L0 1 79
+R5
+r1
+!s85 0
+31
+R6
+Z11 !s107 C:/Users/rohan/OneDrive/Desktop/Claude_FGPA/tb/tb_rasterizer.sv|
+Z12 !s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/rohan/OneDrive/Desktop/Claude_FGPA/tb/tb_rasterizer.sv|
+!i113 1
+R7
+R8
+vtb_screen_mem
+R0
+!s110 1784404807
+!i10b 1
+!s100 L7aAlc<;Dh0D[XB0jL]K>2
+R2
+I66oSD85;XSgB7_h6EbTB30
+R3
+S1
+R4
+w1784404462
+R9
+R10
+!i122 27
+L0 1 78
+R5
+r1
+!s85 0
+31
+!s108 1784404807.000000
+R11
+R12
+!i113 1
+R7
+R8
