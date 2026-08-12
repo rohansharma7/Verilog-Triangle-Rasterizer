@@ -104,6 +104,7 @@ module touchscreen_interface (
 
                 T_CS = 1;
             end
+
             SEND_CMD: begin
                 if(bit_count == 7) begin
                     next_state = ACQUIRE;

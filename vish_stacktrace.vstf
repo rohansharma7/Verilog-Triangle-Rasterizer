@@ -1,0 +1,75 @@
+# Current time Tue Aug 11 15:00:29 2026
+# ModelSim - Intel FPGA Edition Stack Trace
+# Program = vish
+# Id = "2020.1"
+# Version = "2020.02"
+# Date = "Feb 28 2020"
+# Platform = win32pe
+
+Exception c0000005 has occurred at address 64ad9e6f. Traceback:
+# 0    0x64ad9e6f: 'Tcl_GetString + 0xf'
+# 1    0x64ac1f5a: 'TclListObjSetElement + 0x31a'
+# 2    0x64a33a49: 'TclNRRunCallbacks + 0x49'
+StackWalk failed 299
+# End of Stack Trace
+
+# Current time Tue Aug 11 15:00:29 2026
+# ModelSim - Intel FPGA Edition Stack Trace
+# Program = vish
+# Id = "2020.1"
+# Version = "2020.02"
+# Date = "Feb 28 2020"
+# Platform = win32pe
+
+Exception c0000005 has occurred at address 64ad9e6f. Traceback:
+# 0    0x64ad9e6f: 'Tcl_GetString + 0xf'
+# 1    0x64ac1f5a: 'TclListObjSetElement + 0x31a'
+# 2    0x64a33a49: 'TclNRRunCallbacks + 0x49'
+# 3    0x64ac114d: 'Tcl_ListObjReplace + 0x4d'
+# 4    0x64ac09fc: 'Tcl_UpdateLinkedVar + 0xa8c'
+# 5    0x0051d06e: 'EnumDispProc + 0x274ee'
+# 6    0x0051732b: 'EnumDispProc + 0x217ab'
+# 7    0x64a339f1: 'TclNREvalObjv + 0x3e1'
+StackWalk failed 299
+# End of Stack Trace
+
+# Current time Tue Aug 11 15:00:29 2026
+# ModelSim - Intel FPGA Edition Stack Trace
+# Program = vish
+# Id = "2020.1"
+# Version = "2020.02"
+# Date = "Feb 28 2020"
+# Platform = win32pe
+
+Exception c0000005 has occurred at address 64ad9e6f. Traceback:
+# 0    0x64ad9e6f: 'Tcl_GetString + 0xf'
+# 1    0x64ac1f5a: 'TclListObjSetElement + 0x31a'
+# 2    0x64a33a49: 'TclNRRunCallbacks + 0x49'
+# 3    0x64ac114d: 'Tcl_ListObjReplace + 0x4d'
+# 4    0x64ac09fc: 'Tcl_UpdateLinkedVar + 0xa8c'
+# 5    0x0051d06e: 'EnumDispProc + 0x274ee'
+# 6    0x0051732b: 'EnumDispProc + 0x217ab'
+# 7    0x64a339f1: 'TclNREvalObjv + 0x3e1'
+StackWalk failed 299
+# End of Stack Trace
+
+# Current time Tue Aug 11 15:00:29 2026
+# ModelSim - Intel FPGA Edition Stack Trace
+# Program = vish
+# Id = "2020.1"
+# Version = "2020.02"
+# Date = "Feb 28 2020"
+# Platform = win32pe
+
+Exception c0000005 has occurred at address 64ad9e6f. Traceback:
+# 0    0x64ad9e6f: 'Tcl_GetString + 0xf'
+# 1    0x64ac1f5a: 'TclListObjSetElement + 0x31a'
+# 2    0x64a33a49: 'TclNRRunCallbacks + 0x49'
+# 3    0x64ac114d: 'Tcl_ListObjReplace + 0x4d'
+# 4    0x64ac09fc: 'Tcl_UpdateLinkedVar + 0xa8c'
+# 5    0x0051d06e: 'EnumDispProc + 0x274ee'
+# 6    0x0051732b: 'EnumDispProc + 0x217ab'
+# 7    0x64a339f1: 'TclNREvalObjv + 0x3e1'
+StackWalk failed 299
+# End of Stack Trace
+

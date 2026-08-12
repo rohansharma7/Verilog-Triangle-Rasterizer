@@ -9,103 +9,278 @@ z2
 !i10f 100
 cModel Technology
 dC:/Users/rohan/OneDrive/Desktop/modelsim_ase/win32aloem
-vrasterizer
+vcmd_processor
 Z0 DXx6 sv_std 3 std 0 22 VYECXdT12H8WgbUP_5Y6:3
-Z1 !s110 1784409309
+Z1 !s110 1786478930
 !i10b 1
-!s100 8R36C=UUeFBUYd4RM`kdD1
+!s100 ?QVfLaY<iHeIe]6<AFaK92
 Z2 !s11b Dg1SIo80bB@j0V0VzS_@n1
-IH:h9Vg4Pe@cT2]OIXo;Qh1
+IQo<`<<c?oY^_aF0@7VO_N1
 Z3 VDg1SIo80bB@j0V0VzS_@n1
 S1
 Z4 dC:/Users/rohan/OneDrive/Desktop/Claude_FGPA
-w1784409169
-8C:/Users/rohan/OneDrive/Desktop/Claude_FGPA/rtl/rasterizer.sv
-FC:/Users/rohan/OneDrive/Desktop/Claude_FGPA/rtl/rasterizer.sv
-!i122 49
-L0 1 155
+w1786318718
+8C:/Users/rohan/OneDrive/Desktop/Claude_FGPA/rtl/cmd_processor.sv
+FC:/Users/rohan/OneDrive/Desktop/Claude_FGPA/rtl/cmd_processor.sv
+!i122 88
+L0 1 102
 Z5 OV;L;2020.1;71
 r1
 !s85 0
 31
-Z6 !s108 1784409309.000000
-!s107 C:/Users/rohan/OneDrive/Desktop/Claude_FGPA/rtl/rasterizer.sv|
-!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/rohan/OneDrive/Desktop/Claude_FGPA/rtl/rasterizer.sv|
+Z6 !s108 1786478930.000000
+!s107 C:/Users/rohan/OneDrive/Desktop/Claude_FGPA/rtl/cmd_processor.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/rohan/OneDrive/Desktop/Claude_FGPA/rtl/cmd_processor.sv|
 !i113 1
 Z7 o-work work -sv
 Z8 tCvgOpt 0
-vscreen_mem
+vdisplay_driver
 R0
 R1
 !i10b 1
-!s100 FBB:4DdL2ma6KUcm=gQR71
+!s100 T<9ckBdjJgFD]QOOFAhc@0
 R2
-Ikdg^REm9;4[fVl5a[C<m73
+IkzblRMIlJW9I]nRkZU_d@0
 R3
 S1
 R4
-w1784252598
+w1786478506
+8C:/Users/rohan/OneDrive/Desktop/Claude_FGPA/rtl/display_driver.sv
+FC:/Users/rohan/OneDrive/Desktop/Claude_FGPA/rtl/display_driver.sv
+!i122 89
+L0 1 279
+R5
+r1
+!s85 0
+31
+R6
+!s107 C:/Users/rohan/OneDrive/Desktop/Claude_FGPA/rtl/display_driver.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/rohan/OneDrive/Desktop/Claude_FGPA/rtl/display_driver.sv|
+!i113 1
+R7
+R8
+vraster_top
+R0
+R1
+!i10b 1
+!s100 []1J52=EEaXSNNAhX_Na31
+R2
+IPH:?cTbQ6M35=2L[WzAnn3
+R3
+S1
+R4
+w1786478057
+8C:/Users/rohan/OneDrive/Desktop/Claude_FGPA/rtl/raster_top.sv
+FC:/Users/rohan/OneDrive/Desktop/Claude_FGPA/rtl/raster_top.sv
+!i122 90
+L0 1 109
+R5
+r1
+!s85 0
+31
+R6
+!s107 C:/Users/rohan/OneDrive/Desktop/Claude_FGPA/rtl/raster_top.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/rohan/OneDrive/Desktop/Claude_FGPA/rtl/raster_top.sv|
+!i113 1
+R7
+R8
+vrasterizer
+R0
+Z9 !s110 1786478931
+!i10b 1
+!s100 TACOV6FHEO8fNz5j4OkWU2
+R2
+I8Hem?a6e3FYDJdNLWdDbE0
+R3
+S1
+R4
+w1786290796
+8C:/Users/rohan/OneDrive/Desktop/Claude_FGPA/rtl/rasterizer.sv
+FC:/Users/rohan/OneDrive/Desktop/Claude_FGPA/rtl/rasterizer.sv
+!i122 91
+L0 1 155
+R5
+r1
+!s85 0
+31
+R6
+!s107 C:/Users/rohan/OneDrive/Desktop/Claude_FGPA/rtl/rasterizer.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/rohan/OneDrive/Desktop/Claude_FGPA/rtl/rasterizer.sv|
+!i113 1
+R7
+R8
+vscreen_mem
+R0
+R9
+!i10b 1
+!s100 8L;[dOCU6DzOLkBMhQF[42
+R2
+IA>Mn:8:3hEjcgHCCJJIh:3
+R3
+S1
+R4
+w1786290797
 8C:/Users/rohan/OneDrive/Desktop/Claude_FGPA/rtl/screen_mem.sv
 FC:/Users/rohan/OneDrive/Desktop/Claude_FGPA/rtl/screen_mem.sv
-!i122 50
+!i122 92
 L0 1 20
 R5
 r1
 !s85 0
 31
-R6
+Z10 !s108 1786478931.000000
 !s107 C:/Users/rohan/OneDrive/Desktop/Claude_FGPA/rtl/screen_mem.sv|
 !s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/rohan/OneDrive/Desktop/Claude_FGPA/rtl/screen_mem.sv|
 !i113 1
 R7
 R8
-vtb_rasterizer
+vtb_cmd_processor
 R0
-!s110 1784409310
+!s110 1786478929
 !i10b 1
-!s100 ;TF8PKQTbdzHS_:NJLg^D3
+!s100 ^aBUfPBJa2]Hg`d763I2B3
 R2
-I<QX<[z9Z:;?KGMGlkK22o2
+I46f0oARjeDaBoa:dz_J?P3
 R3
 S1
 R4
-w1784409304
-Z9 8C:/Users/rohan/OneDrive/Desktop/Claude_FGPA/tb/tb_rasterizer.sv
-Z10 FC:/Users/rohan/OneDrive/Desktop/Claude_FGPA/tb/tb_rasterizer.sv
-!i122 51
-L0 1 79
+w1786478022
+8C:/Users/rohan/OneDrive/Desktop/Claude_FGPA/tb/tb_cmd_processor.sv
+FC:/Users/rohan/OneDrive/Desktop/Claude_FGPA/tb/tb_cmd_processor.sv
+!i122 84
+L0 1 103
 R5
 r1
 !s85 0
 31
-R6
-Z11 !s107 C:/Users/rohan/OneDrive/Desktop/Claude_FGPA/tb/tb_rasterizer.sv|
-Z12 !s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/rohan/OneDrive/Desktop/Claude_FGPA/tb/tb_rasterizer.sv|
+Z11 !s108 1786478929.000000
+!s107 C:/Users/rohan/OneDrive/Desktop/Claude_FGPA/tb/tb_cmd_processor.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/rohan/OneDrive/Desktop/Claude_FGPA/tb/tb_cmd_processor.sv|
+!i113 1
+R7
+R8
+vtb_display_driver
+R0
+R9
+!i10b 1
+!s100 R>Ql04EA8@nl9=ToYDX7O2
+R2
+Ia9G?:>mFX3X68SmTGbEb51
+R3
+S1
+R4
+w1786478878
+8C:/Users/rohan/OneDrive/Desktop/Claude_FGPA/tb/tb_display_driver.sv
+FC:/Users/rohan/OneDrive/Desktop/Claude_FGPA/tb/tb_display_driver.sv
+!i122 94
+L0 6 151
+R5
+r1
+!s85 0
+31
+R10
+!s107 C:/Users/rohan/OneDrive/Desktop/Claude_FGPA/tb/tb_display_driver.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/rohan/OneDrive/Desktop/Claude_FGPA/tb/tb_display_driver.sv|
+!i113 1
+R7
+R8
+vtb_rasterizer
+R0
+R1
+!i10b 1
+!s100 :M[8i2I>zRcAFaJE?^@?S0
+R2
+Im8E><l53GW8_J=BnCUF4R3
+R3
+S1
+R4
+w1786478006
+8C:/Users/rohan/OneDrive/Desktop/Claude_FGPA/tb/tb_rasterizer.sv
+FC:/Users/rohan/OneDrive/Desktop/Claude_FGPA/tb/tb_rasterizer.sv
+!i122 85
+L0 1 132
+R5
+r1
+!s85 0
+31
+R11
+!s107 C:/Users/rohan/OneDrive/Desktop/Claude_FGPA/tb/tb_rasterizer.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/rohan/OneDrive/Desktop/Claude_FGPA/tb/tb_rasterizer.sv|
 !i113 1
 R7
 R8
 vtb_screen_mem
 R0
-!s110 1784404807
+R1
 !i10b 1
-!s100 L7aAlc<;Dh0D[XB0jL]K>2
+!s100 <0d67bmOHQcX4>BBK?;hL2
 R2
-I66oSD85;XSgB7_h6EbTB30
+I`UZ^i]mY;lc7UJ8<GWc420
 R3
 S1
 R4
-w1784404462
-R9
-R10
-!i122 27
-L0 1 78
+w1786477983
+8C:/Users/rohan/OneDrive/Desktop/Claude_FGPA/tb/tb_screen_mem.sv
+FC:/Users/rohan/OneDrive/Desktop/Claude_FGPA/tb/tb_screen_mem.sv
+!i122 86
+L0 1 87
 R5
 r1
 !s85 0
 31
-!s108 1784404807.000000
-R11
-R12
+R6
+!s107 C:/Users/rohan/OneDrive/Desktop/Claude_FGPA/tb/tb_screen_mem.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/rohan/OneDrive/Desktop/Claude_FGPA/tb/tb_screen_mem.sv|
+!i113 1
+R7
+R8
+vtb_top
+R0
+R1
+!i10b 1
+!s100 7XOBP=ZNG:E7N:J<<?3@P0
+R2
+IAdJSKKi62C<Ad1gG1:<4l1
+R3
+S1
+R4
+w1786478064
+8C:/Users/rohan/OneDrive/Desktop/Claude_FGPA/tb/tb_top.sv
+FC:/Users/rohan/OneDrive/Desktop/Claude_FGPA/tb/tb_top.sv
+!i122 87
+L0 7 165
+R5
+r1
+!s85 0
+31
+R6
+!s107 C:/Users/rohan/OneDrive/Desktop/Claude_FGPA/tb/tb_top.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/rohan/OneDrive/Desktop/Claude_FGPA/tb/tb_top.sv|
+!i113 1
+R7
+R8
+vtouchscreen_interface
+R0
+R9
+!i10b 1
+!s100 b2k:BoVWCniXPBd8dkAGG1
+R2
+Ia9lecNf1XjO7`gn9H92K52
+R3
+S1
+R4
+w1786477893
+8C:/Users/rohan/OneDrive/Desktop/Claude_FGPA/rtl/touchscreen_interface.sv
+FC:/Users/rohan/OneDrive/Desktop/Claude_FGPA/rtl/touchscreen_interface.sv
+!i122 93
+L0 1 141
+R5
+r1
+!s85 0
+31
+R10
+!s107 C:/Users/rohan/OneDrive/Desktop/Claude_FGPA/rtl/touchscreen_interface.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/rohan/OneDrive/Desktop/Claude_FGPA/rtl/touchscreen_interface.sv|
 !i113 1
 R7
 R8
