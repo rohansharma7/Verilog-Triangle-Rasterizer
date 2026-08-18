@@ -2,13 +2,13 @@ module tb_rasterizer;
     logic clk = 0;
     logic wr_en;
     logic [16:0] wr_addr;
-    logic [15:0] wr_data;
+    logic wr_data;
     logic [16:0] rd_addr;
-    logic [15:0] rd_data;
+    logic rd_data;
 
     logic rst_n, start;
     logic [8:0] x1_in, y1_in, x2_in, y2_in, x3_in, y3_in;
-    logic [15:0] color_in;
+    logic color_in;
 
     logic done;
 
@@ -73,7 +73,7 @@ module tb_rasterizer;
         rst_n = 1;
 
         @(posedge clk);
-        color_in = 16'hFFFF;
+        color_in = 1'b1;
         x1_in = 0; y1_in = 0;
         x2_in = 6; y2_in = 0;
         x3_in = 6; y3_in = 6;
@@ -106,13 +106,22 @@ module tb_rasterizer;
             for (int y = 0; y <= 6; y++) begin
                 rd_addr = (320 * y) + x;
                 @(posedge clk);
+                // screen_mem's always_ff and this testbench are both
+                // triggered by the same posedge clk. Without this #1,
+                // this process can resume and read rd_data BEFORE
+                // screen_mem's own nonblocking update for this same edge
+                // has landed -- a classic same-edge race between two
+                // independent processes. The #1 delay pushes the read
+                // into a later time step, after all NBA updates for this
+                // edge (across every module) have definitely settled.
+                #1;
                 if (is_expected(x, y)) begin
-                    if (rd_data !== 16'hFFFF) begin
-                        $display("FAIL: pixel (%0d,%0d) expected filled (FFFF), got %h", x, y, rd_data);
+                    if (rd_data !== 1'b1) begin
+                        $display("FAIL: pixel (%0d,%0d) expected filled (1), got %b", x, y, rd_data);
                         errors++;
                     end
                 end else begin
-                    if (rd_data === 16'hFFFF) begin
+                    if (rd_data === 1'b1) begin
                         $display("FAIL: pixel (%0d,%0d) unexpectedly filled", x, y);
                         errors++;
                     end

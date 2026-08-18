@@ -58,36 +58,74 @@ module tb_cmd_processor;
         do_touch(12'd300, 12'd400);
         @(posedge clk);
 
-        // touch 3 -- should trigger start on the following cycle
-        do_touch(12'd500, 12'd600);
+        // touch 3 -- this is the one that triggers start
+        do_touch(12'd450, 12'd500);
 
-        // start is asserted combinationally-registered one cycle after
-        // the third ready pulse is captured (see cmd_processor.sv:
-        // start <= 1 happens in the same always_ff cycle READ3 sees
-        // ready), so check it right away.
-        @(posedge clk);
+        // do_touch returns immediately after the clock edge on which READ3
+        // sampled `ready`. start <= 1 was scheduled at that edge, so start
+        // is high during THIS cycle only -- the next edge returns the FSM
+        // to READ1, which drives start back to 0. Waiting another
+        // @(posedge clk) before checking (as an earlier version of this
+        // testbench did) therefore always observed 0.
+        #1; // let the same-edge nonblocking updates settle
         if (start !== 1'b1) begin
             $display("FAIL: expected start=1 after third touch, got %b", start);
             errors++;
         end
 
-        if (x1_in !== 9'd100 || y1_in !== 9'd200) begin
-            $display("FAIL: point1 expected (100,200), got (%0d,%0d)", x1_in, y1_in);
+        // Expected values are the RAW touch readings after cmd_processor's
+        // scaling, using its default full-range calibration:
+        //   X_SCALE = 320*65536/4095 = 5121, screen_x = (raw*5121) >> 16
+        //   Y_SCALE = 240*65536/4095 = 3840, screen_y = (raw*3840) >> 16
+        // so raw x 100/300/450 -> 7/23/35 and raw y 200/400/500 -> 11/23/29.
+        // These were computed independently rather than by re-running the
+        // DUT's own formula, so this actually checks the scaling.
+        if (x1_in !== 9'd7 || y1_in !== 9'd11) begin
+            $display("FAIL: point1 expected (7,11), got (%0d,%0d)", x1_in, y1_in);
             errors++;
         end
-        if (x2_in !== 9'd300 || y2_in !== 9'd400) begin
-            $display("FAIL: point2 expected (300,400), got (%0d,%0d)", x2_in, y2_in);
+        if (x2_in !== 9'd23 || y2_in !== 9'd23) begin
+            $display("FAIL: point2 expected (23,23), got (%0d,%0d)", x2_in, y2_in);
             errors++;
         end
-        if (x3_in !== 9'd500 || y3_in !== 9'd600) begin
-            $display("FAIL: point3 expected (500,600), got (%0d,%0d)", x3_in, y3_in);
+        if (x3_in !== 9'd35 || y3_in !== 9'd29) begin
+            $display("FAIL: point3 expected (35,29), got (%0d,%0d)", x3_in, y3_in);
             errors++;
         end
 
         // start should drop back to 0 the cycle after
         @(posedge clk);
+        #1;
         if (start !== 1'b0) begin
             $display("FAIL: expected start to deassert, still %b", start);
+            errors++;
+        end
+
+        // ------------------------------------------------------------------
+        // Scaling boundary check: the FSM is now back in READ1, so three
+        // more touches load a second triangle. Feed the ADC extremes and
+        // confirm they land exactly on the canvas corners rather than
+        // overflowing -- this is what keeps rasterizer's unbounded
+        // addr = 320*y + x from running past the framebuffer.
+        // ------------------------------------------------------------------
+        @(posedge clk);
+        do_touch(12'd4095, 12'd4095); // max ADC -> bottom-right corner
+        @(posedge clk);
+        do_touch(12'd0,    12'd0);    // min ADC -> top-left corner
+        @(posedge clk);
+        do_touch(12'd2048, 12'd2048); // mid-scale
+        #1;
+
+        if (x1_in !== 9'd319 || y1_in !== 9'd239) begin
+            $display("FAIL: max ADC expected (319,239), got (%0d,%0d)", x1_in, y1_in);
+            errors++;
+        end
+        if (x2_in !== 9'd0 || y2_in !== 9'd0) begin
+            $display("FAIL: min ADC expected (0,0), got (%0d,%0d)", x2_in, y2_in);
+            errors++;
+        end
+        if (x3_in > 9'd319 || y3_in > 9'd239) begin
+            $display("FAIL: mid ADC out of canvas: (%0d,%0d)", x3_in, y3_in);
             errors++;
         end
 

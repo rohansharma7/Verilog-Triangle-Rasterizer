@@ -3,12 +3,14 @@ module rasterizer (
     input logic rst_n,
     input logic start,
     input logic [8 : 0] x1_in, y1_in, x2_in, y2_in, x3_in, y3_in,
-    input logic [15 : 0] color_in,
+    // 1bpp framebuffer: "color" is just set/clear. 1 = filled, 0 = blank.
+    // display_driver expands this to a full RGB565 pixel on output.
+    input logic color_in,
 
     output logic done,
     output logic wr_en,
     output logic  [16 : 0] addr,
-    output logic [15 : 0] data
+    output logic data
 );
 
 
@@ -17,7 +19,7 @@ module rasterizer (
     logic signed [9 : 0] current_x, current_y;
     logic box_count;
     logic signed [9 : 0] x1, y1, x2, y2, x3, y3;
-    logic [15 : 0] color;
+    logic color;
     
     assign data = color;
     assign addr = (320 * current_y) + current_x;
@@ -73,11 +75,52 @@ module rasterizer (
         end
     end
 
+    // max_x/min_x/max_y/min_y depend only on x1..y3 (stable registers
+    // throughout BOX and RASTERIZE) -- not on current_state at all, so
+    // this is computed unconditionally rather than inside the BOX case
+    // branch. Assigning it only inside one case branch left every other
+    // path (IDLE/RASTERIZE/DONE) undriven, which Quartus's synthesizer
+    // (unlike Questa's simulator) correctly flags as latch inference,
+    // since always_comb requires every signal to be driven on every path.
+    always_comb begin
+        if ((x1 > x2) && (x1 > x3)) begin
+            max_x = x1;
+        end else if (x2 > x3) begin
+            max_x = x2;
+        end else begin
+            max_x = x3;
+        end
+
+        if ((x1 < x2) && (x1 < x3)) begin
+            min_x = x1;
+        end else if (x2 < x3) begin
+            min_x = x2;
+        end else begin
+            min_x = x3;
+        end
+
+        if ((y1 > y2) && (y1 > y3)) begin
+            max_y = y1;
+        end else if (y2 > y3) begin
+            max_y = y2;
+        end else begin
+            max_y = y3;
+        end
+
+        if ((y1 < y2) && (y1 < y3)) begin
+            min_y = y1;
+        end else if (y2 < y3) begin
+            min_y = y2;
+        end else begin
+            min_y = y3;
+        end
+    end
+
     always_comb begin
         next_state = current_state;
         case (current_state)
             IDLE: begin
-                
+
                 done = 0;
                 if(start) begin
                     next_state = BOX;
@@ -86,38 +129,6 @@ module rasterizer (
             end
 
             BOX: begin
-                if ((x1 > x2) && (x1 > x3)) begin
-                    max_x = x1;
-                end else if (x2 > x3) begin
-                    max_x = x2;
-                end else begin
-                    max_x = x3;
-                end
-
-                if ((x1 < x2) && (x1 < x3)) begin
-                    min_x = x1;
-                end else if (x2 < x3) begin
-                    min_x = x2;
-                end else begin
-                    min_x = x3;
-                end
-
-                if ((y1 > y2) && (y1 > y3)) begin
-                    max_y = y1;
-                end else if (y2 > y3) begin
-                    max_y = y2;
-                end else begin
-                    max_y = y3;
-                end
-
-                if ((y1 < y2) && (y1 < y3)) begin
-                    min_y = y1;
-                end else if (y2 < y3) begin
-                    min_y = y2;
-                end else begin
-                    min_y = y3;
-                end
-
                 if (box_count == 1) begin
                     next_state = RASTERIZE;
                 end

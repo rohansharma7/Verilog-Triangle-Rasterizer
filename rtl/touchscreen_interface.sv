@@ -93,8 +93,9 @@ module touchscreen_interface (
 
     always_comb begin
         next_state = state;
-        
-        case (state) 
+        T_DIN = 1'b0; // default so every path drives T_DIN (avoids latch inference)
+
+        case (state)
             IDLE: begin
                 if(T_IRQ == 0) begin
                     next_state = SEND_CMD;

@@ -1,15 +1,27 @@
 module display_driver #(
-    // Overridable so testbenches can shrink these from real-hardware
-    // timing (>=10us reset pulse, >=120ms settle) down to something a
-    // simulation can actually finish in reasonable wall-clock time.
-    parameter logic [19:0] RESET_HOLD_CYCLES  = 20'd1000,
-    parameter logic [19:0] SETTLE_HOLD_CYCLES = 20'd1_000_000
+    // Defaults are sized for the ~1.03MHz clock raster_top divides down
+    // to (see the clock divider there), i.e. roughly 1us per cycle.
+    //
+    //   RESET_HOLD:  100 cycles   ~= 97us   (datasheet wants >=10us low)
+    //   SETTLE_HOLD: 130,000      ~= 126ms  (datasheet wants >=120ms
+    //                                        before the first command)
+    //
+    // These are clock-rate dependent -- if you change raster_top's
+    // divider, these must be recomputed or the ILI9341 will be issued
+    // commands before it's ready (too short) or take absurdly long to
+    // start (too long).
+    //
+    // Testbenches override both with tiny values so simulation doesn't
+    // have to burn 130k cycles before anything observable happens.
+    parameter logic [19:0] RESET_HOLD_CYCLES  = 20'd100,
+    parameter logic [19:0] SETTLE_HOLD_CYCLES = 20'd130_000
 ) (
     input logic clk,
     input logic rst_n,
 
-    // framebuffer read port (from screen_mem)
-    input logic [15:0] rd_data,
+    // framebuffer read port (from screen_mem). 1bpp: each bit is one
+    // pixel, expanded to a full RGB565 value below (see PIXEL_COLOR_ON).
+    input logic rd_data,
     output logic [16:0] rd_addr,
 
     // ILI9341 SPI interface
@@ -57,6 +69,14 @@ module display_driver #(
     end
 
     localparam logic [16:0] LAST_PIXEL = 17'd76799; // 320*240 - 1
+
+    // 1bpp -> RGB565 expansion. Change these to recolor the image
+    // without touching the framebuffer or the rasterizer.
+    localparam logic [15:0] PIXEL_COLOR_ON  = 16'hFFFF; // white
+    localparam logic [15:0] PIXEL_COLOR_OFF = 16'h0000; // black
+
+    logic [15:0] pixel_expanded;
+    assign pixel_expanded = rd_data ? PIXEL_COLOR_ON : PIXEL_COLOR_OFF;
 
     logic [3:0]  init_idx;
     logic [3:0]  window_idx;
@@ -161,9 +181,9 @@ module display_driver #(
                 end
 
                 PIXEL_LOAD: begin
-                    pixel_reg      <= rd_data;
+                    pixel_reg      <= pixel_expanded;
                     dc_reg         <= 1'b1;
-                    shift_reg      <= rd_data[15:8];
+                    shift_reg      <= pixel_expanded[15:8];
                     bit_count      <= 0;
                     pixel_byte_sel <= 0;
                 end
@@ -195,7 +215,8 @@ module display_driver #(
 
     always_comb begin
         next_state = state;
-        CS = 1'b1;
+        CS  = 1'b1;
+        SDI = 1'b0; // default so every path drives SDI (avoids latch inference)
 
         case (state)
             RESET_PULSE: begin

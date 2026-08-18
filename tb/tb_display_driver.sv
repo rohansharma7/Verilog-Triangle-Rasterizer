@@ -7,7 +7,7 @@ module tb_display_driver;
     logic clk = 0;
     logic rst_n;
 
-    logic [15:0] rd_data;
+    logic rd_data;
     logic [16:0] rd_addr;
 
     logic CS, RESET, DC, SDI, SCK, LED;
@@ -33,12 +33,13 @@ module tb_display_driver;
         .LED     (LED)
     );
 
-    // Fake framebuffer: respond to rd_addr with a simple pattern
-    // (pixel value = address, truncated to 16 bits) with the same
-    // 1-cycle registered-read latency screen_mem has, so display_driver's
-    // FETCH_WAIT state assumption holds here too.
+    // Fake 1bpp framebuffer: pixel 0 reads as 0 (blank), pixel 1 reads
+    // as 1 (filled), everything else 0. Same 1-cycle registered-read
+    // latency screen_mem has, so display_driver's FETCH_WAIT state
+    // assumption holds here too. This gives us one OFF pixel and one ON
+    // pixel to check the 1bpp -> RGB565 expansion in both directions.
     always_ff @(posedge clk) begin
-        rd_data <= rd_addr[15:0];
+        rd_data <= (rd_addr == 17'd1);
     end
 
     // ------------------------------------------------------------------
@@ -133,16 +134,17 @@ module tb_display_driver;
             check_next_byte(expected_window[i], $sformatf("window[%0d]", i));
         end
 
-        // First pixel: rd_addr should have been 0 when FETCH first ran,
-        // so the fake framebuffer returns 16'h0000 -> expect two data
-        // bytes {dc=1, 8'h00} and {dc=1, 8'h00}.
+        // First pixel: rd_addr == 0 when FETCH first ran, so the fake
+        // framebuffer returns 0 (blank) -> expands to PIXEL_COLOR_OFF
+        // (16'h0000) -> two data bytes {dc=1, 00} and {dc=1, 00}.
         check_next_byte({1'b1, 8'h00}, "pixel0_hi");
         check_next_byte({1'b1, 8'h00}, "pixel0_lo");
 
-        // Second pixel: rd_addr should now be 1 -> 16'h0001 -> bytes
-        // {dc=1, 8'h00} and {dc=1, 8'h01}.
-        check_next_byte({1'b1, 8'h00}, "pixel1_hi");
-        check_next_byte({1'b1, 8'h01}, "pixel1_lo");
+        // Second pixel: rd_addr == 1 -> fake framebuffer returns 1
+        // (filled) -> expands to PIXEL_COLOR_ON (16'hFFFF) -> two data
+        // bytes {dc=1, FF} and {dc=1, FF}.
+        check_next_byte({1'b1, 8'hFF}, "pixel1_hi");
+        check_next_byte({1'b1, 8'hFF}, "pixel1_lo");
 
         if (errors == 0) begin
             $display("ALL TESTS PASSED");
