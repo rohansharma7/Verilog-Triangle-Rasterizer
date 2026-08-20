@@ -1,8 +1,5 @@
-// Testbench for display_driver: pre-loads a small fake screen_mem with
-// known pixel values, then sniffs the SPI lines (CS/DC/SDI, sampled on
-// SCK rising edge like a real ILI9341 would) and checks the byte stream
-// against the expected init sequence, address-window sequence, and the
-// first couple of pixels.
+// sniffs the SPI lines and checks the byte stream against the expected
+// init sequence, window sequence, and first couple pixels
 module tb_display_driver;
     logic clk = 0;
     logic rst_n;
@@ -16,7 +13,7 @@ module tb_display_driver;
 
     always #5 clk = ~clk;
 
-    // Small hold counts so the reset/settle states resolve quickly in sim.
+    // tiny holds so reset/settle resolve fast
     display_driver #(
         .RESET_HOLD_CYCLES  (20'd5),
         .SETTLE_HOLD_CYCLES (20'd10)
@@ -33,21 +30,14 @@ module tb_display_driver;
         .LED     (LED)
     );
 
-    // Fake 1bpp framebuffer: pixel 0 reads as 0 (blank), pixel 1 reads
-    // as 1 (filled), everything else 0. Same 1-cycle registered-read
-    // latency screen_mem has, so display_driver's FETCH_WAIT state
-    // assumption holds here too. This gives us one OFF pixel and one ON
-    // pixel to check the 1bpp -> RGB565 expansion in both directions.
+    // fake framebuffer. pixel 1 is set, everything else clear, so we get one
+    // ON and one OFF pixel to check the expansion both ways. registered read
+    // to match screen_mem
     always_ff @(posedge clk) begin
         rd_data <= (rd_addr == 17'd1);
     end
 
-    // ------------------------------------------------------------------
-    // SPI sniffer: captures each byte shifted out on SDI while CS is low,
-    // sampling on SCK's rising edge (SCK is tied directly to clk in
-    // display_driver, so this is just "sample on posedge clk while CS=0").
-    // Also records the DC value latched at the start of each byte.
-    // ------------------------------------------------------------------
+    // grab each byte off SDI while CS is low. SCK is just clk here
     logic [7:0] captured_byte;
     logic       captured_dc;
     int         bit_pos = 0;
@@ -71,9 +61,6 @@ module tb_display_driver;
         end
     end
 
-    // Expected init sequence: {dc, byte}, matching display_driver's
-    // init_rom exactly (SWRESET, MADCTL, MADCTL data, COLMOD, COLMOD
-    // data, SLPOUT, DISPON, RAMWR).
     localparam int NUM_EXPECTED_INIT = 8;
     logic [8:0] expected_init [0:NUM_EXPECTED_INIT-1] = '{
         {1'b0, 8'h01},
@@ -86,7 +73,6 @@ module tb_display_driver;
         {1'b0, 8'h2C}
     };
 
-    // Expected window sequence: CASET + 4 bytes, PASET + 4 bytes.
     localparam int NUM_EXPECTED_WINDOW = 10;
     logic [8:0] expected_window [0:NUM_EXPECTED_WINDOW-1] = '{
         {1'b0, 8'h2A},
@@ -102,12 +88,9 @@ module tb_display_driver;
     };
 
     task automatic check_next_byte(input logic [8:0] expected, input string label);
-        // byte_ready is a registered pulse (one clk cycle wide). Using a
-        // level-sensitive wait() here is the bug that caused every check
-        // to read one byte late: if byte_ready is still 1 on the very
-        // edge we resume on, wait() falls through immediately without
-        // waiting for a fresh pulse. @(posedge byte_ready) only fires on
-        // the 0->1 transition, so it can't double-trigger this way.
+        // has to be @(posedge), not wait(). byte_ready is a 1-cycle pulse and
+        // wait() falls straight through if it's still high, which made every
+        // check read one byte late
         @(posedge byte_ready);
         if (captured_dc !== expected[8] || captured_byte !== expected[7:0]) begin
             $display("FAIL: %s expected {dc=%b, byte=%h}, got {dc=%b, byte=%h}",
@@ -124,25 +107,19 @@ module tb_display_driver;
         @(posedge clk);
         rst_n = 1;
 
-        // Walk through the expected init sequence
         for (int i = 0; i < NUM_EXPECTED_INIT; i++) begin
             check_next_byte(expected_init[i], $sformatf("init[%0d]", i));
         end
 
-        // Walk through the expected address-window sequence
         for (int i = 0; i < NUM_EXPECTED_WINDOW; i++) begin
             check_next_byte(expected_window[i], $sformatf("window[%0d]", i));
         end
 
-        // First pixel: rd_addr == 0 when FETCH first ran, so the fake
-        // framebuffer returns 0 (blank) -> expands to PIXEL_COLOR_OFF
-        // (16'h0000) -> two data bytes {dc=1, 00} and {dc=1, 00}.
+        // pixel 0 is clear -> 0x0000
         check_next_byte({1'b1, 8'h00}, "pixel0_hi");
         check_next_byte({1'b1, 8'h00}, "pixel0_lo");
 
-        // Second pixel: rd_addr == 1 -> fake framebuffer returns 1
-        // (filled) -> expands to PIXEL_COLOR_ON (16'hFFFF) -> two data
-        // bytes {dc=1, FF} and {dc=1, FF}.
+        // pixel 1 is set -> 0xFFFF
         check_next_byte({1'b1, 8'hFF}, "pixel1_hi");
         check_next_byte({1'b1, 8'hFF}, "pixel1_lo");
 

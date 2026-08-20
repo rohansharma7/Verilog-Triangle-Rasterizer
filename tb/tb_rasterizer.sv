@@ -14,9 +14,8 @@ module tb_rasterizer;
 
     int errors = 0;
 
-    // Expected set of filled pixels for triangle (0,0),(6,0),(6,6),
-    // computed independently (Python re-implementation of the same
-    // edge-function/winding logic) -- see conversation history.
+    // pixels that should be filled for triangle (0,0),(6,0),(6,6).
+    // worked these out separately, not from the RTL
     localparam int NUM_EXPECTED = 10;
     int expected_x [0:NUM_EXPECTED-1] = '{2, 3, 3, 4, 4, 4, 5, 5, 5, 5};
     int expected_y [0:NUM_EXPECTED-1] = '{1, 1, 2, 1, 2, 3, 1, 2, 3, 4};
@@ -82,8 +81,7 @@ module tb_rasterizer;
         @(posedge clk);
         start = 0;
 
-        // wait for the rasterizer to finish (with a timeout so a broken
-        // FSM can't hang the simulation forever)
+        // timeout so a broken FSM doesn't hang the sim
         fork
             begin
                 wait (done);
@@ -96,24 +94,15 @@ module tb_rasterizer;
         join_any
         disable fork;
 
-        @(posedge clk); // let the last write settle before reading back
+        @(posedge clk); // let the last write land
 
-        // Read back the full bounding box (0..6, 0..6) and compare
-        // against the expected set. screen_mem's read has 1-cycle
-        // registered latency, so assert rd_addr then check rd_data
-        // one cycle later.
+        // read back the whole bbox and compare
         for (int x = 0; x <= 6; x++) begin
             for (int y = 0; y <= 6; y++) begin
                 rd_addr = (320 * y) + x;
                 @(posedge clk);
-                // screen_mem's always_ff and this testbench are both
-                // triggered by the same posedge clk. Without this #1,
-                // this process can resume and read rd_data BEFORE
-                // screen_mem's own nonblocking update for this same edge
-                // has landed -- a classic same-edge race between two
-                // independent processes. The #1 delay pushes the read
-                // into a later time step, after all NBA updates for this
-                // edge (across every module) have definitely settled.
+                // need this #1 - screen_mem updates on the same edge we
+                // resume on, so without it we read the previous value
                 #1;
                 if (is_expected(x, y)) begin
                     if (rd_data !== 1'b1) begin

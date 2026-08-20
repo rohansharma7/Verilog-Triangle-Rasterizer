@@ -1,6 +1,4 @@
-# ---- Questa / ModelSim simulation artifacts ----
-# These are regenerated on every compile and churn constantly, which also
-# makes OneDrive sync fight with the simulator over file locks.
+# questa junk, regenerated every compile and fights with OneDrive sync
 work/
 transcript
 transcript.*
@@ -13,9 +11,7 @@ vish_stacktrace.vstf
 *.mti
 modelsim.ini
 
-# ---- Quartus build artifacts ----
-# Keep the .qsf (pin constraints), .sdc (timing constraints) and .qpf
-# (project file) -- those are real source. Everything below is generated.
+# quartus generated stuff. keeping the .qsf/.sdc/.qpf, those are real source
 quartus/db/
 quartus/incremental_db/
 quartus/output_files/
@@ -33,10 +29,8 @@ quartus/*.done
 quartus/*.bak
 quartus/*.qdf
 
-# ---- Java golden model build output ----
 *.class
 
-# ---- OS junk ----
 Thumbs.db
 .DS_Store
 desktop.ini

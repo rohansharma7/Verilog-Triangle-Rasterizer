@@ -1,48 +1,26 @@
-# =====================================================================
-# Pin constraints for raster_top on the DueProLogic (EarthPeopleTechnology)
-# Cyclone IV board, FPGA part EP4CE6E22C8.
+# pins for the DueProLogic Cyclone IV board (EP4CE6E22C8).
+# taken from the DueProLogic user manual. it doesn't have the full 54-pin
+# GPIO table so everything goes through the two PMOD headers instead,
+# those are the only pins with a clear pinout.
 #
-# Sources for these assignments: DueProLogic official user manual
-# (DPL_FPGA_DEV_SYS_UM.pdf), verbatim pin tables for the oscillators,
-# pushbuttons, and PMOD headers. The manual does NOT include the full
-# 54-pin GPIO header table (it defers to a separate "Data Sheet" that
-# wasn't located) -- so all touch/display signals here are routed
-# through the two PMOD connectors instead, since those are the only
-# GPIO pins with an unambiguous, fully-documented pin table.
-#
-# KNOWN CAVEAT: the manual's pushbutton table (SW1/SW2 -> PIN_91/PIN_90)
-# lists the SAME two pin numbers as its slide-switch table -- almost
-# certainly a copy-paste error in the vendor doc. Double-check PIN_91
-# against the actual DueProLogic schematic (not just this manual)
-# before relying on it as rst_n. The polarity assumption (active-low,
-# pulled high through 10K, grounded when pressed) matches this design's
-# rst_n either way.
-# =====================================================================
+# careful: the manual lists SW1/SW2 at the same pins as the slide switches,
+# probably a typo in their doc. check PIN_91 against the schematic before
+# trusting it for rst_n
 
 set_global_assignment -name FAMILY "Cyclone IV E"
 set_global_assignment -name DEVICE EP4CE6E22C8
 set_global_assignment -name TOP_LEVEL_ENTITY raster_top
 
-# ---------------------------------------------------------------------
-# Clock and reset
-# ---------------------------------------------------------------------
-# 66MHz onboard oscillator (net name 66MHZ_CLK in the manual).
-# The 100MHz oscillator (PIN_88) is also available as an alternate if
-# you want a faster clock later -- this design's logic doesn't depend
-# on a specific frequency (all timing is in clock cycles, not real
-# time, except display_driver's RESET_HOLD_CYCLES/SETTLE_HOLD_CYCLES
-# parameters, which would need retuning if you switch clock source).
+# 66MHz oscillator. there's also a 100MHz one on PIN_88 if I ever want it,
+# but display_driver's hold cycles would need recalculating
 set_location_assignment PIN_23 -to clk
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to clk
 
-# SW1 pushbutton: momentary ground when pressed, pulled high (10K)
-# when idle -- directly matches this design's active-low rst_n.
+# SW1, grounds when pressed and pulled high otherwise, so active-low already
 set_location_assignment PIN_91 -to rst_n
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to rst_n
 
-# ---------------------------------------------------------------------
-# Touch controller (XPT2046) -- PMOD1, pins 1-1 through 1-7
-# ---------------------------------------------------------------------
+# touch controller (XPT2046), PMOD1 pins 1-1 to 1-7
 set_location_assignment PIN_121 -to T_CS
 set_location_assignment PIN_124 -to T_DIN
 set_location_assignment PIN_125 -to T_CLK
@@ -55,10 +33,7 @@ set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to T_CLK
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to T_DO
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to T_IRQ
 
-# ---------------------------------------------------------------------
-# Display controller (ILI9341) -- remaining PMOD1 pins (1-8, 1-9, 1-10)
-# plus PMOD2 pins 2-1, 2-2, 2-3
-# ---------------------------------------------------------------------
+# display (ILI9341), rest of PMOD1 plus PMOD2 2-1/2-2/2-3
 set_location_assignment PIN_119 -to CS
 set_location_assignment PIN_115 -to RESET
 set_location_assignment PIN_114 -to DC
@@ -73,10 +48,7 @@ set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SDI
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SCK
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to LED
 
-# ---------------------------------------------------------------------
-# Spare PMOD2 pins (2-4, 2-7, 2-8, 2-9, 2-10), not used by this design:
-# PIN_52, PIN_55, PIN_54, PIN_69, PIN_70
-# ---------------------------------------------------------------------
+# spare PMOD2 pins if I need them: PIN_52, 55, 54, 69, 70
 
 set_global_assignment -name LAST_QUARTUS_VERSION "25.1std.0 Lite Edition"
 set_global_assignment -name PROJECT_OUTPUT_DIRECTORY output_files

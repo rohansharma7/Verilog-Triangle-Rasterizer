@@ -1,30 +1,15 @@
 module display_driver #(
-    // Defaults are sized for the ~1.03MHz clock raster_top divides down
-    // to (see the clock divider there), i.e. roughly 1us per cycle.
-    //
-    //   RESET_HOLD:  100 cycles   ~= 97us   (datasheet wants >=10us low)
-    //   SETTLE_HOLD: 130,000      ~= 126ms  (datasheet wants >=120ms
-    //                                        before the first command)
-    //
-    // These are clock-rate dependent -- if you change raster_top's
-    // divider, these must be recomputed or the ILI9341 will be issued
-    // commands before it's ready (too short) or take absurdly long to
-    // start (too long).
-    //
-    // Testbenches override both with tiny values so simulation doesn't
-    // have to burn 130k cycles before anything observable happens.
-    parameter logic [19:0] RESET_HOLD_CYCLES  = 20'd100,
-    parameter logic [19:0] SETTLE_HOLD_CYCLES = 20'd130_000
+    // sized for the ~1MHz clock raster_top divides down to. change these
+    // if the divider changes, or the ILI9341 gets commands too early
+    parameter logic [19:0] RESET_HOLD_CYCLES  = 20'd100,      // ~97us, needs >=10us
+    parameter logic [19:0] SETTLE_HOLD_CYCLES = 20'd130_000   // ~126ms, needs >=120ms
 ) (
     input logic clk,
     input logic rst_n,
 
-    // framebuffer read port (from screen_mem). 1bpp: each bit is one
-    // pixel, expanded to a full RGB565 value below (see PIXEL_COLOR_ON).
-    input logic rd_data,
+    input logic rd_data,          // 1bpp, expanded to RGB565 below
     output logic [16:0] rd_addr,
 
-    // ILI9341 SPI interface
     output logic CS,
     output logic RESET,
     output logic DC,
@@ -33,63 +18,52 @@ module display_driver #(
     output logic LED
 );
 
-    // ------------------------------------------------------------------
-    // Init command table: each entry is {DC bit, byte to send}.
-    // DC = 0 -> command byte, DC = 1 -> data byte for the previous command.
-    // Sequence: SWRESET, MADCTL, COLMOD(0x55 = 16bpp/RGB565), SLPOUT, DISPON
-    // ------------------------------------------------------------------
+    // each entry is {DC, byte}. DC=0 command, DC=1 data
     localparam int NUM_INIT_BYTES = 8;
-    logic [8:0] init_rom [0:NUM_INIT_BYTES-1]; // bit8 = DC, bits[7:0] = data
+    logic [8:0] init_rom [0:NUM_INIT_BYTES-1];
 
     initial begin
         init_rom[0] = {1'b0, 8'h01}; // SWRESET
         init_rom[1] = {1'b0, 8'h36}; // MADCTL
-        init_rom[2] = {1'b1, 8'h48}; // MADCTL data: MX=1,BGR=1 (adjust for orientation)
+        init_rom[2] = {1'b1, 8'h48}; // MX=1,BGR=1, may need changing on real panel
         init_rom[3] = {1'b0, 8'h3A}; // COLMOD
-        init_rom[4] = {1'b1, 8'h55}; // COLMOD data: 16bpp / RGB565
+        init_rom[4] = {1'b1, 8'h55}; // 16bpp RGB565
         init_rom[5] = {1'b0, 8'h11}; // SLPOUT
         init_rom[6] = {1'b0, 8'h29}; // DISPON
-        init_rom[7] = {1'b0, 8'h2C}; // RAMWR (start of first frame; window defaults to full screen)
+        init_rom[7] = {1'b0, 8'h2C}; // RAMWR
     end
 
     localparam int NUM_WINDOW_BYTES = 10;
-    // CASET (0x2A) + 4 bytes (0,0,319,0) then PASET (0x2B) + 4 bytes (0,0,0,239)
     logic [8:0] window_rom [0:NUM_WINDOW_BYTES-1];
     initial begin
-        window_rom[0] = {1'b0, 8'h2A};        // CASET
-        window_rom[1] = {1'b1, 8'h00};        // start col hi
-        window_rom[2] = {1'b1, 8'h00};        // start col lo
-        window_rom[3] = {1'b1, 8'h01};        // end col hi   (319 = 0x013F)
-        window_rom[4] = {1'b1, 8'h3F};        // end col lo
-        window_rom[5] = {1'b0, 8'h2B};        // PASET
-        window_rom[6] = {1'b1, 8'h00};        // start row hi
-        window_rom[7] = {1'b1, 8'h00};        // start row lo
-        window_rom[8] = {1'b1, 8'h00};        // end row hi   (239 = 0x00EF)
-        window_rom[9] = {1'b1, 8'hEF};        // end row lo
+        window_rom[0] = {1'b0, 8'h2A};  // CASET
+        window_rom[1] = {1'b1, 8'h00};
+        window_rom[2] = {1'b1, 8'h00};
+        window_rom[3] = {1'b1, 8'h01};  // 319 = 0x013F
+        window_rom[4] = {1'b1, 8'h3F};
+        window_rom[5] = {1'b0, 8'h2B};  // PASET
+        window_rom[6] = {1'b1, 8'h00};
+        window_rom[7] = {1'b1, 8'h00};
+        window_rom[8] = {1'b1, 8'h00};  // 239 = 0x00EF
+        window_rom[9] = {1'b1, 8'hEF};
     end
 
-    localparam logic [16:0] LAST_PIXEL = 17'd76799; // 320*240 - 1
+    localparam logic [16:0] LAST_PIXEL = 17'd76799;
 
-    // 1bpp -> RGB565 expansion. Change these to recolor the image
-    // without touching the framebuffer or the rasterizer.
-    localparam logic [15:0] PIXEL_COLOR_ON  = 16'hFFFF; // white
-    localparam logic [15:0] PIXEL_COLOR_OFF = 16'h0000; // black
+    // change these to recolor without touching the framebuffer
+    localparam logic [15:0] PIXEL_COLOR_ON  = 16'hFFFF;
+    localparam logic [15:0] PIXEL_COLOR_OFF = 16'h0000;
 
     logic [15:0] pixel_expanded;
     assign pixel_expanded = rd_data ? PIXEL_COLOR_ON : PIXEL_COLOR_OFF;
 
     logic [3:0]  init_idx;
     logic [3:0]  window_idx;
-    logic [3:0]  bit_count;   // counts 0..7 while shifting a byte out
+    logic [3:0]  bit_count;
     logic [7:0]  shift_reg;
     logic        dc_reg;
-    logic [15:0] pixel_reg;   // latched pixel data being shifted (RAMWR phase)
-    logic        pixel_byte_sel; // 0 = high byte, 1 = low byte
-
-    // Hold counter for reset-low pulse and the post-reset settle wait.
-    // RESET_HOLD_CYCLES/SETTLE_HOLD_CYCLES are module parameters (see
-    // above) so a testbench can override them to small values instead
-    // of waiting out real->hardware timing in simulation.
+    logic [15:0] pixel_reg;
+    logic        pixel_byte_sel;  // 0 = high byte, 1 = low byte
     logic [19:0] hold_count;
 
     typedef enum logic [3:0] {
@@ -173,11 +147,10 @@ module display_driver #(
                 end
 
                 FETCH: begin
-                    // rd_addr already valid; screen_mem registers rd_data next cycle
                 end
 
                 FETCH_WAIT: begin
-                    // wait one extra cycle for screen_mem's registered read
+                    // screen_mem read is registered, so wait a cycle
                 end
 
                 PIXEL_LOAD: begin
@@ -198,7 +171,7 @@ module display_driver #(
                         end else begin
                             pixel_byte_sel <= 0;
                             if (rd_addr == LAST_PIXEL) begin
-                                rd_addr <= 0; // wrap to redraw next frame
+                                rd_addr <= 0;   // wrap, redraw next frame
                             end else begin
                                 rd_addr <= rd_addr + 1;
                             end
@@ -216,7 +189,7 @@ module display_driver #(
     always_comb begin
         next_state = state;
         CS  = 1'b1;
-        SDI = 1'b0; // default so every path drives SDI (avoids latch inference)
+        SDI = 1'b0;   // default, else latch
 
         case (state)
             RESET_PULSE: begin
@@ -300,24 +273,11 @@ module display_driver #(
 endmodule
 
 /*
-    display_driver drives an ILI9341 over 4-wire SPI (CS, DC, SDI, SCK).
+    ILI9341 over 4-wire SPI.
 
-    Flow:
-    1. RESET_PULSE / INIT_LOAD / INIT_SHIFT: send the fixed power-on
-       command sequence (SWRESET, MADCTL, COLMOD=0x55 for RGB565, SLPOUT,
-       DISPON, then the RAMWR opcode that starts the first frame write).
-    2. WINDOW_LOAD / WINDOW_SHIFT: send CASET + PASET to set the full-screen
-       320x239 address window (only needs to happen once here, since RAMWR
-       auto-increments through the whole window and this design free-runs
-       forever redrawing the same window).
-    3. FETCH / FETCH_WAIT / PIXEL_LOAD / PIXEL_SHIFT: read one pixel from
-       screen_mem (1-cycle registered read latency, hence FETCH_WAIT),
-       then shift its 16 bits out MSB-first as two bytes with DC=1.
-       Loops back to FETCH after each pixel, wrapping rd_addr back to 0
-       after the last pixel (76799) to continuously redraw the frame.
+    reset -> init command sequence -> CASET/PASET to set full screen window
+    -> then loop forever reading one pixel from screen_mem and shifting it
+    out as 2 bytes. wraps back to addr 0 after the last pixel.
 
-    Known simplification: no power/gamma tuning commands are sent (only
-    the minimum required to get a picture up), and MADCTL's data byte
-    (0x48) picks one particular orientation/color-order -- may need
-    adjusting once tested against the real panel.
+    only sends the minimum init commands, no gamma/power tuning.
 */

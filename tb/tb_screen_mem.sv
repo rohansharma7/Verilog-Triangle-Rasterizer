@@ -27,14 +27,12 @@ module tb_screen_mem;
 
         @(posedge clk);
 
-        // --- Write 1: addr 5 <= 1 ---
         wr_en   = 1;
         wr_addr = 5;
         wr_data = 1'b1;
         @(posedge clk);
         wr_en   = 0;
 
-        // --- Write 2: addr 100 <= 1 ---
         @(posedge clk);
         wr_en   = 1;
         wr_addr = 100;
@@ -42,8 +40,7 @@ module tb_screen_mem;
         @(posedge clk);
         wr_en   = 0;
 
-        // --- Write 3: addr 200 <= 0 (explicit clear, so we're testing
-        //     that a 0 write actually lands and isn't just unwritten X) ---
+        // write a 0 too, so we're not just checking 1-vs-X
         @(posedge clk);
         wr_en   = 1;
         wr_addr = 200;
@@ -51,14 +48,11 @@ module tb_screen_mem;
         @(posedge clk);
         wr_en   = 0;
 
-        // give screen_mem's registered write a cycle to land, then
-        // read back each address (registered read has 1-cycle latency,
-        // so we assert rd_addr, wait a cycle, then check rd_data)
         @(posedge clk);
 
         rd_addr = 5;
         @(posedge clk);
-        #1; // let screen_mem's same-edge nonblocking update settle (see tb_rasterizer.sv for why)
+        #1; // same-edge race, see tb_rasterizer
         if (rd_data !== 1'b1) begin
             $display("FAIL: addr 5 expected 1, got %b", rd_data);
             errors++;
@@ -86,9 +80,8 @@ module tb_screen_mem;
             $display("PASS: addr 200 = %b", rd_data);
         end
 
-        // sanity check: an address we never wrote should still be X,
-        // guarding against address-decoding bugs that would alias it
-        // onto one of the written locations.
+        // an address we never wrote should still be X, catches address
+        // decoding aliasing onto a written location
         rd_addr = 5000;
         @(posedge clk);
         #1;

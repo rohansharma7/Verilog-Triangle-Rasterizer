@@ -3,9 +3,7 @@ module rasterizer (
     input logic rst_n,
     input logic start,
     input logic [8 : 0] x1_in, y1_in, x2_in, y2_in, x3_in, y3_in,
-    // 1bpp framebuffer: "color" is just set/clear. 1 = filled, 0 = blank.
-    // display_driver expands this to a full RGB565 pixel on output.
-    input logic color_in,
+    input logic color_in,   // 1bpp now, so just set/clear
 
     output logic done,
     output logic wr_en,
@@ -75,13 +73,8 @@ module rasterizer (
         end
     end
 
-    // max_x/min_x/max_y/min_y depend only on x1..y3 (stable registers
-    // throughout BOX and RASTERIZE) -- not on current_state at all, so
-    // this is computed unconditionally rather than inside the BOX case
-    // branch. Assigning it only inside one case branch left every other
-    // path (IDLE/RASTERIZE/DONE) undriven, which Quartus's synthesizer
-    // (unlike Questa's simulator) correctly flags as latch inference,
-    // since always_comb requires every signal to be driven on every path.
+    // pulled out of the BOX case branch - only assigning these in one state
+    // left the others undriven and Quartus flagged it as a latch
     always_comb begin
         if ((x1 > x2) && (x1 > x3)) begin
             max_x = x1;

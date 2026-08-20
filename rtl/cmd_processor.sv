@@ -1,9 +1,7 @@
 module cmd_processor #(
-    // Raw XPT2046 ADC range this panel actually produces. The defaults
-    // assume the full 12-bit span, which is NOT what a real resistive
-    // panel gives -- measured usable ranges are typically more like
-    // 200..3900, and they differ per panel and per axis. Measure yours
-    // and narrow these; that's the calibration step.
+    // raw ADC range the panel actually gives. defaults are the full 12-bit
+    // span which is NOT realistic - real panels are more like 200..3900.
+    // measure mine and narrow these, that's the calibration
     parameter int X_RAW_MIN = 0,
     parameter int X_RAW_MAX = 4095,
     parameter int Y_RAW_MIN = 0,
@@ -21,21 +19,9 @@ module cmd_processor #(
     output logic start
 );
 
-// ---------------------------------------------------------------------
-// Touch coordinate scaling.
-//
-// The XPT2046 returns 12-bit ADC readings (0..4095) but the canvas is
-// only 320x240. Previously these were just truncated to 9 bits, which
-// wrapped modulo 512 -- a raw 600 landed at 88 -- so touches mapped to
-// meaningless screen positions. Scaling also guarantees coordinates stay
-// in range, which matters because rasterizer computes addr = 320*y + x
-// with no bounds check: a y of 511 would address ~163,000, well past the
-// end of the 76,800-entry framebuffer.
-//
-// The divides below are on parameters only, so they're evaluated at
-// elaboration time by the synthesis tool -- no divider in hardware. What
-// remains is a constant multiply and a shift.
-// ---------------------------------------------------------------------
+// scale 12-bit ADC down to screen coords. was just truncating to 9 bits
+// before, which wrapped mod 512 and also let addr run past the framebuffer.
+// divides are on params only so they fold at elaboration, no real divider
 localparam int X_SCALE = (SCREEN_W * 65536) / (X_RAW_MAX - X_RAW_MIN);
 localparam int Y_SCALE = (SCREEN_H * 65536) / (Y_RAW_MAX - Y_RAW_MIN);
 
