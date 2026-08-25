@@ -1,4 +1,4 @@
-module tb_cmd_processor;
+module tb_touch_commands;
     logic clk = 0;
     logic rst_n;
     logic ready;
@@ -11,7 +11,7 @@ module tb_cmd_processor;
 
     always #5 clk = ~clk;
 
-    cmd_processor dut (
+    touch_commands dut (
         .clk     (clk),
         .rst_n   (rst_n),
         .ready   (ready),

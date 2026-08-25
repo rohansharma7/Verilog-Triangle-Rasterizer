@@ -1,9 +1,4 @@
-module display_driver #(
-    // sized for the ~1MHz clock raster_top divides down to. change these
-    // if the divider changes, or the ILI9341 gets commands too early
-    parameter logic [19:0] RESET_HOLD_CYCLES  = 20'd100,      // ~97us, needs >=10us
-    parameter logic [19:0] SETTLE_HOLD_CYCLES = 20'd130_000   // ~126ms, needs >=120ms
-) (
+module display_interface (
     input logic clk,
     input logic rst_n,
 
@@ -19,8 +14,7 @@ module display_driver #(
 );
 
     // each entry is {DC, byte}. DC=0 command, DC=1 data
-    localparam int NUM_INIT_BYTES = 8;
-    logic [8:0] init_rom [0:NUM_INIT_BYTES-1];
+    logic [8:0] init_rom [0:7];
 
     initial begin
         init_rom[0] = {1'b0, 8'h01}; // SWRESET
@@ -33,8 +27,7 @@ module display_driver #(
         init_rom[7] = {1'b0, 8'h2C}; // RAMWR
     end
 
-    localparam int NUM_WINDOW_BYTES = 10;
-    logic [8:0] window_rom [0:NUM_WINDOW_BYTES-1];
+    logic [8:0] window_rom [0:9];
     initial begin
         window_rom[0] = {1'b0, 8'h2A};  // CASET
         window_rom[1] = {1'b1, 8'h00};
@@ -48,14 +41,8 @@ module display_driver #(
         window_rom[9] = {1'b1, 8'hEF};
     end
 
-    localparam logic [16:0] LAST_PIXEL = 17'd76799;
-
-    // change these to recolor without touching the framebuffer
-    localparam logic [15:0] PIXEL_COLOR_ON  = 16'hFFFF;
-    localparam logic [15:0] PIXEL_COLOR_OFF = 16'h0000;
-
     logic [15:0] pixel_expanded;
-    assign pixel_expanded = rd_data ? PIXEL_COLOR_ON : PIXEL_COLOR_OFF;
+    assign pixel_expanded = rd_data ? 16'hFFFF : 16'h0000;
 
     logic [3:0]  init_idx;
     logic [3:0]  window_idx;
@@ -99,7 +86,7 @@ module display_driver #(
             case (state)
                 RESET_PULSE: begin
                     init_idx <= 0;
-                    if (hold_count == RESET_HOLD_CYCLES) begin
+                    if (hold_count == 20'd100) begin
                         hold_count <= 0;
                     end else begin
                         hold_count <= hold_count + 1;
@@ -107,7 +94,7 @@ module display_driver #(
                 end
 
                 RESET_SETTLE: begin
-                    if (hold_count == SETTLE_HOLD_CYCLES) begin
+                    if (hold_count == 20'd130_000) begin
                         hold_count <= 0;
                     end else begin
                         hold_count <= hold_count + 1;
@@ -170,7 +157,7 @@ module display_driver #(
                             pixel_byte_sel <= 1;
                         end else begin
                             pixel_byte_sel <= 0;
-                            if (rd_addr == LAST_PIXEL) begin
+                            if (rd_addr == 17'd76799) begin
                                 rd_addr <= 0;   // wrap, redraw next frame
                             end else begin
                                 rd_addr <= rd_addr + 1;
@@ -193,7 +180,7 @@ module display_driver #(
 
         case (state)
             RESET_PULSE: begin
-                if (hold_count == RESET_HOLD_CYCLES) begin
+                if (hold_count == 20'd100) begin
                     next_state = RESET_SETTLE;
                 end else begin
                     next_state = RESET_PULSE;
@@ -201,7 +188,7 @@ module display_driver #(
             end
 
             RESET_SETTLE: begin
-                if (hold_count == SETTLE_HOLD_CYCLES) begin
+                if (hold_count == 20'd130_000) begin
                     next_state = INIT_LOAD;
                 end else begin
                     next_state = RESET_SETTLE;
@@ -216,7 +203,7 @@ module display_driver #(
                 CS   = 1'b0;
                 SDI  = shift_reg[7];
                 if (bit_count == 7) begin
-                    if (init_idx == NUM_INIT_BYTES - 1) begin
+                    if (init_idx == 7) begin
                         next_state = WINDOW_LOAD;
                     end else begin
                         next_state = INIT_LOAD;
@@ -234,7 +221,7 @@ module display_driver #(
                 CS   = 1'b0;
                 SDI  = shift_reg[7];
                 if (bit_count == 7) begin
-                    if (window_idx == NUM_WINDOW_BYTES - 1) begin
+                    if (window_idx == 9) begin
                         next_state = FETCH;
                     end else begin
                         next_state = WINDOW_LOAD;

@@ -1,8 +1,7 @@
 module tb_rasterizer;
     logic clk = 0;
     logic wr_en;
-    logic [7:0] wr_mask;
-    logic [13:0] wr_addr;
+    logic [16:0] wr_addr;
     logic wr_data;
     logic [16:0] rd_addr;
     logic rd_data;
@@ -25,7 +24,6 @@ module tb_rasterizer;
     screen_mem dut_mem (
         .clk     (clk),
         .wr_en   (wr_en),
-        .wr_mask (wr_mask),
         .wr_addr (wr_addr),
         .wr_data (wr_data),
         .rd_addr (rd_addr),
@@ -46,7 +44,6 @@ module tb_rasterizer;
 
         .done   (done),
         .wr_en  (wr_en),
-        .wr_mask(wr_mask),
         .addr   (wr_addr),
         .data   (wr_data)
     );

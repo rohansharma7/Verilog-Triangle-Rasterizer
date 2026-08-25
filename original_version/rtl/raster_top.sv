@@ -43,8 +43,7 @@ module raster_top (
 
     // 1bpp, so this is just set/clear. actual color lives in display_interface
     logic        raster_wr_en;
-    logic [7:0]  raster_wr_mask;
-    logic [13:0] raster_addr;
+    logic [16:0] raster_addr;
     logic        raster_data;
 
     logic [16:0] disp_rd_addr;
@@ -91,7 +90,6 @@ module raster_top (
         .color_in (1'b1),
         .done     (raster_done),
         .wr_en    (raster_wr_en),
-        .wr_mask  (raster_wr_mask),
         .addr     (raster_addr),
         .data     (raster_data)
     );
@@ -99,7 +97,6 @@ module raster_top (
     screen_mem u_screen_mem (
         .clk     (slow_clk),
         .wr_en   (raster_wr_en),
-        .wr_mask (raster_wr_mask),
         .wr_addr (raster_addr),
         .wr_data (raster_data),
         .rd_addr (disp_rd_addr),

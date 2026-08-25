@@ -1,8 +1,7 @@
 module tb_screen_mem;
     logic clk = 0;
     logic wr_en;
-    logic [7:0] wr_mask;
-    logic [13:0] wr_addr;
+    logic [16:0] wr_addr;
     logic wr_data;
     logic [16:0] rd_addr;
     logic rd_data;
@@ -14,7 +13,6 @@ module tb_screen_mem;
     screen_mem dut (
         .clk     (clk),
         .wr_en   (wr_en),
-        .wr_mask (wr_mask),
         .wr_addr (wr_addr),
         .wr_data (wr_data),
         .rd_addr (rd_addr),
@@ -23,7 +21,6 @@ module tb_screen_mem;
 
     initial begin
         wr_en   = 0;
-        wr_mask = 0;
         wr_addr = 0;
         wr_data = 0;
         rd_addr = 0;
@@ -31,16 +28,14 @@ module tb_screen_mem;
         @(posedge clk);
 
         wr_en   = 1;
-        wr_addr = 0;
-        wr_mask = 8'b0010_0000;
+        wr_addr = 5;
         wr_data = 1'b1;
         @(posedge clk);
         wr_en   = 0;
 
         @(posedge clk);
         wr_en   = 1;
-        wr_addr = 12;
-        wr_mask = 8'b0001_0000;
+        wr_addr = 100;
         wr_data = 1'b1;
         @(posedge clk);
         wr_en   = 0;
@@ -48,8 +43,7 @@ module tb_screen_mem;
         // write a 0 too, so we're not just checking 1-vs-X
         @(posedge clk);
         wr_en   = 1;
-        wr_addr = 25;
-        wr_mask = 8'b0000_0001;
+        wr_addr = 200;
         wr_data = 1'b0;
         @(posedge clk);
         wr_en   = 0;

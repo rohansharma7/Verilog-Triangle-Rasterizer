@@ -1,6 +1,6 @@
 // sniffs the SPI lines and checks the byte stream against the expected
 // init sequence, window sequence, and first couple pixels
-module tb_display_driver;
+module tb_display_interface;
     logic clk = 0;
     logic rst_n;
 
@@ -13,11 +13,7 @@ module tb_display_driver;
 
     always #5 clk = ~clk;
 
-    // tiny holds so reset/settle resolve fast
-    display_driver #(
-        .RESET_HOLD_CYCLES  (20'd5),
-        .SETTLE_HOLD_CYCLES (20'd10)
-    ) dut (
+    display_interface dut (
         .clk     (clk),
         .rst_n   (rst_n),
         .rd_data (rd_data),
@@ -61,8 +57,7 @@ module tb_display_driver;
         end
     end
 
-    localparam int NUM_EXPECTED_INIT = 8;
-    logic [8:0] expected_init [0:NUM_EXPECTED_INIT-1] = '{
+    logic [8:0] expected_init [0:7] = '{
         {1'b0, 8'h01},
         {1'b0, 8'h36},
         {1'b1, 8'h48},
@@ -73,8 +68,7 @@ module tb_display_driver;
         {1'b0, 8'h2C}
     };
 
-    localparam int NUM_EXPECTED_WINDOW = 10;
-    logic [8:0] expected_window [0:NUM_EXPECTED_WINDOW-1] = '{
+    logic [8:0] expected_window [0:9] = '{
         {1'b0, 8'h2A},
         {1'b1, 8'h00},
         {1'b1, 8'h00},
@@ -107,11 +101,11 @@ module tb_display_driver;
         @(posedge clk);
         rst_n = 1;
 
-        for (int i = 0; i < NUM_EXPECTED_INIT; i++) begin
+        for (int i = 0; i < 8; i++) begin
             check_next_byte(expected_init[i], $sformatf("init[%0d]", i));
         end
 
-        for (int i = 0; i < NUM_EXPECTED_WINDOW; i++) begin
+        for (int i = 0; i < 10; i++) begin
             check_next_byte(expected_window[i], $sformatf("window[%0d]", i));
         end
 

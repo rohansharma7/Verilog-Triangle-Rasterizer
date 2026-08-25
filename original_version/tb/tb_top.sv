@@ -159,16 +159,7 @@ module tb_top;
         logic [16:0] addr;
         logic        value;
         addr  = (320 * y) + x;
-        case (addr & 7)
-            0: value = dut.u_screen_mem.mem0[addr >> 3];
-            1: value = dut.u_screen_mem.mem1[addr >> 3];
-            2: value = dut.u_screen_mem.mem2[addr >> 3];
-            3: value = dut.u_screen_mem.mem3[addr >> 3];
-            4: value = dut.u_screen_mem.mem4[addr >> 3];
-            5: value = dut.u_screen_mem.mem5[addr >> 3];
-            6: value = dut.u_screen_mem.mem6[addr >> 3];
-            default: value = dut.u_screen_mem.mem7[addr >> 3];
-        endcase
+        value = dut.u_screen_mem.mem[addr];
         if (expect_filled) begin
             if (value !== 1'b1) begin
                 $display("FAIL: pixel (%0d,%0d) expected filled, got %b", x, y, value);
