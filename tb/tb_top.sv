@@ -96,10 +96,10 @@ module tb_top;
         T_IRQ = 1;
         rst_n = 0;
 
-        // hold reset for a few slow_clk edges, submodules use sync reset
-        repeat (20) @(posedge clk);
+        // wait for real slow clock edges so every module actually sees reset
+        repeat (3) @(posedge T_CLK);
         rst_n = 1;
-        repeat (10) @(posedge clk);
+        repeat (2) @(posedge T_CLK);
 
         // raw ADC values. touch_commands scales them, so these map to
         // screen (10,10) (20,10) (20,20) - small bbox to keep the sim short
