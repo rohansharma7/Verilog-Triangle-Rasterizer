@@ -1,0 +1,14 @@
+Analysis & Synthesis Status : Successful - Wed Aug 26 11:43:50 2026
+Quartus Prime Version : 25.1std.0 Build 1129 10/21/2025 SC Lite Edition
+Revision Name : baseline_benchmark
+Top-level Entity Name : rasterizer_benchmark
+Family : Cyclone IV E
+Total logic elements : 608
+    Total combinational functions : 550
+    Dedicated logic registers : 100
+Total registers : 100
+Total pins : 59
+Total virtual pins : 0
+Total memory bits : 76,800
+Embedded Multiplier 9-bit elements : 12
+Total PLLs : 0

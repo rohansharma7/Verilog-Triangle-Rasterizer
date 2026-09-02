@@ -26,17 +26,6 @@ module tb_touch_commands;
         .start   (start)
     );
 
-    // one-cycle ready pulse, same as what touchscreen_interface does
-    task automatic do_touch(input [11:0] x, input [11:0] y);
-        x_value = x;
-        y_value = y;
-        ready   = 1;
-        @(posedge clk);
-        ready   = 0;
-        x_value = 0;
-        y_value = 0;
-    endtask
-
     initial begin
         rst_n   = 0;
         ready   = 0;
@@ -49,15 +38,33 @@ module tb_touch_commands;
         @(posedge clk);
 
         // touch 1
-        do_touch(12'd100, 12'd200);
+        x_value = 12'd100;
+        y_value = 12'd200;
+        ready = 1;
+        @(posedge clk);
+        ready = 0;
+        x_value = 0;
+        y_value = 0;
         @(posedge clk);
 
         // touch 2
-        do_touch(12'd300, 12'd400);
+        x_value = 12'd300;
+        y_value = 12'd400;
+        ready = 1;
+        @(posedge clk);
+        ready = 0;
+        x_value = 0;
+        y_value = 0;
         @(posedge clk);
 
         // touch 3, this one triggers start
-        do_touch(12'd450, 12'd500);
+        x_value = 12'd450;
+        y_value = 12'd500;
+        ready = 1;
+        @(posedge clk);
+        ready = 0;
+        x_value = 0;
+        y_value = 0;
 
         // start is only high for this one cycle - don't add another
         // @(posedge clk) here or it's already back to 0
@@ -94,11 +101,23 @@ module tb_touch_commands;
         // feed the ADC extremes and check they clamp to the canvas corners,
         // that's what stops addr running past the framebuffer
         @(posedge clk);
-        do_touch(12'd4095, 12'd4095);
+        x_value = 12'd4095;
+        y_value = 12'd4095;
+        ready = 1;
         @(posedge clk);
-        do_touch(12'd0,    12'd0);
+        ready = 0;
         @(posedge clk);
-        do_touch(12'd2048, 12'd2048);
+        x_value = 12'd0;
+        y_value = 12'd0;
+        ready = 1;
+        @(posedge clk);
+        ready = 0;
+        @(posedge clk);
+        x_value = 12'd2048;
+        y_value = 12'd2048;
+        ready = 1;
+        @(posedge clk);
+        ready = 0;
         #1;
 
         if (x1_in !== 9'd319 || y1_in !== 9'd239) begin

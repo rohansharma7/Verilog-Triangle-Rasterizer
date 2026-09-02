@@ -1,0 +1,41 @@
+------------------------------------------------------------
+Timing Analyzer Summary
+------------------------------------------------------------
+
+Type  : Slow 1200mV 85C Model Setup 'raster_clk'
+Slack : -10.475
+TNS   : -1453.112
+
+Type  : Slow 1200mV 85C Model Hold 'raster_clk'
+Slack : 0.430
+TNS   : 0.000
+
+Type  : Slow 1200mV 85C Model Minimum Pulse Width 'raster_clk'
+Slack : -3.201
+TNS   : -506.093
+
+Type  : Slow 1200mV 0C Model Setup 'raster_clk'
+Slack : -9.694
+TNS   : -1336.422
+
+Type  : Slow 1200mV 0C Model Hold 'raster_clk'
+Slack : 0.385
+TNS   : 0.000
+
+Type  : Slow 1200mV 0C Model Minimum Pulse Width 'raster_clk'
+Slack : -3.201
+TNS   : -506.093
+
+Type  : Fast 1200mV 0C Model Setup 'raster_clk'
+Slack : -3.961
+TNS   : -490.468
+
+Type  : Fast 1200mV 0C Model Hold 'raster_clk'
+Slack : 0.148
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Minimum Pulse Width 'raster_clk'
+Slack : -3.000
+TNS   : -309.493
+
+------------------------------------------------------------

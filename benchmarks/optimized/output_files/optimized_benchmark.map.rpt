@@ -1,0 +1,1683 @@
+Analysis & Synthesis report for optimized_benchmark
+Wed Aug 26 11:46:04 2026
+Quartus Prime Version 25.1std.0 Build 1129 10/21/2025 SC Lite Edition
+
+
+---------------------
+; Table of Contents ;
+---------------------
+  1. Legal Notice
+  2. Analysis & Synthesis Summary
+  3. Analysis & Synthesis Settings
+  4. Parallel Compilation
+  5. Analysis & Synthesis Source Files Read
+  6. Analysis & Synthesis Resource Usage Summary
+  7. Analysis & Synthesis Resource Utilization by Entity
+  8. Analysis & Synthesis RAM Summary
+  9. Analysis & Synthesis DSP Block Usage Summary
+ 10. State Machine - |rasterizer_benchmark|rasterizer:u_rasterizer|current_state
+ 11. Registers Removed During Synthesis
+ 12. Removed Registers Triggering Further Register Optimizations
+ 13. General Register Statistics
+ 14. Registers Packed Into Inferred Megafunctions
+ 15. Multiplexer Restructuring Statistics (Restructuring Performed)
+ 16. Source assignments for screen_mem:u_screen_mem|altsyncram:mem0_rtl_0|altsyncram_0fg1:auto_generated
+ 17. Source assignments for screen_mem:u_screen_mem|altsyncram:mem1_rtl_0|altsyncram_0fg1:auto_generated
+ 18. Source assignments for screen_mem:u_screen_mem|altsyncram:mem2_rtl_0|altsyncram_0fg1:auto_generated
+ 19. Source assignments for screen_mem:u_screen_mem|altsyncram:mem3_rtl_0|altsyncram_0fg1:auto_generated
+ 20. Source assignments for screen_mem:u_screen_mem|altsyncram:mem4_rtl_0|altsyncram_0fg1:auto_generated
+ 21. Source assignments for screen_mem:u_screen_mem|altsyncram:mem5_rtl_0|altsyncram_0fg1:auto_generated
+ 22. Source assignments for screen_mem:u_screen_mem|altsyncram:mem6_rtl_0|altsyncram_0fg1:auto_generated
+ 23. Source assignments for screen_mem:u_screen_mem|altsyncram:mem7_rtl_0|altsyncram_0fg1:auto_generated
+ 24. Parameter Settings for Inferred Entity Instance: screen_mem:u_screen_mem|altsyncram:mem0_rtl_0
+ 25. Parameter Settings for Inferred Entity Instance: screen_mem:u_screen_mem|altsyncram:mem1_rtl_0
+ 26. Parameter Settings for Inferred Entity Instance: screen_mem:u_screen_mem|altsyncram:mem2_rtl_0
+ 27. Parameter Settings for Inferred Entity Instance: screen_mem:u_screen_mem|altsyncram:mem3_rtl_0
+ 28. Parameter Settings for Inferred Entity Instance: screen_mem:u_screen_mem|altsyncram:mem4_rtl_0
+ 29. Parameter Settings for Inferred Entity Instance: screen_mem:u_screen_mem|altsyncram:mem5_rtl_0
+ 30. Parameter Settings for Inferred Entity Instance: screen_mem:u_screen_mem|altsyncram:mem6_rtl_0
+ 31. Parameter Settings for Inferred Entity Instance: screen_mem:u_screen_mem|altsyncram:mem7_rtl_0
+ 32. Parameter Settings for Inferred Entity Instance: rasterizer:u_rasterizer|lpm_mult:Mult5
+ 33. Parameter Settings for Inferred Entity Instance: rasterizer:u_rasterizer|lpm_mult:Mult4
+ 34. Parameter Settings for Inferred Entity Instance: rasterizer:u_rasterizer|lpm_mult:Mult3
+ 35. Parameter Settings for Inferred Entity Instance: rasterizer:u_rasterizer|lpm_mult:Mult2
+ 36. Parameter Settings for Inferred Entity Instance: rasterizer:u_rasterizer|lpm_mult:Mult1
+ 37. Parameter Settings for Inferred Entity Instance: rasterizer:u_rasterizer|lpm_mult:Mult0
+ 38. altsyncram Parameter Settings by Entity Instance
+ 39. lpm_mult Parameter Settings by Entity Instance
+ 40. Port Connectivity Checks: "rasterizer:u_rasterizer"
+ 41. Post-Synthesis Netlist Statistics for Top Partition
+ 42. Elapsed Time Per Partition
+ 43. Analysis & Synthesis Messages
+ 44. Analysis & Synthesis Suppressed Messages
+
+
+
+----------------
+; Legal Notice ;
+----------------
+Copyright (C) 2025  Altera Corporation. All rights reserved.
+Your use of Altera Corporation's design tools, logic functions 
+and other software and tools, and any partner logic 
+functions, and any output files from any of the foregoing 
+(including device programming or simulation files), and any 
+associated documentation or information are expressly subject 
+to the terms and conditions of the Altera Program License 
+Subscription Agreement, the Altera Quartus Prime License Agreement,
+the Altera IP License Agreement, or other applicable license
+agreement, including, without limitation, that your use is for
+the sole purpose of programming logic devices manufactured by
+Altera and sold by Altera or its authorized distributors.  Please
+refer to the Altera Software License Subscription Agreements 
+on the Quartus Prime software download page.
+
+
+
++--------------------------------------------------------------------------------------+
+; Analysis & Synthesis Summary                                                         ;
++------------------------------------+-------------------------------------------------+
+; Analysis & Synthesis Status        ; Successful - Wed Aug 26 11:46:04 2026           ;
+; Quartus Prime Version              ; 25.1std.0 Build 1129 10/21/2025 SC Lite Edition ;
+; Revision Name                      ; optimized_benchmark                             ;
+; Top-level Entity Name              ; rasterizer_benchmark                            ;
+; Family                             ; Cyclone IV E                                    ;
+; Total logic elements               ; 1,429                                           ;
+;     Total combinational functions  ; 1,355                                           ;
+;     Dedicated logic registers      ; 235                                             ;
+; Total registers                    ; 235                                             ;
+; Total pins                         ; 59                                              ;
+; Total virtual pins                 ; 0                                               ;
+; Total memory bits                  ; 76,800                                          ;
+; Embedded Multiplier 9-bit elements ; 12                                              ;
+; Total PLLs                         ; 0                                               ;
++------------------------------------+-------------------------------------------------+
+
+
++---------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Settings                                                                                 ;
++------------------------------------------------------------------+----------------------+---------------------+
+; Option                                                           ; Setting              ; Default Value       ;
++------------------------------------------------------------------+----------------------+---------------------+
+; Device                                                           ; EP4CE6E22C8          ;                     ;
+; Top-level entity name                                            ; rasterizer_benchmark ; optimized_benchmark ;
+; Family name                                                      ; Cyclone IV E         ; Cyclone V           ;
+; Maximum processors allowed for parallel compilation              ; 10                   ;                     ;
+; Use smart compilation                                            ; Off                  ; Off                 ;
+; Enable parallel Assembler and Timing Analyzer during compilation ; On                   ; On                  ;
+; Enable compact report table                                      ; Off                  ; Off                 ;
+; Restructure Multiplexers                                         ; Auto                 ; Auto                ;
+; Create Debugging Nodes for IP Cores                              ; Off                  ; Off                 ;
+; Preserve fewer node names                                        ; On                   ; On                  ;
+; Intel FPGA IP Evaluation Mode                                    ; Enable               ; Enable              ;
+; Verilog Version                                                  ; Verilog_2001         ; Verilog_2001        ;
+; VHDL Version                                                     ; VHDL_1993            ; VHDL_1993           ;
+; State Machine Processing                                         ; Auto                 ; Auto                ;
+; Safe State Machine                                               ; Off                  ; Off                 ;
+; Extract Verilog State Machines                                   ; On                   ; On                  ;
+; Extract VHDL State Machines                                      ; On                   ; On                  ;
+; Ignore Verilog initial constructs                                ; Off                  ; Off                 ;
+; Iteration limit for constant Verilog loops                       ; 5000                 ; 5000                ;
+; Iteration limit for non-constant Verilog loops                   ; 250                  ; 250                 ;
+; Add Pass-Through Logic to Inferred RAMs                          ; On                   ; On                  ;
+; Infer RAMs from Raw Logic                                        ; On                   ; On                  ;
+; Parallel Synthesis                                               ; On                   ; On                  ;
+; DSP Block Balancing                                              ; Auto                 ; Auto                ;
+; NOT Gate Push-Back                                               ; On                   ; On                  ;
+; Power-Up Don't Care                                              ; On                   ; On                  ;
+; Remove Redundant Logic Cells                                     ; Off                  ; Off                 ;
+; Remove Duplicate Registers                                       ; On                   ; On                  ;
+; Ignore CARRY Buffers                                             ; Off                  ; Off                 ;
+; Ignore CASCADE Buffers                                           ; Off                  ; Off                 ;
+; Ignore GLOBAL Buffers                                            ; Off                  ; Off                 ;
+; Ignore ROW GLOBAL Buffers                                        ; Off                  ; Off                 ;
+; Ignore LCELL Buffers                                             ; Off                  ; Off                 ;
+; Ignore SOFT Buffers                                              ; On                   ; On                  ;
+; Limit AHDL Integers to 32 Bits                                   ; Off                  ; Off                 ;
+; Optimization Technique                                           ; Balanced             ; Balanced            ;
+; Carry Chain Length                                               ; 70                   ; 70                  ;
+; Auto Carry Chains                                                ; On                   ; On                  ;
+; Auto Open-Drain Pins                                             ; On                   ; On                  ;
+; Perform WYSIWYG Primitive Resynthesis                            ; Off                  ; Off                 ;
+; Auto ROM Replacement                                             ; On                   ; On                  ;
+; Auto RAM Replacement                                             ; On                   ; On                  ;
+; Auto DSP Block Replacement                                       ; On                   ; On                  ;
+; Auto Shift Register Replacement                                  ; Auto                 ; Auto                ;
+; Allow Shift Register Merging across Hierarchies                  ; Auto                 ; Auto                ;
+; Auto Clock Enable Replacement                                    ; On                   ; On                  ;
+; Strict RAM Replacement                                           ; Off                  ; Off                 ;
+; Allow Synchronous Control Signals                                ; On                   ; On                  ;
+; Force Use of Synchronous Clear Signals                           ; Off                  ; Off                 ;
+; Auto RAM Block Balancing                                         ; On                   ; On                  ;
+; Auto RAM to Logic Cell Conversion                                ; Off                  ; Off                 ;
+; Auto Resource Sharing                                            ; Off                  ; Off                 ;
+; Allow Any RAM Size For Recognition                               ; Off                  ; Off                 ;
+; Allow Any ROM Size For Recognition                               ; Off                  ; Off                 ;
+; Allow Any Shift Register Size For Recognition                    ; Off                  ; Off                 ;
+; Use LogicLock Constraints during Resource Balancing              ; On                   ; On                  ;
+; Ignore translate_off and synthesis_off directives                ; Off                  ; Off                 ;
+; Timing-Driven Synthesis                                          ; On                   ; On                  ;
+; Report Parameter Settings                                        ; On                   ; On                  ;
+; Report Source Assignments                                        ; On                   ; On                  ;
+; Report Connectivity Checks                                       ; On                   ; On                  ;
+; Ignore Maximum Fan-Out Assignments                               ; Off                  ; Off                 ;
+; Synchronization Register Chain Length                            ; 2                    ; 2                   ;
+; Power Optimization During Synthesis                              ; Normal compilation   ; Normal compilation  ;
+; HDL message level                                                ; Level2               ; Level2              ;
+; Suppress Register Optimization Related Messages                  ; Off                  ; Off                 ;
+; Number of Removed Registers Reported in Synthesis Report         ; 5000                 ; 5000                ;
+; Number of Swept Nodes Reported in Synthesis Report               ; 5000                 ; 5000                ;
+; Number of Inverted Registers Reported in Synthesis Report        ; 100                  ; 100                 ;
+; Clock MUX Protection                                             ; On                   ; On                  ;
+; Auto Gated Clock Conversion                                      ; Off                  ; Off                 ;
+; Block Design Naming                                              ; Auto                 ; Auto                ;
+; SDC constraint protection                                        ; Off                  ; Off                 ;
+; Synthesis Effort                                                 ; Auto                 ; Auto                ;
+; Shift Register Replacement - Allow Asynchronous Clear Signal     ; On                   ; On                  ;
+; Pre-Mapping Resynthesis Optimization                             ; Off                  ; Off                 ;
+; Analysis & Synthesis Message Level                               ; Medium               ; Medium              ;
+; Disable Register Merging Across Hierarchies                      ; Auto                 ; Auto                ;
+; Resource Aware Inference For Block RAM                           ; On                   ; On                  ;
++------------------------------------------------------------------+----------------------+---------------------+
+
+
++------------------------------------------+
+; Parallel Compilation                     ;
++----------------------------+-------------+
+; Processors                 ; Number      ;
++----------------------------+-------------+
+; Number detected on machine ; 12          ;
+; Maximum allowed            ; 10          ;
+;                            ;             ;
+; Average used               ; 1.00        ;
+; Maximum used               ; 10          ;
+;                            ;             ;
+; Usage by Processor         ; % Time Used ;
+;     Processor 1            ; 100.0%      ;
+;     Processor 2            ;   0.0%      ;
+;     Processor 3            ;   0.0%      ;
+;     Processor 4            ;   0.0%      ;
+;     Processor 5            ;   0.0%      ;
+;     Processor 6            ;   0.0%      ;
+;     Processors 7-10        ;   0.0%      ;
++----------------------------+-------------+
+
+
++--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Source Files Read                                                                                                                                                     ;
++----------------------------------+-----------------+------------------------------+----------------------------------------------------------------------------------------------+---------+
+; File Name with User-Entered Path ; Used in Netlist ; File Type                    ; File Name with Absolute Path                                                                 ; Library ;
++----------------------------------+-----------------+------------------------------+----------------------------------------------------------------------------------------------+---------+
+; rasterizer_benchmark.sv          ; yes             ; User SystemVerilog HDL File  ; C:/Users/rohan/OneDrive/Desktop/FPGA_Rasterizer/benchmarks/optimized/rasterizer_benchmark.sv ;         ;
+; ../../rtl/rasterizer.sv          ; yes             ; User SystemVerilog HDL File  ; C:/Users/rohan/OneDrive/Desktop/FPGA_Rasterizer/rtl/rasterizer.sv                            ;         ;
+; ../../rtl/screen_mem.sv          ; yes             ; User SystemVerilog HDL File  ; C:/Users/rohan/OneDrive/Desktop/FPGA_Rasterizer/rtl/screen_mem.sv                            ;         ;
+; altsyncram.tdf                   ; yes             ; Megafunction                 ; c:/altera_lite/25.1std/quartus/libraries/megafunctions/altsyncram.tdf                        ;         ;
+; stratix_ram_block.inc            ; yes             ; Megafunction                 ; c:/altera_lite/25.1std/quartus/libraries/megafunctions/stratix_ram_block.inc                 ;         ;
+; lpm_mux.inc                      ; yes             ; Megafunction                 ; c:/altera_lite/25.1std/quartus/libraries/megafunctions/lpm_mux.inc                           ;         ;
+; lpm_decode.inc                   ; yes             ; Megafunction                 ; c:/altera_lite/25.1std/quartus/libraries/megafunctions/lpm_decode.inc                        ;         ;
+; aglobal251.inc                   ; yes             ; Megafunction                 ; c:/altera_lite/25.1std/quartus/libraries/megafunctions/aglobal251.inc                        ;         ;
+; a_rdenreg.inc                    ; yes             ; Megafunction                 ; c:/altera_lite/25.1std/quartus/libraries/megafunctions/a_rdenreg.inc                         ;         ;
+; altrom.inc                       ; yes             ; Megafunction                 ; c:/altera_lite/25.1std/quartus/libraries/megafunctions/altrom.inc                            ;         ;
+; altram.inc                       ; yes             ; Megafunction                 ; c:/altera_lite/25.1std/quartus/libraries/megafunctions/altram.inc                            ;         ;
+; altdpram.inc                     ; yes             ; Megafunction                 ; c:/altera_lite/25.1std/quartus/libraries/megafunctions/altdpram.inc                          ;         ;
+; db/altsyncram_0fg1.tdf           ; yes             ; Auto-Generated Megafunction  ; C:/Users/rohan/OneDrive/Desktop/FPGA_Rasterizer/benchmarks/optimized/db/altsyncram_0fg1.tdf  ;         ;
+; db/decode_jsa.tdf                ; yes             ; Auto-Generated Megafunction  ; C:/Users/rohan/OneDrive/Desktop/FPGA_Rasterizer/benchmarks/optimized/db/decode_jsa.tdf       ;         ;
+; db/mux_smb.tdf                   ; yes             ; Auto-Generated Megafunction  ; C:/Users/rohan/OneDrive/Desktop/FPGA_Rasterizer/benchmarks/optimized/db/mux_smb.tdf          ;         ;
+; lpm_mult.tdf                     ; yes             ; Megafunction                 ; c:/altera_lite/25.1std/quartus/libraries/megafunctions/lpm_mult.tdf                          ;         ;
+; lpm_add_sub.inc                  ; yes             ; Megafunction                 ; c:/altera_lite/25.1std/quartus/libraries/megafunctions/lpm_add_sub.inc                       ;         ;
+; multcore.inc                     ; yes             ; Megafunction                 ; c:/altera_lite/25.1std/quartus/libraries/megafunctions/multcore.inc                          ;         ;
+; bypassff.inc                     ; yes             ; Megafunction                 ; c:/altera_lite/25.1std/quartus/libraries/megafunctions/bypassff.inc                          ;         ;
+; altshift.inc                     ; yes             ; Megafunction                 ; c:/altera_lite/25.1std/quartus/libraries/megafunctions/altshift.inc                          ;         ;
+; db/mult_l5t.tdf                  ; yes             ; Auto-Generated Megafunction  ; C:/Users/rohan/OneDrive/Desktop/FPGA_Rasterizer/benchmarks/optimized/db/mult_l5t.tdf         ;         ;
++----------------------------------+-----------------+------------------------------+----------------------------------------------------------------------------------------------+---------+
+
+
++---------------------------------------------------------+
+; Analysis & Synthesis Resource Usage Summary             ;
++---------------------------------------------+-----------+
+; Resource                                    ; Usage     ;
++---------------------------------------------+-----------+
+; Estimated Total logic elements              ; 1,429     ;
+;                                             ;           ;
+; Total combinational functions               ; 1355      ;
+; Logic element usage by number of LUT inputs ;           ;
+;     -- 4 input functions                    ; 244       ;
+;     -- 3 input functions                    ; 910       ;
+;     -- <=2 input functions                  ; 201       ;
+;                                             ;           ;
+; Logic elements by mode                      ;           ;
+;     -- normal mode                          ; 421       ;
+;     -- arithmetic mode                      ; 934       ;
+;                                             ;           ;
+; Total registers                             ; 235       ;
+;     -- Dedicated logic registers            ; 235       ;
+;     -- I/O registers                        ; 0         ;
+;                                             ;           ;
+; I/O pins                                    ; 59        ;
+; Total memory bits                           ; 76800     ;
+;                                             ;           ;
+; Embedded Multiplier 9-bit elements          ; 12        ;
+;                                             ;           ;
+; Maximum fan-out node                        ; clk~input ;
+; Maximum fan-out                             ; 251       ;
+; Total fan-out                               ; 5381      ;
+; Average fan-out                             ; 3.10      ;
++---------------------------------------------+-----------+
+
+
++------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Resource Utilization by Entity                                                                                                                                                                                                                                                                                ;
++-------------------------------------------+---------------------+---------------------------+-------------+--------------+---------+-----------+------+--------------+-----------------------------------------------------------------------------------------------------------------------+----------------------+--------------+
+; Compilation Hierarchy Node                ; Combinational ALUTs ; Dedicated Logic Registers ; Memory Bits ; DSP Elements ; DSP 9x9 ; DSP 18x18 ; Pins ; Virtual Pins ; Full Hierarchy Name                                                                                                   ; Entity Name          ; Library Name ;
++-------------------------------------------+---------------------+---------------------------+-------------+--------------+---------+-----------+------+--------------+-----------------------------------------------------------------------------------------------------------------------+----------------------+--------------+
+; |rasterizer_benchmark                     ; 1355 (27)           ; 235 (17)                  ; 76800       ; 12           ; 0       ; 6         ; 59   ; 0            ; |rasterizer_benchmark                                                                                                 ; rasterizer_benchmark ; work         ;
+;    |rasterizer:u_rasterizer|              ; 1267 (1267)         ; 207 (207)                 ; 0           ; 12           ; 0       ; 6         ; 0    ; 0            ; |rasterizer_benchmark|rasterizer:u_rasterizer                                                                         ; rasterizer           ; work         ;
+;       |lpm_mult:Mult0|                    ; 0 (0)               ; 0 (0)                     ; 0           ; 2            ; 0       ; 1         ; 0    ; 0            ; |rasterizer_benchmark|rasterizer:u_rasterizer|lpm_mult:Mult0                                                          ; lpm_mult             ; work         ;
+;          |mult_l5t:auto_generated|        ; 0 (0)               ; 0 (0)                     ; 0           ; 2            ; 0       ; 1         ; 0    ; 0            ; |rasterizer_benchmark|rasterizer:u_rasterizer|lpm_mult:Mult0|mult_l5t:auto_generated                                  ; mult_l5t             ; work         ;
+;       |lpm_mult:Mult1|                    ; 0 (0)               ; 0 (0)                     ; 0           ; 2            ; 0       ; 1         ; 0    ; 0            ; |rasterizer_benchmark|rasterizer:u_rasterizer|lpm_mult:Mult1                                                          ; lpm_mult             ; work         ;
+;          |mult_l5t:auto_generated|        ; 0 (0)               ; 0 (0)                     ; 0           ; 2            ; 0       ; 1         ; 0    ; 0            ; |rasterizer_benchmark|rasterizer:u_rasterizer|lpm_mult:Mult1|mult_l5t:auto_generated                                  ; mult_l5t             ; work         ;
+;       |lpm_mult:Mult2|                    ; 0 (0)               ; 0 (0)                     ; 0           ; 2            ; 0       ; 1         ; 0    ; 0            ; |rasterizer_benchmark|rasterizer:u_rasterizer|lpm_mult:Mult2                                                          ; lpm_mult             ; work         ;
+;          |mult_l5t:auto_generated|        ; 0 (0)               ; 0 (0)                     ; 0           ; 2            ; 0       ; 1         ; 0    ; 0            ; |rasterizer_benchmark|rasterizer:u_rasterizer|lpm_mult:Mult2|mult_l5t:auto_generated                                  ; mult_l5t             ; work         ;
+;       |lpm_mult:Mult3|                    ; 0 (0)               ; 0 (0)                     ; 0           ; 2            ; 0       ; 1         ; 0    ; 0            ; |rasterizer_benchmark|rasterizer:u_rasterizer|lpm_mult:Mult3                                                          ; lpm_mult             ; work         ;
+;          |mult_l5t:auto_generated|        ; 0 (0)               ; 0 (0)                     ; 0           ; 2            ; 0       ; 1         ; 0    ; 0            ; |rasterizer_benchmark|rasterizer:u_rasterizer|lpm_mult:Mult3|mult_l5t:auto_generated                                  ; mult_l5t             ; work         ;
+;       |lpm_mult:Mult4|                    ; 0 (0)               ; 0 (0)                     ; 0           ; 2            ; 0       ; 1         ; 0    ; 0            ; |rasterizer_benchmark|rasterizer:u_rasterizer|lpm_mult:Mult4                                                          ; lpm_mult             ; work         ;
+;          |mult_l5t:auto_generated|        ; 0 (0)               ; 0 (0)                     ; 0           ; 2            ; 0       ; 1         ; 0    ; 0            ; |rasterizer_benchmark|rasterizer:u_rasterizer|lpm_mult:Mult4|mult_l5t:auto_generated                                  ; mult_l5t             ; work         ;
+;       |lpm_mult:Mult5|                    ; 0 (0)               ; 0 (0)                     ; 0           ; 2            ; 0       ; 1         ; 0    ; 0            ; |rasterizer_benchmark|rasterizer:u_rasterizer|lpm_mult:Mult5                                                          ; lpm_mult             ; work         ;
+;          |mult_l5t:auto_generated|        ; 0 (0)               ; 0 (0)                     ; 0           ; 2            ; 0       ; 1         ; 0    ; 0            ; |rasterizer_benchmark|rasterizer:u_rasterizer|lpm_mult:Mult5|mult_l5t:auto_generated                                  ; mult_l5t             ; work         ;
+;    |screen_mem:u_screen_mem|              ; 61 (37)             ; 11 (3)                    ; 76800       ; 0            ; 0       ; 0         ; 0    ; 0            ; |rasterizer_benchmark|screen_mem:u_screen_mem                                                                         ; screen_mem           ; work         ;
+;       |altsyncram:mem0_rtl_0|             ; 3 (0)               ; 1 (0)                     ; 9600        ; 0            ; 0       ; 0         ; 0    ; 0            ; |rasterizer_benchmark|screen_mem:u_screen_mem|altsyncram:mem0_rtl_0                                                   ; altsyncram           ; work         ;
+;          |altsyncram_0fg1:auto_generated| ; 3 (0)               ; 1 (1)                     ; 9600        ; 0            ; 0       ; 0         ; 0    ; 0            ; |rasterizer_benchmark|screen_mem:u_screen_mem|altsyncram:mem0_rtl_0|altsyncram_0fg1:auto_generated                    ; altsyncram_0fg1      ; work         ;
+;             |decode_jsa:decode2|          ; 2 (2)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |rasterizer_benchmark|screen_mem:u_screen_mem|altsyncram:mem0_rtl_0|altsyncram_0fg1:auto_generated|decode_jsa:decode2 ; decode_jsa           ; work         ;
+;             |mux_smb:mux3|                ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |rasterizer_benchmark|screen_mem:u_screen_mem|altsyncram:mem0_rtl_0|altsyncram_0fg1:auto_generated|mux_smb:mux3       ; mux_smb              ; work         ;
+;       |altsyncram:mem1_rtl_0|             ; 3 (0)               ; 1 (0)                     ; 9600        ; 0            ; 0       ; 0         ; 0    ; 0            ; |rasterizer_benchmark|screen_mem:u_screen_mem|altsyncram:mem1_rtl_0                                                   ; altsyncram           ; work         ;
+;          |altsyncram_0fg1:auto_generated| ; 3 (0)               ; 1 (1)                     ; 9600        ; 0            ; 0       ; 0         ; 0    ; 0            ; |rasterizer_benchmark|screen_mem:u_screen_mem|altsyncram:mem1_rtl_0|altsyncram_0fg1:auto_generated                    ; altsyncram_0fg1      ; work         ;
+;             |decode_jsa:decode2|          ; 2 (2)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |rasterizer_benchmark|screen_mem:u_screen_mem|altsyncram:mem1_rtl_0|altsyncram_0fg1:auto_generated|decode_jsa:decode2 ; decode_jsa           ; work         ;
+;             |mux_smb:mux3|                ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |rasterizer_benchmark|screen_mem:u_screen_mem|altsyncram:mem1_rtl_0|altsyncram_0fg1:auto_generated|mux_smb:mux3       ; mux_smb              ; work         ;
+;       |altsyncram:mem2_rtl_0|             ; 3 (0)               ; 1 (0)                     ; 9600        ; 0            ; 0       ; 0         ; 0    ; 0            ; |rasterizer_benchmark|screen_mem:u_screen_mem|altsyncram:mem2_rtl_0                                                   ; altsyncram           ; work         ;
+;          |altsyncram_0fg1:auto_generated| ; 3 (0)               ; 1 (1)                     ; 9600        ; 0            ; 0       ; 0         ; 0    ; 0            ; |rasterizer_benchmark|screen_mem:u_screen_mem|altsyncram:mem2_rtl_0|altsyncram_0fg1:auto_generated                    ; altsyncram_0fg1      ; work         ;
+;             |decode_jsa:decode2|          ; 2 (2)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |rasterizer_benchmark|screen_mem:u_screen_mem|altsyncram:mem2_rtl_0|altsyncram_0fg1:auto_generated|decode_jsa:decode2 ; decode_jsa           ; work         ;
+;             |mux_smb:mux3|                ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |rasterizer_benchmark|screen_mem:u_screen_mem|altsyncram:mem2_rtl_0|altsyncram_0fg1:auto_generated|mux_smb:mux3       ; mux_smb              ; work         ;
+;       |altsyncram:mem3_rtl_0|             ; 3 (0)               ; 1 (0)                     ; 9600        ; 0            ; 0       ; 0         ; 0    ; 0            ; |rasterizer_benchmark|screen_mem:u_screen_mem|altsyncram:mem3_rtl_0                                                   ; altsyncram           ; work         ;
+;          |altsyncram_0fg1:auto_generated| ; 3 (0)               ; 1 (1)                     ; 9600        ; 0            ; 0       ; 0         ; 0    ; 0            ; |rasterizer_benchmark|screen_mem:u_screen_mem|altsyncram:mem3_rtl_0|altsyncram_0fg1:auto_generated                    ; altsyncram_0fg1      ; work         ;
+;             |decode_jsa:decode2|          ; 2 (2)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |rasterizer_benchmark|screen_mem:u_screen_mem|altsyncram:mem3_rtl_0|altsyncram_0fg1:auto_generated|decode_jsa:decode2 ; decode_jsa           ; work         ;
+;             |mux_smb:mux3|                ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |rasterizer_benchmark|screen_mem:u_screen_mem|altsyncram:mem3_rtl_0|altsyncram_0fg1:auto_generated|mux_smb:mux3       ; mux_smb              ; work         ;
+;       |altsyncram:mem4_rtl_0|             ; 3 (0)               ; 1 (0)                     ; 9600        ; 0            ; 0       ; 0         ; 0    ; 0            ; |rasterizer_benchmark|screen_mem:u_screen_mem|altsyncram:mem4_rtl_0                                                   ; altsyncram           ; work         ;
+;          |altsyncram_0fg1:auto_generated| ; 3 (0)               ; 1 (1)                     ; 9600        ; 0            ; 0       ; 0         ; 0    ; 0            ; |rasterizer_benchmark|screen_mem:u_screen_mem|altsyncram:mem4_rtl_0|altsyncram_0fg1:auto_generated                    ; altsyncram_0fg1      ; work         ;
+;             |decode_jsa:decode2|          ; 2 (2)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |rasterizer_benchmark|screen_mem:u_screen_mem|altsyncram:mem4_rtl_0|altsyncram_0fg1:auto_generated|decode_jsa:decode2 ; decode_jsa           ; work         ;
+;             |mux_smb:mux3|                ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |rasterizer_benchmark|screen_mem:u_screen_mem|altsyncram:mem4_rtl_0|altsyncram_0fg1:auto_generated|mux_smb:mux3       ; mux_smb              ; work         ;
+;       |altsyncram:mem5_rtl_0|             ; 3 (0)               ; 1 (0)                     ; 9600        ; 0            ; 0       ; 0         ; 0    ; 0            ; |rasterizer_benchmark|screen_mem:u_screen_mem|altsyncram:mem5_rtl_0                                                   ; altsyncram           ; work         ;
+;          |altsyncram_0fg1:auto_generated| ; 3 (0)               ; 1 (1)                     ; 9600        ; 0            ; 0       ; 0         ; 0    ; 0            ; |rasterizer_benchmark|screen_mem:u_screen_mem|altsyncram:mem5_rtl_0|altsyncram_0fg1:auto_generated                    ; altsyncram_0fg1      ; work         ;
+;             |decode_jsa:decode2|          ; 2 (2)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |rasterizer_benchmark|screen_mem:u_screen_mem|altsyncram:mem5_rtl_0|altsyncram_0fg1:auto_generated|decode_jsa:decode2 ; decode_jsa           ; work         ;
+;             |mux_smb:mux3|                ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |rasterizer_benchmark|screen_mem:u_screen_mem|altsyncram:mem5_rtl_0|altsyncram_0fg1:auto_generated|mux_smb:mux3       ; mux_smb              ; work         ;
+;       |altsyncram:mem6_rtl_0|             ; 3 (0)               ; 1 (0)                     ; 9600        ; 0            ; 0       ; 0         ; 0    ; 0            ; |rasterizer_benchmark|screen_mem:u_screen_mem|altsyncram:mem6_rtl_0                                                   ; altsyncram           ; work         ;
+;          |altsyncram_0fg1:auto_generated| ; 3 (0)               ; 1 (1)                     ; 9600        ; 0            ; 0       ; 0         ; 0    ; 0            ; |rasterizer_benchmark|screen_mem:u_screen_mem|altsyncram:mem6_rtl_0|altsyncram_0fg1:auto_generated                    ; altsyncram_0fg1      ; work         ;
+;             |decode_jsa:decode2|          ; 2 (2)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |rasterizer_benchmark|screen_mem:u_screen_mem|altsyncram:mem6_rtl_0|altsyncram_0fg1:auto_generated|decode_jsa:decode2 ; decode_jsa           ; work         ;
+;             |mux_smb:mux3|                ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |rasterizer_benchmark|screen_mem:u_screen_mem|altsyncram:mem6_rtl_0|altsyncram_0fg1:auto_generated|mux_smb:mux3       ; mux_smb              ; work         ;
+;       |altsyncram:mem7_rtl_0|             ; 3 (0)               ; 1 (0)                     ; 9600        ; 0            ; 0       ; 0         ; 0    ; 0            ; |rasterizer_benchmark|screen_mem:u_screen_mem|altsyncram:mem7_rtl_0                                                   ; altsyncram           ; work         ;
+;          |altsyncram_0fg1:auto_generated| ; 3 (0)               ; 1 (1)                     ; 9600        ; 0            ; 0       ; 0         ; 0    ; 0            ; |rasterizer_benchmark|screen_mem:u_screen_mem|altsyncram:mem7_rtl_0|altsyncram_0fg1:auto_generated                    ; altsyncram_0fg1      ; work         ;
+;             |decode_jsa:decode2|          ; 2 (2)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |rasterizer_benchmark|screen_mem:u_screen_mem|altsyncram:mem7_rtl_0|altsyncram_0fg1:auto_generated|decode_jsa:decode2 ; decode_jsa           ; work         ;
+;             |mux_smb:mux3|                ; 1 (1)               ; 0 (0)                     ; 0           ; 0            ; 0       ; 0         ; 0    ; 0            ; |rasterizer_benchmark|screen_mem:u_screen_mem|altsyncram:mem7_rtl_0|altsyncram_0fg1:auto_generated|mux_smb:mux3       ; mux_smb              ; work         ;
++-------------------------------------------+---------------------+---------------------------+-------------+--------------+---------+-----------+------+--------------+-----------------------------------------------------------------------------------------------------------------------+----------------------+--------------+
+Note: For table entries with two numbers listed, the numbers in parentheses indicate the number of resources of the given type used by the specific entity alone. The numbers listed outside of parentheses indicate the total resources of the given type used by the specific entity and all of its sub-entities in the hierarchy.
+
+
++---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis RAM Summary                                                                                                                                                            ;
++-----------------------------------------------------------------------------------------+------+------------------+--------------+--------------+--------------+--------------+------+------+
+; Name                                                                                    ; Type ; Mode             ; Port A Depth ; Port A Width ; Port B Depth ; Port B Width ; Size ; MIF  ;
++-----------------------------------------------------------------------------------------+------+------------------+--------------+--------------+--------------+--------------+------+------+
+; screen_mem:u_screen_mem|altsyncram:mem0_rtl_0|altsyncram_0fg1:auto_generated|ALTSYNCRAM ; AUTO ; Simple Dual Port ; 9600         ; 1            ; 9600         ; 1            ; 9600 ; None ;
+; screen_mem:u_screen_mem|altsyncram:mem1_rtl_0|altsyncram_0fg1:auto_generated|ALTSYNCRAM ; AUTO ; Simple Dual Port ; 9600         ; 1            ; 9600         ; 1            ; 9600 ; None ;
+; screen_mem:u_screen_mem|altsyncram:mem2_rtl_0|altsyncram_0fg1:auto_generated|ALTSYNCRAM ; AUTO ; Simple Dual Port ; 9600         ; 1            ; 9600         ; 1            ; 9600 ; None ;
+; screen_mem:u_screen_mem|altsyncram:mem3_rtl_0|altsyncram_0fg1:auto_generated|ALTSYNCRAM ; AUTO ; Simple Dual Port ; 9600         ; 1            ; 9600         ; 1            ; 9600 ; None ;
+; screen_mem:u_screen_mem|altsyncram:mem4_rtl_0|altsyncram_0fg1:auto_generated|ALTSYNCRAM ; AUTO ; Simple Dual Port ; 9600         ; 1            ; 9600         ; 1            ; 9600 ; None ;
+; screen_mem:u_screen_mem|altsyncram:mem5_rtl_0|altsyncram_0fg1:auto_generated|ALTSYNCRAM ; AUTO ; Simple Dual Port ; 9600         ; 1            ; 9600         ; 1            ; 9600 ; None ;
+; screen_mem:u_screen_mem|altsyncram:mem6_rtl_0|altsyncram_0fg1:auto_generated|ALTSYNCRAM ; AUTO ; Simple Dual Port ; 9600         ; 1            ; 9600         ; 1            ; 9600 ; None ;
+; screen_mem:u_screen_mem|altsyncram:mem7_rtl_0|altsyncram_0fg1:auto_generated|ALTSYNCRAM ; AUTO ; Simple Dual Port ; 9600         ; 1            ; 9600         ; 1            ; 9600 ; None ;
++-----------------------------------------------------------------------------------------+------+------------------+--------------+--------------+--------------+--------------+------+------+
+
+
++-----------------------------------------------------+
+; Analysis & Synthesis DSP Block Usage Summary        ;
++---------------------------------------+-------------+
+; Statistic                             ; Number Used ;
++---------------------------------------+-------------+
+; Simple Multipliers (9-bit)            ; 0           ;
+; Simple Multipliers (18-bit)           ; 6           ;
+; Embedded Multiplier Blocks            ; --          ;
+; Embedded Multiplier 9-bit elements    ; 12          ;
+; Signed Embedded Multipliers           ; 6           ;
+; Unsigned Embedded Multipliers         ; 0           ;
+; Mixed Sign Embedded Multipliers       ; 0           ;
+; Variable Sign Embedded Multipliers    ; 0           ;
+; Dedicated Input Shift Register Chains ; 0           ;
++---------------------------------------+-------------+
+Note: number of Embedded Multiplier Blocks used is only available after a successful fit.
+
+
+Encoding Type:  One-Hot
++---------------------------------------------------------------------------------------------------------------------------------------+
+; State Machine - |rasterizer_benchmark|rasterizer:u_rasterizer|current_state                                                           ;
++-------------------------+---------------------+-------------------------+-------------------+--------------------+--------------------+
+; Name                    ; current_state.DRAIN ; current_state.RASTERIZE ; current_state.BOX ; current_state.IDLE ; current_state.DONE ;
++-------------------------+---------------------+-------------------------+-------------------+--------------------+--------------------+
+; current_state.IDLE      ; 0                   ; 0                       ; 0                 ; 0                  ; 0                  ;
+; current_state.BOX       ; 0                   ; 0                       ; 1                 ; 1                  ; 0                  ;
+; current_state.RASTERIZE ; 0                   ; 1                       ; 0                 ; 1                  ; 0                  ;
+; current_state.DRAIN     ; 1                   ; 0                       ; 0                 ; 1                  ; 0                  ;
+; current_state.DONE      ; 0                   ; 0                       ; 0                 ; 1                  ; 1                  ;
++-------------------------+---------------------+-------------------------+-------------------+--------------------+--------------------+
+
+
++--------------------------------------------------------------------------------------------+
+; Registers Removed During Synthesis                                                         ;
++-----------------------------------------+--------------------------------------------------+
+; Register name                           ; Reason for Removal                               ;
++-----------------------------------------+--------------------------------------------------+
+; rasterizer:u_rasterizer|x1[9]           ; Stuck at GND due to stuck port data_in           ;
+; rasterizer:u_rasterizer|x2[9]           ; Stuck at GND due to stuck port data_in           ;
+; rasterizer:u_rasterizer|x3[9]           ; Stuck at GND due to stuck port data_in           ;
+; rasterizer:u_rasterizer|y1[9]           ; Stuck at GND due to stuck port data_in           ;
+; rasterizer:u_rasterizer|y2[9]           ; Stuck at GND due to stuck port data_in           ;
+; rasterizer:u_rasterizer|y3[9]           ; Stuck at GND due to stuck port data_in           ;
+; rasterizer:u_rasterizer|color           ; Stuck at VCC due to stuck port data_in           ;
+; rasterizer:u_rasterizer|pipe_min_x[9]   ; Stuck at GND due to stuck port data_in           ;
+; rasterizer:u_rasterizer|pipe_max_x[9]   ; Stuck at GND due to stuck port data_in           ;
+; rasterizer:u_rasterizer|pipe_color      ; Stuck at VCC due to stuck port data_in           ;
+; rasterizer:u_rasterizer|current_x[1,2]  ; Merged with rasterizer:u_rasterizer|current_x[0] ;
+; rasterizer:u_rasterizer|pipe_x[5]       ; Merged with rasterizer:u_rasterizer|pipe_addr[2] ;
+; rasterizer:u_rasterizer|pipe_x[4]       ; Merged with rasterizer:u_rasterizer|pipe_addr[1] ;
+; rasterizer:u_rasterizer|pipe_x[3]       ; Merged with rasterizer:u_rasterizer|pipe_addr[0] ;
+; rasterizer:u_rasterizer|pipe_x[1,2]     ; Merged with rasterizer:u_rasterizer|pipe_x[0]    ;
+; rasterizer:u_rasterizer|current_x[0]    ; Stuck at GND due to stuck port data_in           ;
+; rasterizer:u_rasterizer|pipe_x[0]       ; Stuck at GND due to stuck port data_in           ;
+; rasterizer:u_rasterizer|current_state~4 ; Lost fanout                                      ;
+; rasterizer:u_rasterizer|current_state~5 ; Lost fanout                                      ;
+; Total Number of Removed Registers = 21  ;                                                  ;
++-----------------------------------------+--------------------------------------------------+
+
+
++------------------------------------------------------------------------------------------------------------------------------------------+
+; Removed Registers Triggering Further Register Optimizations                                                                              ;
++-------------------------------+---------------------------+------------------------------------------------------------------------------+
+; Register name                 ; Reason for Removal        ; Registers Removed due to This Register                                       ;
++-------------------------------+---------------------------+------------------------------------------------------------------------------+
+; rasterizer:u_rasterizer|x1[9] ; Stuck at GND              ; rasterizer:u_rasterizer|pipe_max_x[9], rasterizer:u_rasterizer|current_x[0], ;
+;                               ; due to stuck port data_in ; rasterizer:u_rasterizer|pipe_x[0]                                            ;
+; rasterizer:u_rasterizer|color ; Stuck at VCC              ; rasterizer:u_rasterizer|pipe_color                                           ;
+;                               ; due to stuck port data_in ;                                                                              ;
++-------------------------------+---------------------------+------------------------------------------------------------------------------+
+
+
++------------------------------------------------------+
+; General Register Statistics                          ;
++----------------------------------------------+-------+
+; Statistic                                    ; Value ;
++----------------------------------------------+-------+
+; Total registers                              ; 235   ;
+; Number of registers using Synchronous Clear  ; 0     ;
+; Number of registers using Synchronous Load   ; 6     ;
+; Number of registers using Asynchronous Clear ; 23    ;
+; Number of registers using Asynchronous Load  ; 0     ;
+; Number of registers using Clock Enable       ; 201   ;
+; Number of registers using Preset             ; 0     ;
++----------------------------------------------+-------+
+
+
++-------------------------------------------------------------------------+
+; Registers Packed Into Inferred Megafunctions                            ;
++-----------------------------+------------------------------------+------+
+; Register Name               ; Megafunction                       ; Type ;
++-----------------------------+------------------------------------+------+
+; screen_mem:u_screen_mem|rd0 ; screen_mem:u_screen_mem|mem0_rtl_0 ; RAM  ;
+; screen_mem:u_screen_mem|rd1 ; screen_mem:u_screen_mem|mem1_rtl_0 ; RAM  ;
+; screen_mem:u_screen_mem|rd2 ; screen_mem:u_screen_mem|mem2_rtl_0 ; RAM  ;
+; screen_mem:u_screen_mem|rd3 ; screen_mem:u_screen_mem|mem3_rtl_0 ; RAM  ;
+; screen_mem:u_screen_mem|rd4 ; screen_mem:u_screen_mem|mem4_rtl_0 ; RAM  ;
+; screen_mem:u_screen_mem|rd5 ; screen_mem:u_screen_mem|mem5_rtl_0 ; RAM  ;
+; screen_mem:u_screen_mem|rd6 ; screen_mem:u_screen_mem|mem6_rtl_0 ; RAM  ;
+; screen_mem:u_screen_mem|rd7 ; screen_mem:u_screen_mem|mem7_rtl_0 ; RAM  ;
++-----------------------------+------------------------------------+------+
+
+
++---------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Multiplexer Restructuring Statistics (Restructuring Performed)                                                                                                            ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+-------------------------------------------------------------+
+; Multiplexer Inputs ; Bus Width ; Baseline Area ; Area if Restructured ; Saving if Restructured ; Registered ; Example Multiplexer Output                                  ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+-------------------------------------------------------------+
+; 3:1                ; 3 bits    ; 6 LEs         ; 6 LEs                ; 0 LEs                  ; Yes        ; |rasterizer_benchmark|rasterizer:u_rasterizer|pipe_min_x[0] ;
+; 5:1                ; 6 bits    ; 18 LEs        ; 12 LEs               ; 6 LEs                  ; Yes        ; |rasterizer_benchmark|rasterizer:u_rasterizer|current_x[4]  ;
+; 7:1                ; 9 bits    ; 36 LEs        ; 27 LEs               ; 9 LEs                  ; Yes        ; |rasterizer_benchmark|rasterizer:u_rasterizer|current_y[6]  ;
+; 3:1                ; 9 bits    ; 18 LEs        ; 18 LEs               ; 0 LEs                  ; No         ; |rasterizer_benchmark|rasterizer:u_rasterizer|max_x[1]      ;
+; 3:1                ; 9 bits    ; 18 LEs        ; 18 LEs               ; 0 LEs                  ; No         ; |rasterizer_benchmark|rasterizer:u_rasterizer|max_y[7]      ;
+; 3:1                ; 6 bits    ; 12 LEs        ; 12 LEs               ; 0 LEs                  ; No         ; |rasterizer_benchmark|rasterizer:u_rasterizer|min_x[3]      ;
+; 7:1                ; 3 bits    ; 12 LEs        ; 9 LEs                ; 3 LEs                  ; No         ; |rasterizer_benchmark|rasterizer:u_rasterizer|Selector24    ;
+; 8:1                ; 2 bits    ; 10 LEs        ; 4 LEs                ; 6 LEs                  ; No         ; |rasterizer_benchmark|rasterizer:u_rasterizer|Selector25    ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+-------------------------------------------------------------+
+
+
++-----------------------------------------------------------------------------------------------------+
+; Source assignments for screen_mem:u_screen_mem|altsyncram:mem0_rtl_0|altsyncram_0fg1:auto_generated ;
++---------------------------------+--------------------+------+---------------------------------------+
+; Assignment                      ; Value              ; From ; To                                    ;
++---------------------------------+--------------------+------+---------------------------------------+
+; OPTIMIZE_POWER_DURING_SYNTHESIS ; NORMAL_COMPILATION ; -    ; -                                     ;
++---------------------------------+--------------------+------+---------------------------------------+
+
+
++-----------------------------------------------------------------------------------------------------+
+; Source assignments for screen_mem:u_screen_mem|altsyncram:mem1_rtl_0|altsyncram_0fg1:auto_generated ;
++---------------------------------+--------------------+------+---------------------------------------+
+; Assignment                      ; Value              ; From ; To                                    ;
++---------------------------------+--------------------+------+---------------------------------------+
+; OPTIMIZE_POWER_DURING_SYNTHESIS ; NORMAL_COMPILATION ; -    ; -                                     ;
++---------------------------------+--------------------+------+---------------------------------------+
+
+
++-----------------------------------------------------------------------------------------------------+
+; Source assignments for screen_mem:u_screen_mem|altsyncram:mem2_rtl_0|altsyncram_0fg1:auto_generated ;
++---------------------------------+--------------------+------+---------------------------------------+
+; Assignment                      ; Value              ; From ; To                                    ;
++---------------------------------+--------------------+------+---------------------------------------+
+; OPTIMIZE_POWER_DURING_SYNTHESIS ; NORMAL_COMPILATION ; -    ; -                                     ;
++---------------------------------+--------------------+------+---------------------------------------+
+
+
++-----------------------------------------------------------------------------------------------------+
+; Source assignments for screen_mem:u_screen_mem|altsyncram:mem3_rtl_0|altsyncram_0fg1:auto_generated ;
++---------------------------------+--------------------+------+---------------------------------------+
+; Assignment                      ; Value              ; From ; To                                    ;
++---------------------------------+--------------------+------+---------------------------------------+
+; OPTIMIZE_POWER_DURING_SYNTHESIS ; NORMAL_COMPILATION ; -    ; -                                     ;
++---------------------------------+--------------------+------+---------------------------------------+
+
+
++-----------------------------------------------------------------------------------------------------+
+; Source assignments for screen_mem:u_screen_mem|altsyncram:mem4_rtl_0|altsyncram_0fg1:auto_generated ;
++---------------------------------+--------------------+------+---------------------------------------+
+; Assignment                      ; Value              ; From ; To                                    ;
++---------------------------------+--------------------+------+---------------------------------------+
+; OPTIMIZE_POWER_DURING_SYNTHESIS ; NORMAL_COMPILATION ; -    ; -                                     ;
++---------------------------------+--------------------+------+---------------------------------------+
+
+
++-----------------------------------------------------------------------------------------------------+
+; Source assignments for screen_mem:u_screen_mem|altsyncram:mem5_rtl_0|altsyncram_0fg1:auto_generated ;
++---------------------------------+--------------------+------+---------------------------------------+
+; Assignment                      ; Value              ; From ; To                                    ;
++---------------------------------+--------------------+------+---------------------------------------+
+; OPTIMIZE_POWER_DURING_SYNTHESIS ; NORMAL_COMPILATION ; -    ; -                                     ;
++---------------------------------+--------------------+------+---------------------------------------+
+
+
++-----------------------------------------------------------------------------------------------------+
+; Source assignments for screen_mem:u_screen_mem|altsyncram:mem6_rtl_0|altsyncram_0fg1:auto_generated ;
++---------------------------------+--------------------+------+---------------------------------------+
+; Assignment                      ; Value              ; From ; To                                    ;
++---------------------------------+--------------------+------+---------------------------------------+
+; OPTIMIZE_POWER_DURING_SYNTHESIS ; NORMAL_COMPILATION ; -    ; -                                     ;
++---------------------------------+--------------------+------+---------------------------------------+
+
+
++-----------------------------------------------------------------------------------------------------+
+; Source assignments for screen_mem:u_screen_mem|altsyncram:mem7_rtl_0|altsyncram_0fg1:auto_generated ;
++---------------------------------+--------------------+------+---------------------------------------+
+; Assignment                      ; Value              ; From ; To                                    ;
++---------------------------------+--------------------+------+---------------------------------------+
+; OPTIMIZE_POWER_DURING_SYNTHESIS ; NORMAL_COMPILATION ; -    ; -                                     ;
++---------------------------------+--------------------+------+---------------------------------------+
+
+
++------------------------------------------------------------------------------------------------+
+; Parameter Settings for Inferred Entity Instance: screen_mem:u_screen_mem|altsyncram:mem0_rtl_0 ;
++------------------------------------+----------------------+------------------------------------+
+; Parameter Name                     ; Value                ; Type                               ;
++------------------------------------+----------------------+------------------------------------+
+; BYTE_SIZE_BLOCK                    ; 8                    ; Untyped                            ;
+; AUTO_CARRY_CHAINS                  ; ON                   ; AUTO_CARRY                         ;
+; IGNORE_CARRY_BUFFERS               ; OFF                  ; IGNORE_CARRY                       ;
+; AUTO_CASCADE_CHAINS                ; ON                   ; AUTO_CASCADE                       ;
+; IGNORE_CASCADE_BUFFERS             ; OFF                  ; IGNORE_CASCADE                     ;
+; WIDTH_BYTEENA                      ; 1                    ; Untyped                            ;
+; OPERATION_MODE                     ; DUAL_PORT            ; Untyped                            ;
+; WIDTH_A                            ; 1                    ; Untyped                            ;
+; WIDTHAD_A                          ; 14                   ; Untyped                            ;
+; NUMWORDS_A                         ; 9600                 ; Untyped                            ;
+; OUTDATA_REG_A                      ; UNREGISTERED         ; Untyped                            ;
+; ADDRESS_ACLR_A                     ; NONE                 ; Untyped                            ;
+; OUTDATA_ACLR_A                     ; NONE                 ; Untyped                            ;
+; WRCONTROL_ACLR_A                   ; NONE                 ; Untyped                            ;
+; INDATA_ACLR_A                      ; NONE                 ; Untyped                            ;
+; BYTEENA_ACLR_A                     ; NONE                 ; Untyped                            ;
+; WIDTH_B                            ; 1                    ; Untyped                            ;
+; WIDTHAD_B                          ; 14                   ; Untyped                            ;
+; NUMWORDS_B                         ; 9600                 ; Untyped                            ;
+; INDATA_REG_B                       ; CLOCK1               ; Untyped                            ;
+; WRCONTROL_WRADDRESS_REG_B          ; CLOCK1               ; Untyped                            ;
+; RDCONTROL_REG_B                    ; CLOCK1               ; Untyped                            ;
+; ADDRESS_REG_B                      ; CLOCK0               ; Untyped                            ;
+; OUTDATA_REG_B                      ; UNREGISTERED         ; Untyped                            ;
+; BYTEENA_REG_B                      ; CLOCK1               ; Untyped                            ;
+; INDATA_ACLR_B                      ; NONE                 ; Untyped                            ;
+; WRCONTROL_ACLR_B                   ; NONE                 ; Untyped                            ;
+; ADDRESS_ACLR_B                     ; NONE                 ; Untyped                            ;
+; OUTDATA_ACLR_B                     ; NONE                 ; Untyped                            ;
+; RDCONTROL_ACLR_B                   ; NONE                 ; Untyped                            ;
+; BYTEENA_ACLR_B                     ; NONE                 ; Untyped                            ;
+; WIDTH_BYTEENA_A                    ; 1                    ; Untyped                            ;
+; WIDTH_BYTEENA_B                    ; 1                    ; Untyped                            ;
+; RAM_BLOCK_TYPE                     ; AUTO                 ; Untyped                            ;
+; BYTE_SIZE                          ; 8                    ; Untyped                            ;
+; READ_DURING_WRITE_MODE_MIXED_PORTS ; OLD_DATA             ; Untyped                            ;
+; READ_DURING_WRITE_MODE_PORT_A      ; NEW_DATA_NO_NBE_READ ; Untyped                            ;
+; READ_DURING_WRITE_MODE_PORT_B      ; NEW_DATA_NO_NBE_READ ; Untyped                            ;
+; INIT_FILE                          ; UNUSED               ; Untyped                            ;
+; INIT_FILE_LAYOUT                   ; PORT_A               ; Untyped                            ;
+; MAXIMUM_DEPTH                      ; 0                    ; Untyped                            ;
+; CLOCK_ENABLE_INPUT_A               ; NORMAL               ; Untyped                            ;
+; CLOCK_ENABLE_INPUT_B               ; NORMAL               ; Untyped                            ;
+; CLOCK_ENABLE_OUTPUT_A              ; NORMAL               ; Untyped                            ;
+; CLOCK_ENABLE_OUTPUT_B              ; NORMAL               ; Untyped                            ;
+; CLOCK_ENABLE_CORE_A                ; USE_INPUT_CLKEN      ; Untyped                            ;
+; CLOCK_ENABLE_CORE_B                ; USE_INPUT_CLKEN      ; Untyped                            ;
+; ENABLE_ECC                         ; FALSE                ; Untyped                            ;
+; ECC_PIPELINE_STAGE_ENABLED         ; FALSE                ; Untyped                            ;
+; WIDTH_ECCSTATUS                    ; 3                    ; Untyped                            ;
+; DEVICE_FAMILY                      ; Cyclone IV E         ; Untyped                            ;
+; CBXI_PARAMETER                     ; altsyncram_0fg1      ; Untyped                            ;
++------------------------------------+----------------------+------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++------------------------------------------------------------------------------------------------+
+; Parameter Settings for Inferred Entity Instance: screen_mem:u_screen_mem|altsyncram:mem1_rtl_0 ;
++------------------------------------+----------------------+------------------------------------+
+; Parameter Name                     ; Value                ; Type                               ;
++------------------------------------+----------------------+------------------------------------+
+; BYTE_SIZE_BLOCK                    ; 8                    ; Untyped                            ;
+; AUTO_CARRY_CHAINS                  ; ON                   ; AUTO_CARRY                         ;
+; IGNORE_CARRY_BUFFERS               ; OFF                  ; IGNORE_CARRY                       ;
+; AUTO_CASCADE_CHAINS                ; ON                   ; AUTO_CASCADE                       ;
+; IGNORE_CASCADE_BUFFERS             ; OFF                  ; IGNORE_CASCADE                     ;
+; WIDTH_BYTEENA                      ; 1                    ; Untyped                            ;
+; OPERATION_MODE                     ; DUAL_PORT            ; Untyped                            ;
+; WIDTH_A                            ; 1                    ; Untyped                            ;
+; WIDTHAD_A                          ; 14                   ; Untyped                            ;
+; NUMWORDS_A                         ; 9600                 ; Untyped                            ;
+; OUTDATA_REG_A                      ; UNREGISTERED         ; Untyped                            ;
+; ADDRESS_ACLR_A                     ; NONE                 ; Untyped                            ;
+; OUTDATA_ACLR_A                     ; NONE                 ; Untyped                            ;
+; WRCONTROL_ACLR_A                   ; NONE                 ; Untyped                            ;
+; INDATA_ACLR_A                      ; NONE                 ; Untyped                            ;
+; BYTEENA_ACLR_A                     ; NONE                 ; Untyped                            ;
+; WIDTH_B                            ; 1                    ; Untyped                            ;
+; WIDTHAD_B                          ; 14                   ; Untyped                            ;
+; NUMWORDS_B                         ; 9600                 ; Untyped                            ;
+; INDATA_REG_B                       ; CLOCK1               ; Untyped                            ;
+; WRCONTROL_WRADDRESS_REG_B          ; CLOCK1               ; Untyped                            ;
+; RDCONTROL_REG_B                    ; CLOCK1               ; Untyped                            ;
+; ADDRESS_REG_B                      ; CLOCK0               ; Untyped                            ;
+; OUTDATA_REG_B                      ; UNREGISTERED         ; Untyped                            ;
+; BYTEENA_REG_B                      ; CLOCK1               ; Untyped                            ;
+; INDATA_ACLR_B                      ; NONE                 ; Untyped                            ;
+; WRCONTROL_ACLR_B                   ; NONE                 ; Untyped                            ;
+; ADDRESS_ACLR_B                     ; NONE                 ; Untyped                            ;
+; OUTDATA_ACLR_B                     ; NONE                 ; Untyped                            ;
+; RDCONTROL_ACLR_B                   ; NONE                 ; Untyped                            ;
+; BYTEENA_ACLR_B                     ; NONE                 ; Untyped                            ;
+; WIDTH_BYTEENA_A                    ; 1                    ; Untyped                            ;
+; WIDTH_BYTEENA_B                    ; 1                    ; Untyped                            ;
+; RAM_BLOCK_TYPE                     ; AUTO                 ; Untyped                            ;
+; BYTE_SIZE                          ; 8                    ; Untyped                            ;
+; READ_DURING_WRITE_MODE_MIXED_PORTS ; OLD_DATA             ; Untyped                            ;
+; READ_DURING_WRITE_MODE_PORT_A      ; NEW_DATA_NO_NBE_READ ; Untyped                            ;
+; READ_DURING_WRITE_MODE_PORT_B      ; NEW_DATA_NO_NBE_READ ; Untyped                            ;
+; INIT_FILE                          ; UNUSED               ; Untyped                            ;
+; INIT_FILE_LAYOUT                   ; PORT_A               ; Untyped                            ;
+; MAXIMUM_DEPTH                      ; 0                    ; Untyped                            ;
+; CLOCK_ENABLE_INPUT_A               ; NORMAL               ; Untyped                            ;
+; CLOCK_ENABLE_INPUT_B               ; NORMAL               ; Untyped                            ;
+; CLOCK_ENABLE_OUTPUT_A              ; NORMAL               ; Untyped                            ;
+; CLOCK_ENABLE_OUTPUT_B              ; NORMAL               ; Untyped                            ;
+; CLOCK_ENABLE_CORE_A                ; USE_INPUT_CLKEN      ; Untyped                            ;
+; CLOCK_ENABLE_CORE_B                ; USE_INPUT_CLKEN      ; Untyped                            ;
+; ENABLE_ECC                         ; FALSE                ; Untyped                            ;
+; ECC_PIPELINE_STAGE_ENABLED         ; FALSE                ; Untyped                            ;
+; WIDTH_ECCSTATUS                    ; 3                    ; Untyped                            ;
+; DEVICE_FAMILY                      ; Cyclone IV E         ; Untyped                            ;
+; CBXI_PARAMETER                     ; altsyncram_0fg1      ; Untyped                            ;
++------------------------------------+----------------------+------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++------------------------------------------------------------------------------------------------+
+; Parameter Settings for Inferred Entity Instance: screen_mem:u_screen_mem|altsyncram:mem2_rtl_0 ;
++------------------------------------+----------------------+------------------------------------+
+; Parameter Name                     ; Value                ; Type                               ;
++------------------------------------+----------------------+------------------------------------+
+; BYTE_SIZE_BLOCK                    ; 8                    ; Untyped                            ;
+; AUTO_CARRY_CHAINS                  ; ON                   ; AUTO_CARRY                         ;
+; IGNORE_CARRY_BUFFERS               ; OFF                  ; IGNORE_CARRY                       ;
+; AUTO_CASCADE_CHAINS                ; ON                   ; AUTO_CASCADE                       ;
+; IGNORE_CASCADE_BUFFERS             ; OFF                  ; IGNORE_CASCADE                     ;
+; WIDTH_BYTEENA                      ; 1                    ; Untyped                            ;
+; OPERATION_MODE                     ; DUAL_PORT            ; Untyped                            ;
+; WIDTH_A                            ; 1                    ; Untyped                            ;
+; WIDTHAD_A                          ; 14                   ; Untyped                            ;
+; NUMWORDS_A                         ; 9600                 ; Untyped                            ;
+; OUTDATA_REG_A                      ; UNREGISTERED         ; Untyped                            ;
+; ADDRESS_ACLR_A                     ; NONE                 ; Untyped                            ;
+; OUTDATA_ACLR_A                     ; NONE                 ; Untyped                            ;
+; WRCONTROL_ACLR_A                   ; NONE                 ; Untyped                            ;
+; INDATA_ACLR_A                      ; NONE                 ; Untyped                            ;
+; BYTEENA_ACLR_A                     ; NONE                 ; Untyped                            ;
+; WIDTH_B                            ; 1                    ; Untyped                            ;
+; WIDTHAD_B                          ; 14                   ; Untyped                            ;
+; NUMWORDS_B                         ; 9600                 ; Untyped                            ;
+; INDATA_REG_B                       ; CLOCK1               ; Untyped                            ;
+; WRCONTROL_WRADDRESS_REG_B          ; CLOCK1               ; Untyped                            ;
+; RDCONTROL_REG_B                    ; CLOCK1               ; Untyped                            ;
+; ADDRESS_REG_B                      ; CLOCK0               ; Untyped                            ;
+; OUTDATA_REG_B                      ; UNREGISTERED         ; Untyped                            ;
+; BYTEENA_REG_B                      ; CLOCK1               ; Untyped                            ;
+; INDATA_ACLR_B                      ; NONE                 ; Untyped                            ;
+; WRCONTROL_ACLR_B                   ; NONE                 ; Untyped                            ;
+; ADDRESS_ACLR_B                     ; NONE                 ; Untyped                            ;
+; OUTDATA_ACLR_B                     ; NONE                 ; Untyped                            ;
+; RDCONTROL_ACLR_B                   ; NONE                 ; Untyped                            ;
+; BYTEENA_ACLR_B                     ; NONE                 ; Untyped                            ;
+; WIDTH_BYTEENA_A                    ; 1                    ; Untyped                            ;
+; WIDTH_BYTEENA_B                    ; 1                    ; Untyped                            ;
+; RAM_BLOCK_TYPE                     ; AUTO                 ; Untyped                            ;
+; BYTE_SIZE                          ; 8                    ; Untyped                            ;
+; READ_DURING_WRITE_MODE_MIXED_PORTS ; OLD_DATA             ; Untyped                            ;
+; READ_DURING_WRITE_MODE_PORT_A      ; NEW_DATA_NO_NBE_READ ; Untyped                            ;
+; READ_DURING_WRITE_MODE_PORT_B      ; NEW_DATA_NO_NBE_READ ; Untyped                            ;
+; INIT_FILE                          ; UNUSED               ; Untyped                            ;
+; INIT_FILE_LAYOUT                   ; PORT_A               ; Untyped                            ;
+; MAXIMUM_DEPTH                      ; 0                    ; Untyped                            ;
+; CLOCK_ENABLE_INPUT_A               ; NORMAL               ; Untyped                            ;
+; CLOCK_ENABLE_INPUT_B               ; NORMAL               ; Untyped                            ;
+; CLOCK_ENABLE_OUTPUT_A              ; NORMAL               ; Untyped                            ;
+; CLOCK_ENABLE_OUTPUT_B              ; NORMAL               ; Untyped                            ;
+; CLOCK_ENABLE_CORE_A                ; USE_INPUT_CLKEN      ; Untyped                            ;
+; CLOCK_ENABLE_CORE_B                ; USE_INPUT_CLKEN      ; Untyped                            ;
+; ENABLE_ECC                         ; FALSE                ; Untyped                            ;
+; ECC_PIPELINE_STAGE_ENABLED         ; FALSE                ; Untyped                            ;
+; WIDTH_ECCSTATUS                    ; 3                    ; Untyped                            ;
+; DEVICE_FAMILY                      ; Cyclone IV E         ; Untyped                            ;
+; CBXI_PARAMETER                     ; altsyncram_0fg1      ; Untyped                            ;
++------------------------------------+----------------------+------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++------------------------------------------------------------------------------------------------+
+; Parameter Settings for Inferred Entity Instance: screen_mem:u_screen_mem|altsyncram:mem3_rtl_0 ;
++------------------------------------+----------------------+------------------------------------+
+; Parameter Name                     ; Value                ; Type                               ;
++------------------------------------+----------------------+------------------------------------+
+; BYTE_SIZE_BLOCK                    ; 8                    ; Untyped                            ;
+; AUTO_CARRY_CHAINS                  ; ON                   ; AUTO_CARRY                         ;
+; IGNORE_CARRY_BUFFERS               ; OFF                  ; IGNORE_CARRY                       ;
+; AUTO_CASCADE_CHAINS                ; ON                   ; AUTO_CASCADE                       ;
+; IGNORE_CASCADE_BUFFERS             ; OFF                  ; IGNORE_CASCADE                     ;
+; WIDTH_BYTEENA                      ; 1                    ; Untyped                            ;
+; OPERATION_MODE                     ; DUAL_PORT            ; Untyped                            ;
+; WIDTH_A                            ; 1                    ; Untyped                            ;
+; WIDTHAD_A                          ; 14                   ; Untyped                            ;
+; NUMWORDS_A                         ; 9600                 ; Untyped                            ;
+; OUTDATA_REG_A                      ; UNREGISTERED         ; Untyped                            ;
+; ADDRESS_ACLR_A                     ; NONE                 ; Untyped                            ;
+; OUTDATA_ACLR_A                     ; NONE                 ; Untyped                            ;
+; WRCONTROL_ACLR_A                   ; NONE                 ; Untyped                            ;
+; INDATA_ACLR_A                      ; NONE                 ; Untyped                            ;
+; BYTEENA_ACLR_A                     ; NONE                 ; Untyped                            ;
+; WIDTH_B                            ; 1                    ; Untyped                            ;
+; WIDTHAD_B                          ; 14                   ; Untyped                            ;
+; NUMWORDS_B                         ; 9600                 ; Untyped                            ;
+; INDATA_REG_B                       ; CLOCK1               ; Untyped                            ;
+; WRCONTROL_WRADDRESS_REG_B          ; CLOCK1               ; Untyped                            ;
+; RDCONTROL_REG_B                    ; CLOCK1               ; Untyped                            ;
+; ADDRESS_REG_B                      ; CLOCK0               ; Untyped                            ;
+; OUTDATA_REG_B                      ; UNREGISTERED         ; Untyped                            ;
+; BYTEENA_REG_B                      ; CLOCK1               ; Untyped                            ;
+; INDATA_ACLR_B                      ; NONE                 ; Untyped                            ;
+; WRCONTROL_ACLR_B                   ; NONE                 ; Untyped                            ;
+; ADDRESS_ACLR_B                     ; NONE                 ; Untyped                            ;
+; OUTDATA_ACLR_B                     ; NONE                 ; Untyped                            ;
+; RDCONTROL_ACLR_B                   ; NONE                 ; Untyped                            ;
+; BYTEENA_ACLR_B                     ; NONE                 ; Untyped                            ;
+; WIDTH_BYTEENA_A                    ; 1                    ; Untyped                            ;
+; WIDTH_BYTEENA_B                    ; 1                    ; Untyped                            ;
+; RAM_BLOCK_TYPE                     ; AUTO                 ; Untyped                            ;
+; BYTE_SIZE                          ; 8                    ; Untyped                            ;
+; READ_DURING_WRITE_MODE_MIXED_PORTS ; OLD_DATA             ; Untyped                            ;
+; READ_DURING_WRITE_MODE_PORT_A      ; NEW_DATA_NO_NBE_READ ; Untyped                            ;
+; READ_DURING_WRITE_MODE_PORT_B      ; NEW_DATA_NO_NBE_READ ; Untyped                            ;
+; INIT_FILE                          ; UNUSED               ; Untyped                            ;
+; INIT_FILE_LAYOUT                   ; PORT_A               ; Untyped                            ;
+; MAXIMUM_DEPTH                      ; 0                    ; Untyped                            ;
+; CLOCK_ENABLE_INPUT_A               ; NORMAL               ; Untyped                            ;
+; CLOCK_ENABLE_INPUT_B               ; NORMAL               ; Untyped                            ;
+; CLOCK_ENABLE_OUTPUT_A              ; NORMAL               ; Untyped                            ;
+; CLOCK_ENABLE_OUTPUT_B              ; NORMAL               ; Untyped                            ;
+; CLOCK_ENABLE_CORE_A                ; USE_INPUT_CLKEN      ; Untyped                            ;
+; CLOCK_ENABLE_CORE_B                ; USE_INPUT_CLKEN      ; Untyped                            ;
+; ENABLE_ECC                         ; FALSE                ; Untyped                            ;
+; ECC_PIPELINE_STAGE_ENABLED         ; FALSE                ; Untyped                            ;
+; WIDTH_ECCSTATUS                    ; 3                    ; Untyped                            ;
+; DEVICE_FAMILY                      ; Cyclone IV E         ; Untyped                            ;
+; CBXI_PARAMETER                     ; altsyncram_0fg1      ; Untyped                            ;
++------------------------------------+----------------------+------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++------------------------------------------------------------------------------------------------+
+; Parameter Settings for Inferred Entity Instance: screen_mem:u_screen_mem|altsyncram:mem4_rtl_0 ;
++------------------------------------+----------------------+------------------------------------+
+; Parameter Name                     ; Value                ; Type                               ;
++------------------------------------+----------------------+------------------------------------+
+; BYTE_SIZE_BLOCK                    ; 8                    ; Untyped                            ;
+; AUTO_CARRY_CHAINS                  ; ON                   ; AUTO_CARRY                         ;
+; IGNORE_CARRY_BUFFERS               ; OFF                  ; IGNORE_CARRY                       ;
+; AUTO_CASCADE_CHAINS                ; ON                   ; AUTO_CASCADE                       ;
+; IGNORE_CASCADE_BUFFERS             ; OFF                  ; IGNORE_CASCADE                     ;
+; WIDTH_BYTEENA                      ; 1                    ; Untyped                            ;
+; OPERATION_MODE                     ; DUAL_PORT            ; Untyped                            ;
+; WIDTH_A                            ; 1                    ; Untyped                            ;
+; WIDTHAD_A                          ; 14                   ; Untyped                            ;
+; NUMWORDS_A                         ; 9600                 ; Untyped                            ;
+; OUTDATA_REG_A                      ; UNREGISTERED         ; Untyped                            ;
+; ADDRESS_ACLR_A                     ; NONE                 ; Untyped                            ;
+; OUTDATA_ACLR_A                     ; NONE                 ; Untyped                            ;
+; WRCONTROL_ACLR_A                   ; NONE                 ; Untyped                            ;
+; INDATA_ACLR_A                      ; NONE                 ; Untyped                            ;
+; BYTEENA_ACLR_A                     ; NONE                 ; Untyped                            ;
+; WIDTH_B                            ; 1                    ; Untyped                            ;
+; WIDTHAD_B                          ; 14                   ; Untyped                            ;
+; NUMWORDS_B                         ; 9600                 ; Untyped                            ;
+; INDATA_REG_B                       ; CLOCK1               ; Untyped                            ;
+; WRCONTROL_WRADDRESS_REG_B          ; CLOCK1               ; Untyped                            ;
+; RDCONTROL_REG_B                    ; CLOCK1               ; Untyped                            ;
+; ADDRESS_REG_B                      ; CLOCK0               ; Untyped                            ;
+; OUTDATA_REG_B                      ; UNREGISTERED         ; Untyped                            ;
+; BYTEENA_REG_B                      ; CLOCK1               ; Untyped                            ;
+; INDATA_ACLR_B                      ; NONE                 ; Untyped                            ;
+; WRCONTROL_ACLR_B                   ; NONE                 ; Untyped                            ;
+; ADDRESS_ACLR_B                     ; NONE                 ; Untyped                            ;
+; OUTDATA_ACLR_B                     ; NONE                 ; Untyped                            ;
+; RDCONTROL_ACLR_B                   ; NONE                 ; Untyped                            ;
+; BYTEENA_ACLR_B                     ; NONE                 ; Untyped                            ;
+; WIDTH_BYTEENA_A                    ; 1                    ; Untyped                            ;
+; WIDTH_BYTEENA_B                    ; 1                    ; Untyped                            ;
+; RAM_BLOCK_TYPE                     ; AUTO                 ; Untyped                            ;
+; BYTE_SIZE                          ; 8                    ; Untyped                            ;
+; READ_DURING_WRITE_MODE_MIXED_PORTS ; OLD_DATA             ; Untyped                            ;
+; READ_DURING_WRITE_MODE_PORT_A      ; NEW_DATA_NO_NBE_READ ; Untyped                            ;
+; READ_DURING_WRITE_MODE_PORT_B      ; NEW_DATA_NO_NBE_READ ; Untyped                            ;
+; INIT_FILE                          ; UNUSED               ; Untyped                            ;
+; INIT_FILE_LAYOUT                   ; PORT_A               ; Untyped                            ;
+; MAXIMUM_DEPTH                      ; 0                    ; Untyped                            ;
+; CLOCK_ENABLE_INPUT_A               ; NORMAL               ; Untyped                            ;
+; CLOCK_ENABLE_INPUT_B               ; NORMAL               ; Untyped                            ;
+; CLOCK_ENABLE_OUTPUT_A              ; NORMAL               ; Untyped                            ;
+; CLOCK_ENABLE_OUTPUT_B              ; NORMAL               ; Untyped                            ;
+; CLOCK_ENABLE_CORE_A                ; USE_INPUT_CLKEN      ; Untyped                            ;
+; CLOCK_ENABLE_CORE_B                ; USE_INPUT_CLKEN      ; Untyped                            ;
+; ENABLE_ECC                         ; FALSE                ; Untyped                            ;
+; ECC_PIPELINE_STAGE_ENABLED         ; FALSE                ; Untyped                            ;
+; WIDTH_ECCSTATUS                    ; 3                    ; Untyped                            ;
+; DEVICE_FAMILY                      ; Cyclone IV E         ; Untyped                            ;
+; CBXI_PARAMETER                     ; altsyncram_0fg1      ; Untyped                            ;
++------------------------------------+----------------------+------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++------------------------------------------------------------------------------------------------+
+; Parameter Settings for Inferred Entity Instance: screen_mem:u_screen_mem|altsyncram:mem5_rtl_0 ;
++------------------------------------+----------------------+------------------------------------+
+; Parameter Name                     ; Value                ; Type                               ;
++------------------------------------+----------------------+------------------------------------+
+; BYTE_SIZE_BLOCK                    ; 8                    ; Untyped                            ;
+; AUTO_CARRY_CHAINS                  ; ON                   ; AUTO_CARRY                         ;
+; IGNORE_CARRY_BUFFERS               ; OFF                  ; IGNORE_CARRY                       ;
+; AUTO_CASCADE_CHAINS                ; ON                   ; AUTO_CASCADE                       ;
+; IGNORE_CASCADE_BUFFERS             ; OFF                  ; IGNORE_CASCADE                     ;
+; WIDTH_BYTEENA                      ; 1                    ; Untyped                            ;
+; OPERATION_MODE                     ; DUAL_PORT            ; Untyped                            ;
+; WIDTH_A                            ; 1                    ; Untyped                            ;
+; WIDTHAD_A                          ; 14                   ; Untyped                            ;
+; NUMWORDS_A                         ; 9600                 ; Untyped                            ;
+; OUTDATA_REG_A                      ; UNREGISTERED         ; Untyped                            ;
+; ADDRESS_ACLR_A                     ; NONE                 ; Untyped                            ;
+; OUTDATA_ACLR_A                     ; NONE                 ; Untyped                            ;
+; WRCONTROL_ACLR_A                   ; NONE                 ; Untyped                            ;
+; INDATA_ACLR_A                      ; NONE                 ; Untyped                            ;
+; BYTEENA_ACLR_A                     ; NONE                 ; Untyped                            ;
+; WIDTH_B                            ; 1                    ; Untyped                            ;
+; WIDTHAD_B                          ; 14                   ; Untyped                            ;
+; NUMWORDS_B                         ; 9600                 ; Untyped                            ;
+; INDATA_REG_B                       ; CLOCK1               ; Untyped                            ;
+; WRCONTROL_WRADDRESS_REG_B          ; CLOCK1               ; Untyped                            ;
+; RDCONTROL_REG_B                    ; CLOCK1               ; Untyped                            ;
+; ADDRESS_REG_B                      ; CLOCK0               ; Untyped                            ;
+; OUTDATA_REG_B                      ; UNREGISTERED         ; Untyped                            ;
+; BYTEENA_REG_B                      ; CLOCK1               ; Untyped                            ;
+; INDATA_ACLR_B                      ; NONE                 ; Untyped                            ;
+; WRCONTROL_ACLR_B                   ; NONE                 ; Untyped                            ;
+; ADDRESS_ACLR_B                     ; NONE                 ; Untyped                            ;
+; OUTDATA_ACLR_B                     ; NONE                 ; Untyped                            ;
+; RDCONTROL_ACLR_B                   ; NONE                 ; Untyped                            ;
+; BYTEENA_ACLR_B                     ; NONE                 ; Untyped                            ;
+; WIDTH_BYTEENA_A                    ; 1                    ; Untyped                            ;
+; WIDTH_BYTEENA_B                    ; 1                    ; Untyped                            ;
+; RAM_BLOCK_TYPE                     ; AUTO                 ; Untyped                            ;
+; BYTE_SIZE                          ; 8                    ; Untyped                            ;
+; READ_DURING_WRITE_MODE_MIXED_PORTS ; OLD_DATA             ; Untyped                            ;
+; READ_DURING_WRITE_MODE_PORT_A      ; NEW_DATA_NO_NBE_READ ; Untyped                            ;
+; READ_DURING_WRITE_MODE_PORT_B      ; NEW_DATA_NO_NBE_READ ; Untyped                            ;
+; INIT_FILE                          ; UNUSED               ; Untyped                            ;
+; INIT_FILE_LAYOUT                   ; PORT_A               ; Untyped                            ;
+; MAXIMUM_DEPTH                      ; 0                    ; Untyped                            ;
+; CLOCK_ENABLE_INPUT_A               ; NORMAL               ; Untyped                            ;
+; CLOCK_ENABLE_INPUT_B               ; NORMAL               ; Untyped                            ;
+; CLOCK_ENABLE_OUTPUT_A              ; NORMAL               ; Untyped                            ;
+; CLOCK_ENABLE_OUTPUT_B              ; NORMAL               ; Untyped                            ;
+; CLOCK_ENABLE_CORE_A                ; USE_INPUT_CLKEN      ; Untyped                            ;
+; CLOCK_ENABLE_CORE_B                ; USE_INPUT_CLKEN      ; Untyped                            ;
+; ENABLE_ECC                         ; FALSE                ; Untyped                            ;
+; ECC_PIPELINE_STAGE_ENABLED         ; FALSE                ; Untyped                            ;
+; WIDTH_ECCSTATUS                    ; 3                    ; Untyped                            ;
+; DEVICE_FAMILY                      ; Cyclone IV E         ; Untyped                            ;
+; CBXI_PARAMETER                     ; altsyncram_0fg1      ; Untyped                            ;
++------------------------------------+----------------------+------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++------------------------------------------------------------------------------------------------+
+; Parameter Settings for Inferred Entity Instance: screen_mem:u_screen_mem|altsyncram:mem6_rtl_0 ;
++------------------------------------+----------------------+------------------------------------+
+; Parameter Name                     ; Value                ; Type                               ;
++------------------------------------+----------------------+------------------------------------+
+; BYTE_SIZE_BLOCK                    ; 8                    ; Untyped                            ;
+; AUTO_CARRY_CHAINS                  ; ON                   ; AUTO_CARRY                         ;
+; IGNORE_CARRY_BUFFERS               ; OFF                  ; IGNORE_CARRY                       ;
+; AUTO_CASCADE_CHAINS                ; ON                   ; AUTO_CASCADE                       ;
+; IGNORE_CASCADE_BUFFERS             ; OFF                  ; IGNORE_CASCADE                     ;
+; WIDTH_BYTEENA                      ; 1                    ; Untyped                            ;
+; OPERATION_MODE                     ; DUAL_PORT            ; Untyped                            ;
+; WIDTH_A                            ; 1                    ; Untyped                            ;
+; WIDTHAD_A                          ; 14                   ; Untyped                            ;
+; NUMWORDS_A                         ; 9600                 ; Untyped                            ;
+; OUTDATA_REG_A                      ; UNREGISTERED         ; Untyped                            ;
+; ADDRESS_ACLR_A                     ; NONE                 ; Untyped                            ;
+; OUTDATA_ACLR_A                     ; NONE                 ; Untyped                            ;
+; WRCONTROL_ACLR_A                   ; NONE                 ; Untyped                            ;
+; INDATA_ACLR_A                      ; NONE                 ; Untyped                            ;
+; BYTEENA_ACLR_A                     ; NONE                 ; Untyped                            ;
+; WIDTH_B                            ; 1                    ; Untyped                            ;
+; WIDTHAD_B                          ; 14                   ; Untyped                            ;
+; NUMWORDS_B                         ; 9600                 ; Untyped                            ;
+; INDATA_REG_B                       ; CLOCK1               ; Untyped                            ;
+; WRCONTROL_WRADDRESS_REG_B          ; CLOCK1               ; Untyped                            ;
+; RDCONTROL_REG_B                    ; CLOCK1               ; Untyped                            ;
+; ADDRESS_REG_B                      ; CLOCK0               ; Untyped                            ;
+; OUTDATA_REG_B                      ; UNREGISTERED         ; Untyped                            ;
+; BYTEENA_REG_B                      ; CLOCK1               ; Untyped                            ;
+; INDATA_ACLR_B                      ; NONE                 ; Untyped                            ;
+; WRCONTROL_ACLR_B                   ; NONE                 ; Untyped                            ;
+; ADDRESS_ACLR_B                     ; NONE                 ; Untyped                            ;
+; OUTDATA_ACLR_B                     ; NONE                 ; Untyped                            ;
+; RDCONTROL_ACLR_B                   ; NONE                 ; Untyped                            ;
+; BYTEENA_ACLR_B                     ; NONE                 ; Untyped                            ;
+; WIDTH_BYTEENA_A                    ; 1                    ; Untyped                            ;
+; WIDTH_BYTEENA_B                    ; 1                    ; Untyped                            ;
+; RAM_BLOCK_TYPE                     ; AUTO                 ; Untyped                            ;
+; BYTE_SIZE                          ; 8                    ; Untyped                            ;
+; READ_DURING_WRITE_MODE_MIXED_PORTS ; OLD_DATA             ; Untyped                            ;
+; READ_DURING_WRITE_MODE_PORT_A      ; NEW_DATA_NO_NBE_READ ; Untyped                            ;
+; READ_DURING_WRITE_MODE_PORT_B      ; NEW_DATA_NO_NBE_READ ; Untyped                            ;
+; INIT_FILE                          ; UNUSED               ; Untyped                            ;
+; INIT_FILE_LAYOUT                   ; PORT_A               ; Untyped                            ;
+; MAXIMUM_DEPTH                      ; 0                    ; Untyped                            ;
+; CLOCK_ENABLE_INPUT_A               ; NORMAL               ; Untyped                            ;
+; CLOCK_ENABLE_INPUT_B               ; NORMAL               ; Untyped                            ;
+; CLOCK_ENABLE_OUTPUT_A              ; NORMAL               ; Untyped                            ;
+; CLOCK_ENABLE_OUTPUT_B              ; NORMAL               ; Untyped                            ;
+; CLOCK_ENABLE_CORE_A                ; USE_INPUT_CLKEN      ; Untyped                            ;
+; CLOCK_ENABLE_CORE_B                ; USE_INPUT_CLKEN      ; Untyped                            ;
+; ENABLE_ECC                         ; FALSE                ; Untyped                            ;
+; ECC_PIPELINE_STAGE_ENABLED         ; FALSE                ; Untyped                            ;
+; WIDTH_ECCSTATUS                    ; 3                    ; Untyped                            ;
+; DEVICE_FAMILY                      ; Cyclone IV E         ; Untyped                            ;
+; CBXI_PARAMETER                     ; altsyncram_0fg1      ; Untyped                            ;
++------------------------------------+----------------------+------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++------------------------------------------------------------------------------------------------+
+; Parameter Settings for Inferred Entity Instance: screen_mem:u_screen_mem|altsyncram:mem7_rtl_0 ;
++------------------------------------+----------------------+------------------------------------+
+; Parameter Name                     ; Value                ; Type                               ;
++------------------------------------+----------------------+------------------------------------+
+; BYTE_SIZE_BLOCK                    ; 8                    ; Untyped                            ;
+; AUTO_CARRY_CHAINS                  ; ON                   ; AUTO_CARRY                         ;
+; IGNORE_CARRY_BUFFERS               ; OFF                  ; IGNORE_CARRY                       ;
+; AUTO_CASCADE_CHAINS                ; ON                   ; AUTO_CASCADE                       ;
+; IGNORE_CASCADE_BUFFERS             ; OFF                  ; IGNORE_CASCADE                     ;
+; WIDTH_BYTEENA                      ; 1                    ; Untyped                            ;
+; OPERATION_MODE                     ; DUAL_PORT            ; Untyped                            ;
+; WIDTH_A                            ; 1                    ; Untyped                            ;
+; WIDTHAD_A                          ; 14                   ; Untyped                            ;
+; NUMWORDS_A                         ; 9600                 ; Untyped                            ;
+; OUTDATA_REG_A                      ; UNREGISTERED         ; Untyped                            ;
+; ADDRESS_ACLR_A                     ; NONE                 ; Untyped                            ;
+; OUTDATA_ACLR_A                     ; NONE                 ; Untyped                            ;
+; WRCONTROL_ACLR_A                   ; NONE                 ; Untyped                            ;
+; INDATA_ACLR_A                      ; NONE                 ; Untyped                            ;
+; BYTEENA_ACLR_A                     ; NONE                 ; Untyped                            ;
+; WIDTH_B                            ; 1                    ; Untyped                            ;
+; WIDTHAD_B                          ; 14                   ; Untyped                            ;
+; NUMWORDS_B                         ; 9600                 ; Untyped                            ;
+; INDATA_REG_B                       ; CLOCK1               ; Untyped                            ;
+; WRCONTROL_WRADDRESS_REG_B          ; CLOCK1               ; Untyped                            ;
+; RDCONTROL_REG_B                    ; CLOCK1               ; Untyped                            ;
+; ADDRESS_REG_B                      ; CLOCK0               ; Untyped                            ;
+; OUTDATA_REG_B                      ; UNREGISTERED         ; Untyped                            ;
+; BYTEENA_REG_B                      ; CLOCK1               ; Untyped                            ;
+; INDATA_ACLR_B                      ; NONE                 ; Untyped                            ;
+; WRCONTROL_ACLR_B                   ; NONE                 ; Untyped                            ;
+; ADDRESS_ACLR_B                     ; NONE                 ; Untyped                            ;
+; OUTDATA_ACLR_B                     ; NONE                 ; Untyped                            ;
+; RDCONTROL_ACLR_B                   ; NONE                 ; Untyped                            ;
+; BYTEENA_ACLR_B                     ; NONE                 ; Untyped                            ;
+; WIDTH_BYTEENA_A                    ; 1                    ; Untyped                            ;
+; WIDTH_BYTEENA_B                    ; 1                    ; Untyped                            ;
+; RAM_BLOCK_TYPE                     ; AUTO                 ; Untyped                            ;
+; BYTE_SIZE                          ; 8                    ; Untyped                            ;
+; READ_DURING_WRITE_MODE_MIXED_PORTS ; OLD_DATA             ; Untyped                            ;
+; READ_DURING_WRITE_MODE_PORT_A      ; NEW_DATA_NO_NBE_READ ; Untyped                            ;
+; READ_DURING_WRITE_MODE_PORT_B      ; NEW_DATA_NO_NBE_READ ; Untyped                            ;
+; INIT_FILE                          ; UNUSED               ; Untyped                            ;
+; INIT_FILE_LAYOUT                   ; PORT_A               ; Untyped                            ;
+; MAXIMUM_DEPTH                      ; 0                    ; Untyped                            ;
+; CLOCK_ENABLE_INPUT_A               ; NORMAL               ; Untyped                            ;
+; CLOCK_ENABLE_INPUT_B               ; NORMAL               ; Untyped                            ;
+; CLOCK_ENABLE_OUTPUT_A              ; NORMAL               ; Untyped                            ;
+; CLOCK_ENABLE_OUTPUT_B              ; NORMAL               ; Untyped                            ;
+; CLOCK_ENABLE_CORE_A                ; USE_INPUT_CLKEN      ; Untyped                            ;
+; CLOCK_ENABLE_CORE_B                ; USE_INPUT_CLKEN      ; Untyped                            ;
+; ENABLE_ECC                         ; FALSE                ; Untyped                            ;
+; ECC_PIPELINE_STAGE_ENABLED         ; FALSE                ; Untyped                            ;
+; WIDTH_ECCSTATUS                    ; 3                    ; Untyped                            ;
+; DEVICE_FAMILY                      ; Cyclone IV E         ; Untyped                            ;
+; CBXI_PARAMETER                     ; altsyncram_0fg1      ; Untyped                            ;
++------------------------------------+----------------------+------------------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++-----------------------------------------------------------------------------------------+
+; Parameter Settings for Inferred Entity Instance: rasterizer:u_rasterizer|lpm_mult:Mult5 ;
++------------------------------------------------+--------------+-------------------------+
+; Parameter Name                                 ; Value        ; Type                    ;
++------------------------------------------------+--------------+-------------------------+
+; AUTO_CARRY_CHAINS                              ; ON           ; AUTO_CARRY              ;
+; IGNORE_CARRY_BUFFERS                           ; OFF          ; IGNORE_CARRY            ;
+; AUTO_CASCADE_CHAINS                            ; ON           ; AUTO_CASCADE            ;
+; IGNORE_CASCADE_BUFFERS                         ; OFF          ; IGNORE_CASCADE          ;
+; LPM_WIDTHA                                     ; 10           ; Untyped                 ;
+; LPM_WIDTHB                                     ; 10           ; Untyped                 ;
+; LPM_WIDTHP                                     ; 20           ; Untyped                 ;
+; LPM_WIDTHR                                     ; 20           ; Untyped                 ;
+; LPM_WIDTHS                                     ; 1            ; Untyped                 ;
+; LPM_REPRESENTATION                             ; SIGNED       ; Untyped                 ;
+; LPM_PIPELINE                                   ; 0            ; Untyped                 ;
+; LATENCY                                        ; 0            ; Untyped                 ;
+; INPUT_A_IS_CONSTANT                            ; NO           ; Untyped                 ;
+; INPUT_B_IS_CONSTANT                            ; NO           ; Untyped                 ;
+; USE_EAB                                        ; OFF          ; Untyped                 ;
+; MAXIMIZE_SPEED                                 ; 6            ; Untyped                 ;
+; DEVICE_FAMILY                                  ; Cyclone IV E ; Untyped                 ;
+; CARRY_CHAIN                                    ; MANUAL       ; Untyped                 ;
+; APEX20K_TECHNOLOGY_MAPPER                      ; LUT          ; TECH_MAPPER_APEX20K     ;
+; DEDICATED_MULTIPLIER_CIRCUITRY                 ; AUTO         ; Untyped                 ;
+; DEDICATED_MULTIPLIER_MIN_INPUT_WIDTH_FOR_AUTO  ; 0            ; Untyped                 ;
+; DEDICATED_MULTIPLIER_MIN_OUTPUT_WIDTH_FOR_AUTO ; 0            ; Untyped                 ;
+; CBXI_PARAMETER                                 ; mult_l5t     ; Untyped                 ;
+; INPUT_A_FIXED_VALUE                            ; Bx           ; Untyped                 ;
+; INPUT_B_FIXED_VALUE                            ; Bx           ; Untyped                 ;
+; USE_AHDL_IMPLEMENTATION                        ; OFF          ; Untyped                 ;
++------------------------------------------------+--------------+-------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++-----------------------------------------------------------------------------------------+
+; Parameter Settings for Inferred Entity Instance: rasterizer:u_rasterizer|lpm_mult:Mult4 ;
++------------------------------------------------+--------------+-------------------------+
+; Parameter Name                                 ; Value        ; Type                    ;
++------------------------------------------------+--------------+-------------------------+
+; AUTO_CARRY_CHAINS                              ; ON           ; AUTO_CARRY              ;
+; IGNORE_CARRY_BUFFERS                           ; OFF          ; IGNORE_CARRY            ;
+; AUTO_CASCADE_CHAINS                            ; ON           ; AUTO_CASCADE            ;
+; IGNORE_CASCADE_BUFFERS                         ; OFF          ; IGNORE_CASCADE          ;
+; LPM_WIDTHA                                     ; 10           ; Untyped                 ;
+; LPM_WIDTHB                                     ; 10           ; Untyped                 ;
+; LPM_WIDTHP                                     ; 20           ; Untyped                 ;
+; LPM_WIDTHR                                     ; 20           ; Untyped                 ;
+; LPM_WIDTHS                                     ; 1            ; Untyped                 ;
+; LPM_REPRESENTATION                             ; SIGNED       ; Untyped                 ;
+; LPM_PIPELINE                                   ; 0            ; Untyped                 ;
+; LATENCY                                        ; 0            ; Untyped                 ;
+; INPUT_A_IS_CONSTANT                            ; NO           ; Untyped                 ;
+; INPUT_B_IS_CONSTANT                            ; NO           ; Untyped                 ;
+; USE_EAB                                        ; OFF          ; Untyped                 ;
+; MAXIMIZE_SPEED                                 ; 6            ; Untyped                 ;
+; DEVICE_FAMILY                                  ; Cyclone IV E ; Untyped                 ;
+; CARRY_CHAIN                                    ; MANUAL       ; Untyped                 ;
+; APEX20K_TECHNOLOGY_MAPPER                      ; LUT          ; TECH_MAPPER_APEX20K     ;
+; DEDICATED_MULTIPLIER_CIRCUITRY                 ; AUTO         ; Untyped                 ;
+; DEDICATED_MULTIPLIER_MIN_INPUT_WIDTH_FOR_AUTO  ; 0            ; Untyped                 ;
+; DEDICATED_MULTIPLIER_MIN_OUTPUT_WIDTH_FOR_AUTO ; 0            ; Untyped                 ;
+; CBXI_PARAMETER                                 ; mult_l5t     ; Untyped                 ;
+; INPUT_A_FIXED_VALUE                            ; Bx           ; Untyped                 ;
+; INPUT_B_FIXED_VALUE                            ; Bx           ; Untyped                 ;
+; USE_AHDL_IMPLEMENTATION                        ; OFF          ; Untyped                 ;
++------------------------------------------------+--------------+-------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++-----------------------------------------------------------------------------------------+
+; Parameter Settings for Inferred Entity Instance: rasterizer:u_rasterizer|lpm_mult:Mult3 ;
++------------------------------------------------+--------------+-------------------------+
+; Parameter Name                                 ; Value        ; Type                    ;
++------------------------------------------------+--------------+-------------------------+
+; AUTO_CARRY_CHAINS                              ; ON           ; AUTO_CARRY              ;
+; IGNORE_CARRY_BUFFERS                           ; OFF          ; IGNORE_CARRY            ;
+; AUTO_CASCADE_CHAINS                            ; ON           ; AUTO_CASCADE            ;
+; IGNORE_CASCADE_BUFFERS                         ; OFF          ; IGNORE_CASCADE          ;
+; LPM_WIDTHA                                     ; 10           ; Untyped                 ;
+; LPM_WIDTHB                                     ; 10           ; Untyped                 ;
+; LPM_WIDTHP                                     ; 20           ; Untyped                 ;
+; LPM_WIDTHR                                     ; 20           ; Untyped                 ;
+; LPM_WIDTHS                                     ; 1            ; Untyped                 ;
+; LPM_REPRESENTATION                             ; SIGNED       ; Untyped                 ;
+; LPM_PIPELINE                                   ; 0            ; Untyped                 ;
+; LATENCY                                        ; 0            ; Untyped                 ;
+; INPUT_A_IS_CONSTANT                            ; NO           ; Untyped                 ;
+; INPUT_B_IS_CONSTANT                            ; NO           ; Untyped                 ;
+; USE_EAB                                        ; OFF          ; Untyped                 ;
+; MAXIMIZE_SPEED                                 ; 6            ; Untyped                 ;
+; DEVICE_FAMILY                                  ; Cyclone IV E ; Untyped                 ;
+; CARRY_CHAIN                                    ; MANUAL       ; Untyped                 ;
+; APEX20K_TECHNOLOGY_MAPPER                      ; LUT          ; TECH_MAPPER_APEX20K     ;
+; DEDICATED_MULTIPLIER_CIRCUITRY                 ; AUTO         ; Untyped                 ;
+; DEDICATED_MULTIPLIER_MIN_INPUT_WIDTH_FOR_AUTO  ; 0            ; Untyped                 ;
+; DEDICATED_MULTIPLIER_MIN_OUTPUT_WIDTH_FOR_AUTO ; 0            ; Untyped                 ;
+; CBXI_PARAMETER                                 ; mult_l5t     ; Untyped                 ;
+; INPUT_A_FIXED_VALUE                            ; Bx           ; Untyped                 ;
+; INPUT_B_FIXED_VALUE                            ; Bx           ; Untyped                 ;
+; USE_AHDL_IMPLEMENTATION                        ; OFF          ; Untyped                 ;
++------------------------------------------------+--------------+-------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++-----------------------------------------------------------------------------------------+
+; Parameter Settings for Inferred Entity Instance: rasterizer:u_rasterizer|lpm_mult:Mult2 ;
++------------------------------------------------+--------------+-------------------------+
+; Parameter Name                                 ; Value        ; Type                    ;
++------------------------------------------------+--------------+-------------------------+
+; AUTO_CARRY_CHAINS                              ; ON           ; AUTO_CARRY              ;
+; IGNORE_CARRY_BUFFERS                           ; OFF          ; IGNORE_CARRY            ;
+; AUTO_CASCADE_CHAINS                            ; ON           ; AUTO_CASCADE            ;
+; IGNORE_CASCADE_BUFFERS                         ; OFF          ; IGNORE_CASCADE          ;
+; LPM_WIDTHA                                     ; 10           ; Untyped                 ;
+; LPM_WIDTHB                                     ; 10           ; Untyped                 ;
+; LPM_WIDTHP                                     ; 20           ; Untyped                 ;
+; LPM_WIDTHR                                     ; 20           ; Untyped                 ;
+; LPM_WIDTHS                                     ; 1            ; Untyped                 ;
+; LPM_REPRESENTATION                             ; SIGNED       ; Untyped                 ;
+; LPM_PIPELINE                                   ; 0            ; Untyped                 ;
+; LATENCY                                        ; 0            ; Untyped                 ;
+; INPUT_A_IS_CONSTANT                            ; NO           ; Untyped                 ;
+; INPUT_B_IS_CONSTANT                            ; NO           ; Untyped                 ;
+; USE_EAB                                        ; OFF          ; Untyped                 ;
+; MAXIMIZE_SPEED                                 ; 6            ; Untyped                 ;
+; DEVICE_FAMILY                                  ; Cyclone IV E ; Untyped                 ;
+; CARRY_CHAIN                                    ; MANUAL       ; Untyped                 ;
+; APEX20K_TECHNOLOGY_MAPPER                      ; LUT          ; TECH_MAPPER_APEX20K     ;
+; DEDICATED_MULTIPLIER_CIRCUITRY                 ; AUTO         ; Untyped                 ;
+; DEDICATED_MULTIPLIER_MIN_INPUT_WIDTH_FOR_AUTO  ; 0            ; Untyped                 ;
+; DEDICATED_MULTIPLIER_MIN_OUTPUT_WIDTH_FOR_AUTO ; 0            ; Untyped                 ;
+; CBXI_PARAMETER                                 ; mult_l5t     ; Untyped                 ;
+; INPUT_A_FIXED_VALUE                            ; Bx           ; Untyped                 ;
+; INPUT_B_FIXED_VALUE                            ; Bx           ; Untyped                 ;
+; USE_AHDL_IMPLEMENTATION                        ; OFF          ; Untyped                 ;
++------------------------------------------------+--------------+-------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++-----------------------------------------------------------------------------------------+
+; Parameter Settings for Inferred Entity Instance: rasterizer:u_rasterizer|lpm_mult:Mult1 ;
++------------------------------------------------+--------------+-------------------------+
+; Parameter Name                                 ; Value        ; Type                    ;
++------------------------------------------------+--------------+-------------------------+
+; AUTO_CARRY_CHAINS                              ; ON           ; AUTO_CARRY              ;
+; IGNORE_CARRY_BUFFERS                           ; OFF          ; IGNORE_CARRY            ;
+; AUTO_CASCADE_CHAINS                            ; ON           ; AUTO_CASCADE            ;
+; IGNORE_CASCADE_BUFFERS                         ; OFF          ; IGNORE_CASCADE          ;
+; LPM_WIDTHA                                     ; 10           ; Untyped                 ;
+; LPM_WIDTHB                                     ; 10           ; Untyped                 ;
+; LPM_WIDTHP                                     ; 20           ; Untyped                 ;
+; LPM_WIDTHR                                     ; 20           ; Untyped                 ;
+; LPM_WIDTHS                                     ; 1            ; Untyped                 ;
+; LPM_REPRESENTATION                             ; SIGNED       ; Untyped                 ;
+; LPM_PIPELINE                                   ; 0            ; Untyped                 ;
+; LATENCY                                        ; 0            ; Untyped                 ;
+; INPUT_A_IS_CONSTANT                            ; NO           ; Untyped                 ;
+; INPUT_B_IS_CONSTANT                            ; NO           ; Untyped                 ;
+; USE_EAB                                        ; OFF          ; Untyped                 ;
+; MAXIMIZE_SPEED                                 ; 6            ; Untyped                 ;
+; DEVICE_FAMILY                                  ; Cyclone IV E ; Untyped                 ;
+; CARRY_CHAIN                                    ; MANUAL       ; Untyped                 ;
+; APEX20K_TECHNOLOGY_MAPPER                      ; LUT          ; TECH_MAPPER_APEX20K     ;
+; DEDICATED_MULTIPLIER_CIRCUITRY                 ; AUTO         ; Untyped                 ;
+; DEDICATED_MULTIPLIER_MIN_INPUT_WIDTH_FOR_AUTO  ; 0            ; Untyped                 ;
+; DEDICATED_MULTIPLIER_MIN_OUTPUT_WIDTH_FOR_AUTO ; 0            ; Untyped                 ;
+; CBXI_PARAMETER                                 ; mult_l5t     ; Untyped                 ;
+; INPUT_A_FIXED_VALUE                            ; Bx           ; Untyped                 ;
+; INPUT_B_FIXED_VALUE                            ; Bx           ; Untyped                 ;
+; USE_AHDL_IMPLEMENTATION                        ; OFF          ; Untyped                 ;
++------------------------------------------------+--------------+-------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++-----------------------------------------------------------------------------------------+
+; Parameter Settings for Inferred Entity Instance: rasterizer:u_rasterizer|lpm_mult:Mult0 ;
++------------------------------------------------+--------------+-------------------------+
+; Parameter Name                                 ; Value        ; Type                    ;
++------------------------------------------------+--------------+-------------------------+
+; AUTO_CARRY_CHAINS                              ; ON           ; AUTO_CARRY              ;
+; IGNORE_CARRY_BUFFERS                           ; OFF          ; IGNORE_CARRY            ;
+; AUTO_CASCADE_CHAINS                            ; ON           ; AUTO_CASCADE            ;
+; IGNORE_CASCADE_BUFFERS                         ; OFF          ; IGNORE_CASCADE          ;
+; LPM_WIDTHA                                     ; 10           ; Untyped                 ;
+; LPM_WIDTHB                                     ; 10           ; Untyped                 ;
+; LPM_WIDTHP                                     ; 20           ; Untyped                 ;
+; LPM_WIDTHR                                     ; 20           ; Untyped                 ;
+; LPM_WIDTHS                                     ; 1            ; Untyped                 ;
+; LPM_REPRESENTATION                             ; SIGNED       ; Untyped                 ;
+; LPM_PIPELINE                                   ; 0            ; Untyped                 ;
+; LATENCY                                        ; 0            ; Untyped                 ;
+; INPUT_A_IS_CONSTANT                            ; NO           ; Untyped                 ;
+; INPUT_B_IS_CONSTANT                            ; NO           ; Untyped                 ;
+; USE_EAB                                        ; OFF          ; Untyped                 ;
+; MAXIMIZE_SPEED                                 ; 6            ; Untyped                 ;
+; DEVICE_FAMILY                                  ; Cyclone IV E ; Untyped                 ;
+; CARRY_CHAIN                                    ; MANUAL       ; Untyped                 ;
+; APEX20K_TECHNOLOGY_MAPPER                      ; LUT          ; TECH_MAPPER_APEX20K     ;
+; DEDICATED_MULTIPLIER_CIRCUITRY                 ; AUTO         ; Untyped                 ;
+; DEDICATED_MULTIPLIER_MIN_INPUT_WIDTH_FOR_AUTO  ; 0            ; Untyped                 ;
+; DEDICATED_MULTIPLIER_MIN_OUTPUT_WIDTH_FOR_AUTO ; 0            ; Untyped                 ;
+; CBXI_PARAMETER                                 ; mult_l5t     ; Untyped                 ;
+; INPUT_A_FIXED_VALUE                            ; Bx           ; Untyped                 ;
+; INPUT_B_FIXED_VALUE                            ; Bx           ; Untyped                 ;
+; USE_AHDL_IMPLEMENTATION                        ; OFF          ; Untyped                 ;
++------------------------------------------------+--------------+-------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++-------------------------------------------------------------------------------------------+
+; altsyncram Parameter Settings by Entity Instance                                          ;
++-------------------------------------------+-----------------------------------------------+
+; Name                                      ; Value                                         ;
++-------------------------------------------+-----------------------------------------------+
+; Number of entity instances                ; 8                                             ;
+; Entity Instance                           ; screen_mem:u_screen_mem|altsyncram:mem0_rtl_0 ;
+;     -- OPERATION_MODE                     ; DUAL_PORT                                     ;
+;     -- WIDTH_A                            ; 1                                             ;
+;     -- NUMWORDS_A                         ; 9600                                          ;
+;     -- OUTDATA_REG_A                      ; UNREGISTERED                                  ;
+;     -- WIDTH_B                            ; 1                                             ;
+;     -- NUMWORDS_B                         ; 9600                                          ;
+;     -- ADDRESS_REG_B                      ; CLOCK0                                        ;
+;     -- OUTDATA_REG_B                      ; UNREGISTERED                                  ;
+;     -- RAM_BLOCK_TYPE                     ; AUTO                                          ;
+;     -- READ_DURING_WRITE_MODE_MIXED_PORTS ; OLD_DATA                                      ;
+; Entity Instance                           ; screen_mem:u_screen_mem|altsyncram:mem1_rtl_0 ;
+;     -- OPERATION_MODE                     ; DUAL_PORT                                     ;
+;     -- WIDTH_A                            ; 1                                             ;
+;     -- NUMWORDS_A                         ; 9600                                          ;
+;     -- OUTDATA_REG_A                      ; UNREGISTERED                                  ;
+;     -- WIDTH_B                            ; 1                                             ;
+;     -- NUMWORDS_B                         ; 9600                                          ;
+;     -- ADDRESS_REG_B                      ; CLOCK0                                        ;
+;     -- OUTDATA_REG_B                      ; UNREGISTERED                                  ;
+;     -- RAM_BLOCK_TYPE                     ; AUTO                                          ;
+;     -- READ_DURING_WRITE_MODE_MIXED_PORTS ; OLD_DATA                                      ;
+; Entity Instance                           ; screen_mem:u_screen_mem|altsyncram:mem2_rtl_0 ;
+;     -- OPERATION_MODE                     ; DUAL_PORT                                     ;
+;     -- WIDTH_A                            ; 1                                             ;
+;     -- NUMWORDS_A                         ; 9600                                          ;
+;     -- OUTDATA_REG_A                      ; UNREGISTERED                                  ;
+;     -- WIDTH_B                            ; 1                                             ;
+;     -- NUMWORDS_B                         ; 9600                                          ;
+;     -- ADDRESS_REG_B                      ; CLOCK0                                        ;
+;     -- OUTDATA_REG_B                      ; UNREGISTERED                                  ;
+;     -- RAM_BLOCK_TYPE                     ; AUTO                                          ;
+;     -- READ_DURING_WRITE_MODE_MIXED_PORTS ; OLD_DATA                                      ;
+; Entity Instance                           ; screen_mem:u_screen_mem|altsyncram:mem3_rtl_0 ;
+;     -- OPERATION_MODE                     ; DUAL_PORT                                     ;
+;     -- WIDTH_A                            ; 1                                             ;
+;     -- NUMWORDS_A                         ; 9600                                          ;
+;     -- OUTDATA_REG_A                      ; UNREGISTERED                                  ;
+;     -- WIDTH_B                            ; 1                                             ;
+;     -- NUMWORDS_B                         ; 9600                                          ;
+;     -- ADDRESS_REG_B                      ; CLOCK0                                        ;
+;     -- OUTDATA_REG_B                      ; UNREGISTERED                                  ;
+;     -- RAM_BLOCK_TYPE                     ; AUTO                                          ;
+;     -- READ_DURING_WRITE_MODE_MIXED_PORTS ; OLD_DATA                                      ;
+; Entity Instance                           ; screen_mem:u_screen_mem|altsyncram:mem4_rtl_0 ;
+;     -- OPERATION_MODE                     ; DUAL_PORT                                     ;
+;     -- WIDTH_A                            ; 1                                             ;
+;     -- NUMWORDS_A                         ; 9600                                          ;
+;     -- OUTDATA_REG_A                      ; UNREGISTERED                                  ;
+;     -- WIDTH_B                            ; 1                                             ;
+;     -- NUMWORDS_B                         ; 9600                                          ;
+;     -- ADDRESS_REG_B                      ; CLOCK0                                        ;
+;     -- OUTDATA_REG_B                      ; UNREGISTERED                                  ;
+;     -- RAM_BLOCK_TYPE                     ; AUTO                                          ;
+;     -- READ_DURING_WRITE_MODE_MIXED_PORTS ; OLD_DATA                                      ;
+; Entity Instance                           ; screen_mem:u_screen_mem|altsyncram:mem5_rtl_0 ;
+;     -- OPERATION_MODE                     ; DUAL_PORT                                     ;
+;     -- WIDTH_A                            ; 1                                             ;
+;     -- NUMWORDS_A                         ; 9600                                          ;
+;     -- OUTDATA_REG_A                      ; UNREGISTERED                                  ;
+;     -- WIDTH_B                            ; 1                                             ;
+;     -- NUMWORDS_B                         ; 9600                                          ;
+;     -- ADDRESS_REG_B                      ; CLOCK0                                        ;
+;     -- OUTDATA_REG_B                      ; UNREGISTERED                                  ;
+;     -- RAM_BLOCK_TYPE                     ; AUTO                                          ;
+;     -- READ_DURING_WRITE_MODE_MIXED_PORTS ; OLD_DATA                                      ;
+; Entity Instance                           ; screen_mem:u_screen_mem|altsyncram:mem6_rtl_0 ;
+;     -- OPERATION_MODE                     ; DUAL_PORT                                     ;
+;     -- WIDTH_A                            ; 1                                             ;
+;     -- NUMWORDS_A                         ; 9600                                          ;
+;     -- OUTDATA_REG_A                      ; UNREGISTERED                                  ;
+;     -- WIDTH_B                            ; 1                                             ;
+;     -- NUMWORDS_B                         ; 9600                                          ;
+;     -- ADDRESS_REG_B                      ; CLOCK0                                        ;
+;     -- OUTDATA_REG_B                      ; UNREGISTERED                                  ;
+;     -- RAM_BLOCK_TYPE                     ; AUTO                                          ;
+;     -- READ_DURING_WRITE_MODE_MIXED_PORTS ; OLD_DATA                                      ;
+; Entity Instance                           ; screen_mem:u_screen_mem|altsyncram:mem7_rtl_0 ;
+;     -- OPERATION_MODE                     ; DUAL_PORT                                     ;
+;     -- WIDTH_A                            ; 1                                             ;
+;     -- NUMWORDS_A                         ; 9600                                          ;
+;     -- OUTDATA_REG_A                      ; UNREGISTERED                                  ;
+;     -- WIDTH_B                            ; 1                                             ;
+;     -- NUMWORDS_B                         ; 9600                                          ;
+;     -- ADDRESS_REG_B                      ; CLOCK0                                        ;
+;     -- OUTDATA_REG_B                      ; UNREGISTERED                                  ;
+;     -- RAM_BLOCK_TYPE                     ; AUTO                                          ;
+;     -- READ_DURING_WRITE_MODE_MIXED_PORTS ; OLD_DATA                                      ;
++-------------------------------------------+-----------------------------------------------+
+
+
++--------------------------------------------------------------------------------+
+; lpm_mult Parameter Settings by Entity Instance                                 ;
++---------------------------------------+----------------------------------------+
+; Name                                  ; Value                                  ;
++---------------------------------------+----------------------------------------+
+; Number of entity instances            ; 6                                      ;
+; Entity Instance                       ; rasterizer:u_rasterizer|lpm_mult:Mult5 ;
+;     -- LPM_WIDTHA                     ; 10                                     ;
+;     -- LPM_WIDTHB                     ; 10                                     ;
+;     -- LPM_WIDTHP                     ; 20                                     ;
+;     -- LPM_REPRESENTATION             ; SIGNED                                 ;
+;     -- INPUT_A_IS_CONSTANT            ; NO                                     ;
+;     -- INPUT_B_IS_CONSTANT            ; NO                                     ;
+;     -- USE_EAB                        ; OFF                                    ;
+;     -- DEDICATED_MULTIPLIER_CIRCUITRY ; AUTO                                   ;
+;     -- INPUT_A_FIXED_VALUE            ; Bx                                     ;
+;     -- INPUT_B_FIXED_VALUE            ; Bx                                     ;
+; Entity Instance                       ; rasterizer:u_rasterizer|lpm_mult:Mult4 ;
+;     -- LPM_WIDTHA                     ; 10                                     ;
+;     -- LPM_WIDTHB                     ; 10                                     ;
+;     -- LPM_WIDTHP                     ; 20                                     ;
+;     -- LPM_REPRESENTATION             ; SIGNED                                 ;
+;     -- INPUT_A_IS_CONSTANT            ; NO                                     ;
+;     -- INPUT_B_IS_CONSTANT            ; NO                                     ;
+;     -- USE_EAB                        ; OFF                                    ;
+;     -- DEDICATED_MULTIPLIER_CIRCUITRY ; AUTO                                   ;
+;     -- INPUT_A_FIXED_VALUE            ; Bx                                     ;
+;     -- INPUT_B_FIXED_VALUE            ; Bx                                     ;
+; Entity Instance                       ; rasterizer:u_rasterizer|lpm_mult:Mult3 ;
+;     -- LPM_WIDTHA                     ; 10                                     ;
+;     -- LPM_WIDTHB                     ; 10                                     ;
+;     -- LPM_WIDTHP                     ; 20                                     ;
+;     -- LPM_REPRESENTATION             ; SIGNED                                 ;
+;     -- INPUT_A_IS_CONSTANT            ; NO                                     ;
+;     -- INPUT_B_IS_CONSTANT            ; NO                                     ;
+;     -- USE_EAB                        ; OFF                                    ;
+;     -- DEDICATED_MULTIPLIER_CIRCUITRY ; AUTO                                   ;
+;     -- INPUT_A_FIXED_VALUE            ; Bx                                     ;
+;     -- INPUT_B_FIXED_VALUE            ; Bx                                     ;
+; Entity Instance                       ; rasterizer:u_rasterizer|lpm_mult:Mult2 ;
+;     -- LPM_WIDTHA                     ; 10                                     ;
+;     -- LPM_WIDTHB                     ; 10                                     ;
+;     -- LPM_WIDTHP                     ; 20                                     ;
+;     -- LPM_REPRESENTATION             ; SIGNED                                 ;
+;     -- INPUT_A_IS_CONSTANT            ; NO                                     ;
+;     -- INPUT_B_IS_CONSTANT            ; NO                                     ;
+;     -- USE_EAB                        ; OFF                                    ;
+;     -- DEDICATED_MULTIPLIER_CIRCUITRY ; AUTO                                   ;
+;     -- INPUT_A_FIXED_VALUE            ; Bx                                     ;
+;     -- INPUT_B_FIXED_VALUE            ; Bx                                     ;
+; Entity Instance                       ; rasterizer:u_rasterizer|lpm_mult:Mult1 ;
+;     -- LPM_WIDTHA                     ; 10                                     ;
+;     -- LPM_WIDTHB                     ; 10                                     ;
+;     -- LPM_WIDTHP                     ; 20                                     ;
+;     -- LPM_REPRESENTATION             ; SIGNED                                 ;
+;     -- INPUT_A_IS_CONSTANT            ; NO                                     ;
+;     -- INPUT_B_IS_CONSTANT            ; NO                                     ;
+;     -- USE_EAB                        ; OFF                                    ;
+;     -- DEDICATED_MULTIPLIER_CIRCUITRY ; AUTO                                   ;
+;     -- INPUT_A_FIXED_VALUE            ; Bx                                     ;
+;     -- INPUT_B_FIXED_VALUE            ; Bx                                     ;
+; Entity Instance                       ; rasterizer:u_rasterizer|lpm_mult:Mult0 ;
+;     -- LPM_WIDTHA                     ; 10                                     ;
+;     -- LPM_WIDTHB                     ; 10                                     ;
+;     -- LPM_WIDTHP                     ; 20                                     ;
+;     -- LPM_REPRESENTATION             ; SIGNED                                 ;
+;     -- INPUT_A_IS_CONSTANT            ; NO                                     ;
+;     -- INPUT_B_IS_CONSTANT            ; NO                                     ;
+;     -- USE_EAB                        ; OFF                                    ;
+;     -- DEDICATED_MULTIPLIER_CIRCUITRY ; AUTO                                   ;
+;     -- INPUT_A_FIXED_VALUE            ; Bx                                     ;
+;     -- INPUT_B_FIXED_VALUE            ; Bx                                     ;
++---------------------------------------+----------------------------------------+
+
+
++-----------------------------------------------------+
+; Port Connectivity Checks: "rasterizer:u_rasterizer" ;
++----------+-------+----------+-----------------------+
+; Port     ; Type  ; Severity ; Details               ;
++----------+-------+----------+-----------------------+
+; color_in ; Input ; Info     ; Stuck at VCC          ;
++----------+-------+----------+-----------------------+
+
+
++-----------------------------------------------------+
+; Post-Synthesis Netlist Statistics for Top Partition ;
++-----------------------+-----------------------------+
+; Type                  ; Count                       ;
++-----------------------+-----------------------------+
+; boundary_port         ; 59                          ;
+; cycloneiii_ff         ; 235                         ;
+;     CLR               ; 23                          ;
+;     ENA               ; 195                         ;
+;     ENA SLD           ; 6                           ;
+;     plain             ; 11                          ;
+; cycloneiii_lcell_comb ; 1355                        ;
+;     arith             ; 934                         ;
+;         2 data inputs ; 84                          ;
+;         3 data inputs ; 850                         ;
+;     normal            ; 421                         ;
+;         0 data inputs ; 12                          ;
+;         1 data inputs ; 12                          ;
+;         2 data inputs ; 93                          ;
+;         3 data inputs ; 60                          ;
+;         4 data inputs ; 244                         ;
+; cycloneiii_mac_mult   ; 6                           ;
+; cycloneiii_mac_out    ; 6                           ;
+; cycloneiii_ram_block  ; 16                          ;
+;                       ;                             ;
+; Max LUT depth         ; 9.50                        ;
+; Average LUT depth     ; 5.42                        ;
++-----------------------+-----------------------------+
+
+
++-------------------------------+
+; Elapsed Time Per Partition    ;
++----------------+--------------+
+; Partition Name ; Elapsed Time ;
++----------------+--------------+
+; Top            ; 00:00:04     ;
++----------------+--------------+
+
+
++-------------------------------+
+; Analysis & Synthesis Messages ;
++-------------------------------+
+Info: *******************************************************************
+Info: Running Quartus Prime Analysis & Synthesis
+    Info: Version 25.1std.0 Build 1129 10/21/2025 SC Lite Edition
+    Info: Processing started: Wed Aug 26 11:45:45 2026
+Info: Command: quartus_map --read_settings_files=on --write_settings_files=off optimized_benchmark -c optimized_benchmark
+Info (16303): High Performance Effort optimization mode selected -- timing performance will be prioritized at the potential cost of increased compilation time
+Info (20032): Parallel compilation is enabled and will use up to 10 processors
+Info (12021): Found 1 design units, including 1 entities, in source file rasterizer_benchmark.sv
+    Info (12023): Found entity 1: rasterizer_benchmark File: C:/Users/rohan/OneDrive/Desktop/FPGA_Rasterizer/benchmarks/optimized/rasterizer_benchmark.sv Line: 1
+Info (12021): Found 1 design units, including 1 entities, in source file /users/rohan/onedrive/desktop/fpga_rasterizer/rtl/rasterizer.sv
+    Info (12023): Found entity 1: rasterizer File: C:/Users/rohan/OneDrive/Desktop/FPGA_Rasterizer/rtl/rasterizer.sv Line: 1
+Info (12021): Found 1 design units, including 1 entities, in source file /users/rohan/onedrive/desktop/fpga_rasterizer/rtl/screen_mem.sv
+    Info (12023): Found entity 1: screen_mem File: C:/Users/rohan/OneDrive/Desktop/FPGA_Rasterizer/rtl/screen_mem.sv Line: 2
+Info (12127): Elaborating entity "rasterizer_benchmark" for the top level hierarchy
+Info (12128): Elaborating entity "rasterizer" for hierarchy "rasterizer:u_rasterizer" File: C:/Users/rohan/OneDrive/Desktop/FPGA_Rasterizer/benchmarks/optimized/rasterizer_benchmark.sv Line: 31
+Warning (10230): Verilog HDL assignment warning at rasterizer.sv(58): truncated value with size 32 to match size of target (14) File: C:/Users/rohan/OneDrive/Desktop/FPGA_Rasterizer/rtl/rasterizer.sv Line: 58
+Warning (10230): Verilog HDL assignment warning at rasterizer.sv(82): truncated value with size 32 to match size of target (10) File: C:/Users/rohan/OneDrive/Desktop/FPGA_Rasterizer/rtl/rasterizer.sv Line: 82
+Warning (10230): Verilog HDL assignment warning at rasterizer.sv(85): truncated value with size 32 to match size of target (10) File: C:/Users/rohan/OneDrive/Desktop/FPGA_Rasterizer/rtl/rasterizer.sv Line: 85
+Warning (10230): Verilog HDL assignment warning at rasterizer.sv(146): truncated value with size 32 to match size of target (10) File: C:/Users/rohan/OneDrive/Desktop/FPGA_Rasterizer/rtl/rasterizer.sv Line: 146
+Warning (10230): Verilog HDL assignment warning at rasterizer.sv(147): truncated value with size 32 to match size of target (21) File: C:/Users/rohan/OneDrive/Desktop/FPGA_Rasterizer/rtl/rasterizer.sv Line: 147
+Warning (10230): Verilog HDL assignment warning at rasterizer.sv(148): truncated value with size 32 to match size of target (21) File: C:/Users/rohan/OneDrive/Desktop/FPGA_Rasterizer/rtl/rasterizer.sv Line: 148
+Warning (10230): Verilog HDL assignment warning at rasterizer.sv(149): truncated value with size 32 to match size of target (21) File: C:/Users/rohan/OneDrive/Desktop/FPGA_Rasterizer/rtl/rasterizer.sv Line: 149
+Info (12128): Elaborating entity "screen_mem" for hierarchy "screen_mem:u_screen_mem" File: C:/Users/rohan/OneDrive/Desktop/FPGA_Rasterizer/benchmarks/optimized/rasterizer_benchmark.sv Line: 37
+Info (19000): Inferred 8 megafunctions from design logic
+    Info (276029): Inferred altsyncram megafunction from the following design logic: "screen_mem:u_screen_mem|mem0_rtl_0" 
+        Info (286033): Parameter OPERATION_MODE set to DUAL_PORT
+        Info (286033): Parameter WIDTH_A set to 1
+        Info (286033): Parameter WIDTHAD_A set to 14
+        Info (286033): Parameter NUMWORDS_A set to 9600
+        Info (286033): Parameter WIDTH_B set to 1
+        Info (286033): Parameter WIDTHAD_B set to 14
+        Info (286033): Parameter NUMWORDS_B set to 9600
+        Info (286033): Parameter ADDRESS_ACLR_A set to NONE
+        Info (286033): Parameter OUTDATA_REG_B set to UNREGISTERED
+        Info (286033): Parameter ADDRESS_ACLR_B set to NONE
+        Info (286033): Parameter OUTDATA_ACLR_B set to NONE
+        Info (286033): Parameter ADDRESS_REG_B set to CLOCK0
+        Info (286033): Parameter INDATA_ACLR_A set to NONE
+        Info (286033): Parameter WRCONTROL_ACLR_A set to NONE
+        Info (286033): Parameter READ_DURING_WRITE_MODE_MIXED_PORTS set to OLD_DATA
+    Info (276029): Inferred altsyncram megafunction from the following design logic: "screen_mem:u_screen_mem|mem1_rtl_0" 
+        Info (286033): Parameter OPERATION_MODE set to DUAL_PORT
+        Info (286033): Parameter WIDTH_A set to 1
+        Info (286033): Parameter WIDTHAD_A set to 14
+        Info (286033): Parameter NUMWORDS_A set to 9600
+        Info (286033): Parameter WIDTH_B set to 1
+        Info (286033): Parameter WIDTHAD_B set to 14
+        Info (286033): Parameter NUMWORDS_B set to 9600
+        Info (286033): Parameter ADDRESS_ACLR_A set to NONE
+        Info (286033): Parameter OUTDATA_REG_B set to UNREGISTERED
+        Info (286033): Parameter ADDRESS_ACLR_B set to NONE
+        Info (286033): Parameter OUTDATA_ACLR_B set to NONE
+        Info (286033): Parameter ADDRESS_REG_B set to CLOCK0
+        Info (286033): Parameter INDATA_ACLR_A set to NONE
+        Info (286033): Parameter WRCONTROL_ACLR_A set to NONE
+        Info (286033): Parameter READ_DURING_WRITE_MODE_MIXED_PORTS set to OLD_DATA
+    Info (276029): Inferred altsyncram megafunction from the following design logic: "screen_mem:u_screen_mem|mem2_rtl_0" 
+        Info (286033): Parameter OPERATION_MODE set to DUAL_PORT
+        Info (286033): Parameter WIDTH_A set to 1
+        Info (286033): Parameter WIDTHAD_A set to 14
+        Info (286033): Parameter NUMWORDS_A set to 9600
+        Info (286033): Parameter WIDTH_B set to 1
+        Info (286033): Parameter WIDTHAD_B set to 14
+        Info (286033): Parameter NUMWORDS_B set to 9600
+        Info (286033): Parameter ADDRESS_ACLR_A set to NONE
+        Info (286033): Parameter OUTDATA_REG_B set to UNREGISTERED
+        Info (286033): Parameter ADDRESS_ACLR_B set to NONE
+        Info (286033): Parameter OUTDATA_ACLR_B set to NONE
+        Info (286033): Parameter ADDRESS_REG_B set to CLOCK0
+        Info (286033): Parameter INDATA_ACLR_A set to NONE
+        Info (286033): Parameter WRCONTROL_ACLR_A set to NONE
+        Info (286033): Parameter READ_DURING_WRITE_MODE_MIXED_PORTS set to OLD_DATA
+    Info (276029): Inferred altsyncram megafunction from the following design logic: "screen_mem:u_screen_mem|mem3_rtl_0" 
+        Info (286033): Parameter OPERATION_MODE set to DUAL_PORT
+        Info (286033): Parameter WIDTH_A set to 1
+        Info (286033): Parameter WIDTHAD_A set to 14
+        Info (286033): Parameter NUMWORDS_A set to 9600
+        Info (286033): Parameter WIDTH_B set to 1
+        Info (286033): Parameter WIDTHAD_B set to 14
+        Info (286033): Parameter NUMWORDS_B set to 9600
+        Info (286033): Parameter ADDRESS_ACLR_A set to NONE
+        Info (286033): Parameter OUTDATA_REG_B set to UNREGISTERED
+        Info (286033): Parameter ADDRESS_ACLR_B set to NONE
+        Info (286033): Parameter OUTDATA_ACLR_B set to NONE
+        Info (286033): Parameter ADDRESS_REG_B set to CLOCK0
+        Info (286033): Parameter INDATA_ACLR_A set to NONE
+        Info (286033): Parameter WRCONTROL_ACLR_A set to NONE
+        Info (286033): Parameter READ_DURING_WRITE_MODE_MIXED_PORTS set to OLD_DATA
+    Info (276029): Inferred altsyncram megafunction from the following design logic: "screen_mem:u_screen_mem|mem4_rtl_0" 
+        Info (286033): Parameter OPERATION_MODE set to DUAL_PORT
+        Info (286033): Parameter WIDTH_A set to 1
+        Info (286033): Parameter WIDTHAD_A set to 14
+        Info (286033): Parameter NUMWORDS_A set to 9600
+        Info (286033): Parameter WIDTH_B set to 1
+        Info (286033): Parameter WIDTHAD_B set to 14
+        Info (286033): Parameter NUMWORDS_B set to 9600
+        Info (286033): Parameter ADDRESS_ACLR_A set to NONE
+        Info (286033): Parameter OUTDATA_REG_B set to UNREGISTERED
+        Info (286033): Parameter ADDRESS_ACLR_B set to NONE
+        Info (286033): Parameter OUTDATA_ACLR_B set to NONE
+        Info (286033): Parameter ADDRESS_REG_B set to CLOCK0
+        Info (286033): Parameter INDATA_ACLR_A set to NONE
+        Info (286033): Parameter WRCONTROL_ACLR_A set to NONE
+        Info (286033): Parameter READ_DURING_WRITE_MODE_MIXED_PORTS set to OLD_DATA
+    Info (276029): Inferred altsyncram megafunction from the following design logic: "screen_mem:u_screen_mem|mem5_rtl_0" 
+        Info (286033): Parameter OPERATION_MODE set to DUAL_PORT
+        Info (286033): Parameter WIDTH_A set to 1
+        Info (286033): Parameter WIDTHAD_A set to 14
+        Info (286033): Parameter NUMWORDS_A set to 9600
+        Info (286033): Parameter WIDTH_B set to 1
+        Info (286033): Parameter WIDTHAD_B set to 14
+        Info (286033): Parameter NUMWORDS_B set to 9600
+        Info (286033): Parameter ADDRESS_ACLR_A set to NONE
+        Info (286033): Parameter OUTDATA_REG_B set to UNREGISTERED
+        Info (286033): Parameter ADDRESS_ACLR_B set to NONE
+        Info (286033): Parameter OUTDATA_ACLR_B set to NONE
+        Info (286033): Parameter ADDRESS_REG_B set to CLOCK0
+        Info (286033): Parameter INDATA_ACLR_A set to NONE
+        Info (286033): Parameter WRCONTROL_ACLR_A set to NONE
+        Info (286033): Parameter READ_DURING_WRITE_MODE_MIXED_PORTS set to OLD_DATA
+    Info (276029): Inferred altsyncram megafunction from the following design logic: "screen_mem:u_screen_mem|mem6_rtl_0" 
+        Info (286033): Parameter OPERATION_MODE set to DUAL_PORT
+        Info (286033): Parameter WIDTH_A set to 1
+        Info (286033): Parameter WIDTHAD_A set to 14
+        Info (286033): Parameter NUMWORDS_A set to 9600
+        Info (286033): Parameter WIDTH_B set to 1
+        Info (286033): Parameter WIDTHAD_B set to 14
+        Info (286033): Parameter NUMWORDS_B set to 9600
+        Info (286033): Parameter ADDRESS_ACLR_A set to NONE
+        Info (286033): Parameter OUTDATA_REG_B set to UNREGISTERED
+        Info (286033): Parameter ADDRESS_ACLR_B set to NONE
+        Info (286033): Parameter OUTDATA_ACLR_B set to NONE
+        Info (286033): Parameter ADDRESS_REG_B set to CLOCK0
+        Info (286033): Parameter INDATA_ACLR_A set to NONE
+        Info (286033): Parameter WRCONTROL_ACLR_A set to NONE
+        Info (286033): Parameter READ_DURING_WRITE_MODE_MIXED_PORTS set to OLD_DATA
+    Info (276029): Inferred altsyncram megafunction from the following design logic: "screen_mem:u_screen_mem|mem7_rtl_0" 
+        Info (286033): Parameter OPERATION_MODE set to DUAL_PORT
+        Info (286033): Parameter WIDTH_A set to 1
+        Info (286033): Parameter WIDTHAD_A set to 14
+        Info (286033): Parameter NUMWORDS_A set to 9600
+        Info (286033): Parameter WIDTH_B set to 1
+        Info (286033): Parameter WIDTHAD_B set to 14
+        Info (286033): Parameter NUMWORDS_B set to 9600
+        Info (286033): Parameter ADDRESS_ACLR_A set to NONE
+        Info (286033): Parameter OUTDATA_REG_B set to UNREGISTERED
+        Info (286033): Parameter ADDRESS_ACLR_B set to NONE
+        Info (286033): Parameter OUTDATA_ACLR_B set to NONE
+        Info (286033): Parameter ADDRESS_REG_B set to CLOCK0
+        Info (286033): Parameter INDATA_ACLR_A set to NONE
+        Info (286033): Parameter WRCONTROL_ACLR_A set to NONE
+        Info (286033): Parameter READ_DURING_WRITE_MODE_MIXED_PORTS set to OLD_DATA
+Info (278001): Inferred 6 megafunctions from design logic
+    Info (278003): Inferred multiplier megafunction ("lpm_mult") from the following logic: "rasterizer:u_rasterizer|Mult5" File: C:/Users/rohan/OneDrive/Desktop/FPGA_Rasterizer/rtl/rasterizer.sv Line: 135
+    Info (278003): Inferred multiplier megafunction ("lpm_mult") from the following logic: "rasterizer:u_rasterizer|Mult4" File: C:/Users/rohan/OneDrive/Desktop/FPGA_Rasterizer/rtl/rasterizer.sv Line: 134
+    Info (278003): Inferred multiplier megafunction ("lpm_mult") from the following logic: "rasterizer:u_rasterizer|Mult3" File: C:/Users/rohan/OneDrive/Desktop/FPGA_Rasterizer/rtl/rasterizer.sv Line: 133
+    Info (278003): Inferred multiplier megafunction ("lpm_mult") from the following logic: "rasterizer:u_rasterizer|Mult2" File: C:/Users/rohan/OneDrive/Desktop/FPGA_Rasterizer/rtl/rasterizer.sv Line: 132
+    Info (278003): Inferred multiplier megafunction ("lpm_mult") from the following logic: "rasterizer:u_rasterizer|Mult1" File: C:/Users/rohan/OneDrive/Desktop/FPGA_Rasterizer/rtl/rasterizer.sv Line: 131
+    Info (278003): Inferred multiplier megafunction ("lpm_mult") from the following logic: "rasterizer:u_rasterizer|Mult0" File: C:/Users/rohan/OneDrive/Desktop/FPGA_Rasterizer/rtl/rasterizer.sv Line: 130
+Info (12130): Elaborated megafunction instantiation "screen_mem:u_screen_mem|altsyncram:mem0_rtl_0"
+Info (12133): Instantiated megafunction "screen_mem:u_screen_mem|altsyncram:mem0_rtl_0" with the following parameter:
+    Info (12134): Parameter "OPERATION_MODE" = "DUAL_PORT"
+    Info (12134): Parameter "WIDTH_A" = "1"
+    Info (12134): Parameter "WIDTHAD_A" = "14"
+    Info (12134): Parameter "NUMWORDS_A" = "9600"
+    Info (12134): Parameter "WIDTH_B" = "1"
+    Info (12134): Parameter "WIDTHAD_B" = "14"
+    Info (12134): Parameter "NUMWORDS_B" = "9600"
+    Info (12134): Parameter "ADDRESS_ACLR_A" = "NONE"
+    Info (12134): Parameter "OUTDATA_REG_B" = "UNREGISTERED"
+    Info (12134): Parameter "ADDRESS_ACLR_B" = "NONE"
+    Info (12134): Parameter "OUTDATA_ACLR_B" = "NONE"
+    Info (12134): Parameter "ADDRESS_REG_B" = "CLOCK0"
+    Info (12134): Parameter "INDATA_ACLR_A" = "NONE"
+    Info (12134): Parameter "WRCONTROL_ACLR_A" = "NONE"
+    Info (12134): Parameter "READ_DURING_WRITE_MODE_MIXED_PORTS" = "OLD_DATA"
+Info (12021): Found 1 design units, including 1 entities, in source file db/altsyncram_0fg1.tdf
+    Info (12023): Found entity 1: altsyncram_0fg1 File: C:/Users/rohan/OneDrive/Desktop/FPGA_Rasterizer/benchmarks/optimized/db/altsyncram_0fg1.tdf Line: 32
+Info (12021): Found 1 design units, including 1 entities, in source file db/decode_jsa.tdf
+    Info (12023): Found entity 1: decode_jsa File: C:/Users/rohan/OneDrive/Desktop/FPGA_Rasterizer/benchmarks/optimized/db/decode_jsa.tdf Line: 23
+Info (12021): Found 1 design units, including 1 entities, in source file db/mux_smb.tdf
+    Info (12023): Found entity 1: mux_smb File: C:/Users/rohan/OneDrive/Desktop/FPGA_Rasterizer/benchmarks/optimized/db/mux_smb.tdf Line: 23
+Info (12130): Elaborated megafunction instantiation "rasterizer:u_rasterizer|lpm_mult:Mult5" File: C:/Users/rohan/OneDrive/Desktop/FPGA_Rasterizer/rtl/rasterizer.sv Line: 135
+Info (12133): Instantiated megafunction "rasterizer:u_rasterizer|lpm_mult:Mult5" with the following parameter: File: C:/Users/rohan/OneDrive/Desktop/FPGA_Rasterizer/rtl/rasterizer.sv Line: 135
+    Info (12134): Parameter "LPM_WIDTHA" = "10"
+    Info (12134): Parameter "LPM_WIDTHB" = "10"
+    Info (12134): Parameter "LPM_WIDTHP" = "20"
+    Info (12134): Parameter "LPM_WIDTHR" = "20"
+    Info (12134): Parameter "LPM_WIDTHS" = "1"
+    Info (12134): Parameter "LPM_REPRESENTATION" = "SIGNED"
+    Info (12134): Parameter "INPUT_A_IS_CONSTANT" = "NO"
+    Info (12134): Parameter "INPUT_B_IS_CONSTANT" = "NO"
+    Info (12134): Parameter "MAXIMIZE_SPEED" = "6"
+Info (12021): Found 1 design units, including 1 entities, in source file db/mult_l5t.tdf
+    Info (12023): Found entity 1: mult_l5t File: C:/Users/rohan/OneDrive/Desktop/FPGA_Rasterizer/benchmarks/optimized/db/mult_l5t.tdf Line: 29
+Info (286030): Timing-Driven Synthesis is running
+Info (17049): 2 registers lost all their fanouts during netlist optimizations.
+Info (128000): Starting physical synthesis optimizations for speed
+Info (332104): Reading SDC File: 'rasterizer_benchmark.sdc'
+Info (332151): Clock uncertainty is not calculated until you update the timing netlist.
+Info (332154): The derive_clock_uncertainty command did not apply clock uncertainty to any clock-to-clock transfers.
+Info (332129): Detected timing requirements -- optimizing circuit to achieve only the specified requirements
+Info (332111): Found 1 clocks
+    Info (332111):   Period   Clock Name
+    Info (332111): ======== ============
+    Info (332111):    1.000   raster_clk
+Info (128002): Starting physical synthesis algorithm register retiming
+Info (128003): Physical synthesis algorithm register retiming complete: estimated slack improvement of 0 ps
+Info (128002): Starting physical synthesis algorithm combinational resynthesis using boolean division
+Info (128003): Physical synthesis algorithm combinational resynthesis using boolean division complete: estimated slack improvement of 0 ps
+Info (128001): Physical synthesis optimizations for speed complete: elapsed time is 00:00:01
+Info (144001): Generated suppressed messages file C:/Users/rohan/OneDrive/Desktop/FPGA_Rasterizer/benchmarks/optimized/output_files/optimized_benchmark.map.smsg
+Info (16010): Generating hard_block partition "hard_block:auto_generated_inst"
+    Info (16011): Adding 0 node(s), including 0 DDIO, 0 PLL, 0 transceiver and 0 LCELL
+Info (21057): Implemented 1558 device resources after synthesis - the final resource count might be different
+    Info (21058): Implemented 57 input pins
+    Info (21059): Implemented 2 output pins
+    Info (21061): Implemented 1471 logic cells
+    Info (21064): Implemented 16 RAM segments
+    Info (21062): Implemented 12 DSP elements
+Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 7 warnings
+    Info: Peak virtual memory: 4911 megabytes
+    Info: Processing ended: Wed Aug 26 11:46:04 2026
+    Info: Elapsed time: 00:00:19
+    Info: Total CPU time (on all processors): 00:00:34
+
+
++------------------------------------------+
+; Analysis & Synthesis Suppressed Messages ;
++------------------------------------------+
+The suppressed messages can be found in C:/Users/rohan/OneDrive/Desktop/FPGA_Rasterizer/benchmarks/optimized/output_files/optimized_benchmark.map.smsg.
+
+

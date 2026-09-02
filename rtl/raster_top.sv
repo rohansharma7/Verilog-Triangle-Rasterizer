@@ -34,6 +34,23 @@ module raster_top (
         end
     end
 
+    // rst_n comes in from a pin, asynchronous to slow_clk. two flops in the
+    // slow_clk domain so a reset release near a clock edge can't put the
+    // submodules' state machines into different states. reset asserts
+    // asynchronously (the sync chain clears immediately) and releases
+    // synchronously, one slow_clk edge after the pin goes high.
+    logic rst_n_meta, rst_n_sync;
+
+    always_ff @(posedge slow_clk or negedge rst_n) begin
+        if (!rst_n) begin
+            rst_n_meta <= 1'b0;
+            rst_n_sync <= 1'b0;
+        end else begin
+            rst_n_meta <= 1'b1;
+            rst_n_sync <= rst_n_meta;
+        end
+    end
+
     logic [11:0] x_value, y_value;
     logic        touch_ready;
 
@@ -52,7 +69,7 @@ module raster_top (
 
     touchscreen_interface u_touchscreen_interface (
         .clk      (slow_clk),
-        .rst_n    (rst_n),
+        .rst_n    (rst_n_sync),
         .T_DO     (T_DO),
         .T_IRQ    (T_IRQ),
         .T_CS     (T_CS),
@@ -65,7 +82,7 @@ module raster_top (
 
     touch_commands u_touch_commands (
         .clk     (slow_clk),
-        .rst_n   (rst_n),
+        .rst_n   (rst_n_sync),
         .ready   (touch_ready),
         .x_value (x_value),
         .y_value (y_value),
@@ -80,7 +97,7 @@ module raster_top (
 
     rasterizer u_rasterizer (
         .clk      (slow_clk),
-        .rst_n    (rst_n),
+        .rst_n    (rst_n_sync),
         .start    (start),
         .x1_in    (x1_in),
         .y1_in    (y1_in),
@@ -108,7 +125,7 @@ module raster_top (
 
     display_interface u_display_interface (
         .clk     (slow_clk),
-        .rst_n   (rst_n),
+        .rst_n   (rst_n_sync),
         .rd_data (disp_rd_data),
         .rd_addr (disp_rd_addr),
         .CS      (CS),

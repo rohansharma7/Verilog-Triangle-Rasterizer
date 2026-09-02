@@ -1,0 +1,7 @@
+
+State Machine - |rasterizer_benchmark|rasterizer:u_rasterizer|current_state
+Name current_state.DONE current_state.RASTERIZE current_state.BOX current_state.IDLE 
+current_state.IDLE 0 0 0 0 
+current_state.BOX 0 0 1 1 
+current_state.RASTERIZE 0 1 0 1 
+current_state.DONE 1 0 0 1 

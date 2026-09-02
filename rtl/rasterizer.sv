@@ -64,8 +64,12 @@ module rasterizer (
                     current_x <= 0;
                     current_y <= 0;
                     box_count <= 0;
-                    x1 <= x1_in; x2 <= x2_in; x3 <= x3_in;
-                    y1 <= y1_in; y2 <= y2_in; y3 <= y3_in;
+                    x1 <= x1_in;
+                    x2 <= x2_in;
+                    x3 <= x3_in;
+                    y1 <= y1_in;
+                    y2 <= y2_in;
+                    y3 <= y3_in;
                     color <= color_in;
                 end
                 BOX: begin
@@ -109,9 +113,12 @@ module rasterizer (
 
     // first part of the pipeline. get the edge values for the first pixel
     always_comb begin
-        dx1 = x2 - x1; dy1 = y2 - y1;
-        dx2 = x3 - x2; dy2 = y3 - y2;
-        dx3 = x1 - x3; dy3 = y1 - y3;
+        dx1 = x2 - x1;
+        dy1 = y2 - y1;
+        dx2 = x3 - x2;
+        dy2 = y3 - y2;
+        dx3 = x1 - x3;
+        dy3 = y1 - y3;
 
         delta_y1 = current_y - y1;
         delta_y2 = current_y - y2;
