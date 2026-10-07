@@ -57,6 +57,7 @@ module touchscreen_interface (
                 ready <= 0;
             end
 
+            // give the touch controller 3 cycles to get the measurement
             ACQUIRE: begin
                 if (bit_count == 2) begin
                     bit_count <= 0;
@@ -66,6 +67,7 @@ module touchscreen_interface (
                 ready <= 0;
             end
 
+            // collect the 12 coordinate bits one at a time
             READ_RESULT: begin
                 shift_in_reg <= {shift_in_reg[10:0], T_DO};
                 if (bit_count == 11) begin

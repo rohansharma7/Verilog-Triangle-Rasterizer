@@ -16,12 +16,7 @@ module raster_top (
     output logic LED
 );
 
-    // 66MHz -> ~1MHz. needed because T_CLK is tied to this clock and the
-    // XPT2046 maxes out around 2MHz. also makes timing closure a non-issue.
-    // downside: ~1.4s to redraw a full frame.
-    //
-    // not reset by rst_n on purpose. submodules use sync reset, so if this
-    // stopped during reset they'd never actually reset.
+
     logic [15:0] clk_div_count = 0;
     logic        slow_clk      = 0;
 
@@ -34,11 +29,7 @@ module raster_top (
         end
     end
 
-    // rst_n comes in from a pin, asynchronous to slow_clk. two flops in the
-    // slow_clk domain so a reset release near a clock edge can't put the
-    // submodules' state machines into different states. reset asserts
-    // asynchronously (the sync chain clears immediately) and releases
-    // synchronously, one slow_clk edge after the pin goes high.
+
     logic rst_n_meta, rst_n_sync;
 
     always_ff @(posedge slow_clk or negedge rst_n) begin
@@ -142,11 +133,6 @@ endmodule
     touchscreen -> touchscreen_interface -> touch_commands -> rasterizer
     -> screen_mem -> display_interface -> display
 
-    framebuffer is 1bpp because RGB565 at 320x240 needs 1.2Mbit and the
-    EP4CE6 only has ~276kbit. display_interface expands each bit back to
-    RGB565 on the way out, so the panel still runs 16bpp.
-
-    no arbitration on screen_mem. rasterizer only writes after 3 touches,
     display_interface reads constantly. a write to the address being read that
     same cycle just shows up one frame later.
 */

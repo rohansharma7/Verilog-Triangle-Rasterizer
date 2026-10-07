@@ -2,7 +2,7 @@ module display_interface (
     input logic clk,
     input logic rst_n,
 
-    input logic rd_data,          // 1bpp, expanded to RGB565 below
+    input logic rd_data,
     output logic [16:0] rd_addr,
 
     output logic CS,
@@ -13,55 +13,51 @@ module display_interface (
     output logic LED
 );
 
-    // each entry is {DC, byte}. DC=0 command, DC=1 data
-    logic [8:0] init_rom [0:7];
-
-    initial begin
-        init_rom[0] = {1'b0, 8'h01}; // SWRESET
-        init_rom[1] = {1'b0, 8'h36}; // MADCTL
-        init_rom[2] = {1'b1, 8'h48}; // MX=1,BGR=1, may need changing on real panel
-        init_rom[3] = {1'b0, 8'h3A}; // COLMOD
-        init_rom[4] = {1'b1, 8'h55}; // 16bpp RGB565
-        init_rom[5] = {1'b0, 8'h11}; // SLPOUT
-        init_rom[6] = {1'b0, 8'h29}; // DISPON
-        init_rom[7] = {1'b0, 8'h2C}; // RAMWR
-    end
-
-    logic [8:0] window_rom [0:9];
-    initial begin
-        window_rom[0] = {1'b0, 8'h2A};  // CASET
-        window_rom[1] = {1'b1, 8'h00};
-        window_rom[2] = {1'b1, 8'h00};
-        window_rom[3] = {1'b1, 8'h01};  // 319 = 0x013F
-        window_rom[4] = {1'b1, 8'h3F};
-        window_rom[5] = {1'b0, 8'h2B};  // PASET
-        window_rom[6] = {1'b1, 8'h00};
-        window_rom[7] = {1'b1, 8'h00};
-        window_rom[8] = {1'b1, 8'h00};  // 239 = 0x00EF
-        window_rom[9] = {1'b1, 8'hEF};
-    end
+    logic [8:0] init_entry;
 
     logic [15:0] pixel_expanded;
+    // FFFF is white and 0000 is black
     assign pixel_expanded = rd_data ? 16'hFFFF : 16'h0000;
 
-    logic [3:0]  init_idx;
-    logic [3:0]  window_idx;
+    logic [4:0]  init_idx; // picks between the 18 initialization values
     logic [3:0]  bit_count;
     logic [7:0]  shift_reg;
     logic        dc_reg;
     logic [15:0] pixel_reg;
-    logic        pixel_byte_sel;  // 0 = high byte, 1 = low byte
+    logic        pixel_byte_sel;
     logic [19:0] hold_count;
+
+    // values for initializing display
+    always_comb begin
+        case (init_idx)
+            0: init_entry = {1'b0, 8'h01}; // SWRESET
+            1: init_entry = {1'b0, 8'h36}; // MADCTL
+            2: init_entry = {1'b1, 8'h48}; // MX=1, BGR=1
+            3: init_entry = {1'b0, 8'h3A}; // COLMOD
+            4: init_entry = {1'b1, 8'h55}; // RGB565
+            5: init_entry = {1'b0, 8'h11}; // SLPOUT
+            6: init_entry = {1'b0, 8'h29}; // DISPON
+            7: init_entry = {1'b0, 8'h2C}; // RAMWR
+            8: init_entry = {1'b0, 8'h2A}; // CASET
+            9: init_entry = {1'b1, 8'h00}; // Column start high
+            10: init_entry = {1'b1, 8'h00}; // Column start low
+            11: init_entry = {1'b1, 8'h01}; // Column end high: 319
+            12: init_entry = {1'b1, 8'h3F}; // Column end low
+            13: init_entry = {1'b0, 8'h2B}; // PASET
+            14: init_entry = {1'b1, 8'h00}; // Row start high
+            15: init_entry = {1'b1, 8'h00}; // Row start low
+            16: init_entry = {1'b1, 8'h00}; // Row end high: 239
+            17: init_entry = {1'b1, 8'hEF}; // Row end low
+            default: init_entry = 9'b0;
+        endcase
+    end
 
     typedef enum logic [3:0] {
         RESET_PULSE,
         RESET_SETTLE,
         INIT_LOAD,
         INIT_SHIFT,
-        WINDOW_LOAD,
-        WINDOW_SHIFT,
         FETCH,
-        FETCH_WAIT,
         PIXEL_LOAD,
         PIXEL_SHIFT
     } state_t;
@@ -77,7 +73,6 @@ module display_interface (
         if (!rst_n) begin
             state      <= RESET_PULSE;
             init_idx   <= 0;
-            window_idx <= 0;
             rd_addr    <= 0;
             hold_count <= 0;
         end else begin
@@ -102,8 +97,8 @@ module display_interface (
                 end
 
                 INIT_LOAD: begin
-                    dc_reg    <= init_rom[init_idx][8];
-                    shift_reg <= init_rom[init_idx][7:0];
+                    dc_reg    <= init_entry[8];
+                    shift_reg <= init_entry[7:0];
                     bit_count <= 0;
                 end
 
@@ -117,27 +112,7 @@ module display_interface (
                     end
                 end
 
-                WINDOW_LOAD: begin
-                    dc_reg    <= window_rom[window_idx][8];
-                    shift_reg <= window_rom[window_idx][7:0];
-                    bit_count <= 0;
-                end
-
-                WINDOW_SHIFT: begin
-                    shift_reg <= shift_reg << 1;
-                    if (bit_count == 7) begin
-                        bit_count  <= 0;
-                        window_idx <= window_idx + 1;
-                    end else begin
-                        bit_count <= bit_count + 1;
-                    end
-                end
-
                 FETCH: begin
-                end
-
-                FETCH_WAIT: begin
-                    // screen_mem read is registered, so wait a cycle
                 end
 
                 PIXEL_LOAD: begin
@@ -158,7 +133,7 @@ module display_interface (
                         end else begin
                             pixel_byte_sel <= 0;
                             if (rd_addr == 17'd76799) begin
-                                rd_addr <= 0;   // wrap, redraw next frame
+                                rd_addr <= 0; 
                             end else begin
                                 rd_addr <= rd_addr + 1;
                             end
@@ -176,7 +151,7 @@ module display_interface (
     always_comb begin
         next_state = state;
         CS  = 1'b1;
-        SDI = 1'b0;   // default, else latch
+        SDI = 1'b0;  
 
         case (state)
             RESET_PULSE: begin
@@ -203,8 +178,8 @@ module display_interface (
                 CS   = 1'b0;
                 SDI  = shift_reg[7];
                 if (bit_count == 7) begin
-                    if (init_idx == 7) begin
-                        next_state = WINDOW_LOAD;
+                    if (init_idx == 17) begin
+                        next_state = FETCH;
                     end else begin
                         next_state = INIT_LOAD;
                     end
@@ -213,29 +188,7 @@ module display_interface (
                 end
             end
 
-            WINDOW_LOAD: begin
-                next_state = WINDOW_SHIFT;
-            end
-
-            WINDOW_SHIFT: begin
-                CS   = 1'b0;
-                SDI  = shift_reg[7];
-                if (bit_count == 7) begin
-                    if (window_idx == 9) begin
-                        next_state = FETCH;
-                    end else begin
-                        next_state = WINDOW_LOAD;
-                    end
-                end else begin
-                    next_state = WINDOW_SHIFT;
-                end
-            end
-
             FETCH: begin
-                next_state = FETCH_WAIT;
-            end
-
-            FETCH_WAIT: begin
                 next_state = PIXEL_LOAD;
             end
 
@@ -258,13 +211,3 @@ module display_interface (
     end
 
 endmodule
-
-/*
-    ILI9341 over 4-wire SPI.
-
-    reset -> init command sequence -> CASET/PASET to set full screen window
-    -> then loop forever reading one pixel from screen_mem and shifting it
-    out as 2 bytes. wraps back to addr 0 after the last pixel.
-
-    only sends the minimum init commands, no gamma/power tuning.
-*/

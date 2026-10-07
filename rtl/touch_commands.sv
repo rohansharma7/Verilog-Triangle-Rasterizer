@@ -8,25 +8,18 @@ module touch_commands (
     output logic start
 );
 
-// turn the raw 0..4095 touch values into 320x240 screen coordinates
-// the constants are just the scale factors multiplied by 65536
-// shifting right by 16 divides it back down without needing a divider
-logic [31:0] scaled_x_math, scaled_y_math;
+// turn the raw 0-4095 values into 320x240 screen coordinates
+logic [20:0] scaled_x_math;
+logic [19:0] scaled_y_math;
 logic [8:0] scaled_x, scaled_y;
-
+// scale the 4096 possible raw values to 320 x coordinates and 240 y coordinates
 always_comb begin
-    scaled_x_math = (x_value * 32'd5121) >> 16;
-    scaled_y_math = (y_value * 32'd3840) >> 16;
+    scaled_x_math = (x_value * 21'd320) >> 12;
+    scaled_y_math = (y_value * 20'd240) >> 12;
 
-    if (scaled_x_math >= 320)
-        scaled_x = 9'd319;
-    else
-        scaled_x = scaled_x_math[8:0];
+    scaled_x = scaled_x_math[8:0];
 
-    if (scaled_y_math >= 240)
-        scaled_y = 9'd239;
-    else
-        scaled_y = scaled_y_math[8:0];
+    scaled_y = scaled_y_math[8:0];
 end
 
 logic [8:0] x1, y1, x2, y2, x3, y3;

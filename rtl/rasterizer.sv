@@ -34,8 +34,14 @@ module rasterizer (
     assign addr = pipe_addr;
     assign wr_en = pipe_valid && (|wr_mask);
 
-    typedef enum logic [2:0] {IDLE, BOX, RASTERIZE, DRAIN, DONE} rasterizer_fsm;
-    rasterizer_fsm current_state, next_state;
+    typedef enum logic [2:0] {
+        IDLE,
+    BOX,
+    RASTERIZE,
+    DRAIN,
+    DONE
+    } state_t;
+    state_t current_state, next_state;
 
     always_ff @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
@@ -45,19 +51,6 @@ module rasterizer (
             current_state <= next_state;
             pipe_valid <= (current_state == RASTERIZE);
 
-            if (current_state == RASTERIZE) begin
-                pipe_x <= current_x;
-                pipe_min_x <= min_x;
-                pipe_max_x <= max_x;
-                pipe_dy1 <= dy1;
-                pipe_dy2 <= dy2;
-                pipe_dy3 <= dy3;
-                pipe_edge1 <= base_edge1;
-                pipe_edge2 <= base_edge2;
-                pipe_edge3 <= base_edge3;
-                pipe_addr <= (40 * current_y) + (current_x >>> 3);
-                pipe_color <= color;
-            end
 
             case (current_state)
                 IDLE: begin
@@ -73,11 +66,24 @@ module rasterizer (
                     color <= color_in;
                 end
                 BOX: begin
+                    // round down to a multiple of 8
                     current_x <= {min_x[9:3], 3'b000};
                     current_y <= min_y;
                     box_count <= box_count + 1'b1;
                 end
                 RASTERIZE: begin
+                    pipe_x     <= current_x;
+                    pipe_min_x <= min_x;
+                    pipe_max_x <= max_x;
+                    pipe_dy1   <= dy1;
+                    pipe_dy2   <= dy2;
+                    pipe_dy3   <= dy3;
+                    pipe_edge1 <= base_edge1;
+                    pipe_edge2 <= base_edge2;
+                    pipe_edge3 <= base_edge3;
+                    pipe_addr  <= (40 * current_y) + (current_x >>> 3);
+                    pipe_color <= color;
+
                     if ((current_x + 7) < max_x)
                         current_x <= current_x + 8;
                     else begin

@@ -27,7 +27,6 @@ module tb_rasterizer;
     int errors = 0;
 
     // pixels that should be filled for triangle (0,0),(6,0),(6,6).
-    // worked these out separately, not from the RTL
     int expected_x [0:9] = '{2, 3, 3, 4, 4, 4, 5, 5, 5, 5};
     int expected_y [0:9] = '{1, 1, 2, 1, 2, 3, 1, 2, 3, 4};
     bit expected_mem [0:4095];

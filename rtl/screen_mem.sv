@@ -8,6 +8,7 @@ module screen_mem (
     output logic rd_data
 );
 
+// framebuffer is split into 8 banks so 8 bits can be written at a time
 logic mem0 [0:9599];
 logic mem1 [0:9599];
 logic mem2 [0:9599];
